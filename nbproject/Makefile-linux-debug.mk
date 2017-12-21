@@ -24,7 +24,7 @@ QMAKE=qmake
 # Macros
 CND_PLATFORM=GNU-Linux
 CND_DLIB_EXT=so
-CND_CONF=Release
+CND_CONF=linux-debug
 CND_DISTDIR=dist
 CND_BUILDDIR=build
 
@@ -64,7 +64,7 @@ FORCE:
 .build-conf: ${BUILD_SUBPROJECTS} nbproject/qt-${CND_CONF}.mk
 	"${MAKE}" -f nbproject/qt-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/client-qt
 
-${CND_BUILDDIR}/Release/%.o: nbproject/qt-${CND_CONF}.mk
+${CND_BUILDDIR}/linux-debug/%.o: nbproject/qt-${CND_CONF}.mk
 	${MAKE} -f nbproject/qt-${CND_CONF}.mk "$@"
 
 # Subprojects

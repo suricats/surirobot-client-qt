@@ -1,11 +1,11 @@
 # This file is generated automatically. Do not edit.
 # Use project properties -> Build -> Qt -> Expert -> Custom Definitions.
 TEMPLATE = app
-DESTDIR = dist/Release/GNU-Linux
+DESTDIR = dist/linux-debug/GNU-Linux
 TARGET = client-qt
 VERSION = 1.0.0
 CONFIG -= debug_and_release app_bundle lib_bundle
-CONFIG += release 
+CONFIG += debug 
 PKGCONFIG +=
 QT = core gui widgets
 SOURCES += keyPressEventHandler.cpp main.cpp mainWindow.cpp.cc
@@ -13,7 +13,7 @@ HEADERS += keyPressEventHandler.h mainWindow.h
 FORMS += mainWindow.ui
 RESOURCES +=
 TRANSLATIONS +=
-OBJECTS_DIR = build/Release/GNU-Linux
+OBJECTS_DIR = build/linux-debug/GNU-Linux
 MOC_DIR = 
 RCC_DIR = 
 UI_DIR = 
