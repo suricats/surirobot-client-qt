@@ -38,7 +38,7 @@ DISTNAME      = client-qt1.0.0
 DISTDIR = /srv/suri/client-qt/build/linux-debug/GNU-Linux/client-qt1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -Wl,-rpath,/usr/lib /usr/lib/libhiredis.so -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -50,14 +50,20 @@ OBJECTS_DIR   = build/linux-debug/GNU-Linux/
 
 ####### Files
 
-SOURCES       = keyPressEventHandler.cpp \
+SOURCES       = connectors/redis/QTRedis.cpp \
+		keyPressEventHandler.cpp \
 		main.cpp \
-		mainWindow.cpp.cc moc_keyPressEventHandler.cpp \
+		mainWindow.cpp.cc moc_QTRedis.cpp \
+		moc_keyPressEventHandler.cpp \
+		moc_qt.cpp \
 		moc_mainWindow.cpp
-OBJECTS       = build/linux-debug/GNU-Linux/keyPressEventHandler.o \
+OBJECTS       = build/linux-debug/GNU-Linux/QTRedis.o \
+		build/linux-debug/GNU-Linux/keyPressEventHandler.o \
 		build/linux-debug/GNU-Linux/main.o \
 		build/linux-debug/GNU-Linux/mainWindow.cpp.o \
+		build/linux-debug/GNU-Linux/moc_QTRedis.o \
 		build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o \
+		build/linux-debug/GNU-Linux/moc_qt.o \
 		build/linux-debug/GNU-Linux/moc_mainWindow.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
@@ -227,6 +233,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		nbproject/.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -245,8 +252,11 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		nbproject/nbproject/qt-linux-debug.pro keyPressEventHandler.h \
-		mainWindow.h keyPressEventHandler.cpp \
+		nbproject/nbproject/qt-linux-debug.pro connectors/redis/QTRedis.hpp \
+		keyPressEventHandler.h \
+		lib/hiredis/include/adapters/qt.h \
+		mainWindow.h connectors/redis/QTRedis.cpp \
+		keyPressEventHandler.cpp \
 		main.cpp \
 		mainWindow.cpp.cc
 QMAKE_TARGET  = client-qt
@@ -429,6 +439,7 @@ qttmp-linux-debug.mk: nbproject/qt-linux-debug.pro /usr/lib/qt/mkspecs/linux-g++
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -620,6 +631,7 @@ qttmp-linux-debug.mk: nbproject/qt-linux-debug.pro /usr/lib/qt/mkspecs/linux-g++
 /usr/lib/qt/mkspecs/features/qt_config.prf:
 /usr/lib/qt/mkspecs/linux-g++/qmake.conf:
 /usr/lib/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/toolchain.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
@@ -657,8 +669,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents keyPressEventHandler.h mainWindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents keyPressEventHandler.cpp main.cpp mainWindow.cpp.cc $(DISTDIR)/
+	$(COPY_FILE) --parents connectors/redis/QTRedis.hpp keyPressEventHandler.h lib/hiredis/include/adapters/qt.h mainWindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents connectors/redis/QTRedis.cpp keyPressEventHandler.cpp main.cpp mainWindow.cpp.cc $(DISTDIR)/
 	$(COPY_FILE) --parents mainWindow.ui $(DISTDIR)/
 
 
@@ -691,13 +703,27 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_keyPressEventHandler.cpp moc_mainWindow.cpp
+compiler_moc_header_make_all: moc_QTRedis.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_mainWindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_keyPressEventHandler.cpp moc_mainWindow.cpp
+	-$(DEL_FILE) moc_QTRedis.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_mainWindow.cpp
+moc_QTRedis.cpp: connectors/redis/QTRedis.hpp \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/srv/suri/client-qt/nbproject -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include connectors/redis/QTRedis.hpp -o moc_QTRedis.cpp
+
 moc_keyPressEventHandler.cpp: keyPressEventHandler.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/srv/suri/client-qt/nbproject -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include keyPressEventHandler.h -o moc_keyPressEventHandler.cpp
+
+moc_qt.cpp: lib/hiredis/include/async.h \
+		lib/hiredis/include/hiredis.h \
+		lib/hiredis/include/read.h \
+		lib/hiredis/include/sds.h \
+		lib/hiredis/include/adapters/qt.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/srv/suri/client-qt/nbproject -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include lib/hiredis/include/adapters/qt.h -o moc_qt.cpp
 
 moc_mainWindow.cpp: ui_mainWindow.h \
 		keyPressEventHandler.h \
@@ -727,12 +753,16 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
+build/linux-debug/GNU-Linux/QTRedis.o: connectors/redis/QTRedis.cpp connectors/redis/QTRedis.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/QTRedis.o connectors/redis/QTRedis.cpp
+
 build/linux-debug/GNU-Linux/keyPressEventHandler.o: keyPressEventHandler.cpp keyPressEventHandler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/keyPressEventHandler.o keyPressEventHandler.cpp
 
 build/linux-debug/GNU-Linux/main.o: main.cpp keyPressEventHandler.h \
 		mainWindow.h \
-		ui_mainWindow.h
+		ui_mainWindow.h \
+		connectors/redis/QTRedis.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/main.o main.cpp
 
 build/linux-debug/GNU-Linux/mainWindow.cpp.o: mainWindow.cpp.cc mainWindow.h \
@@ -740,8 +770,14 @@ build/linux-debug/GNU-Linux/mainWindow.cpp.o: mainWindow.cpp.cc mainWindow.h \
 		keyPressEventHandler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/mainWindow.cpp.o mainWindow.cpp.cc
 
+build/linux-debug/GNU-Linux/moc_QTRedis.o: moc_QTRedis.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_QTRedis.o moc_QTRedis.cpp
+
 build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o: moc_keyPressEventHandler.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o moc_keyPressEventHandler.cpp
+
+build/linux-debug/GNU-Linux/moc_qt.o: moc_qt.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_qt.o moc_qt.cpp
 
 build/linux-debug/GNU-Linux/moc_mainWindow.o: moc_mainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_mainWindow.o moc_mainWindow.cpp

@@ -28,6 +28,9 @@
 #include <QNetworkReply>
 
 
+#include "connectors/redis/QTRedis.hpp"
+
+
 int main(int argc, char *argv[]) {
     std::cout << "Program started.  " << std::endl;
 
@@ -61,6 +64,12 @@ int main(int argc, char *argv[]) {
     }
     else window->setText((QString) currentReply->readAll());
    
+
+    
+    QTRedis redis;
+    redis.run();
+    QObject::connect(&redis, &QTRedis::signalNewPerson, window, &mainWindow::changeText);
+    
     return app.exec();
 
 

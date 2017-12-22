@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>connectors/redis/QTRedis.hpp</itemPath>
       <itemPath>keyPressEventHandler.h</itemPath>
       <itemPath>mainWindow.h</itemPath>
     </logicalFolder>
@@ -15,6 +16,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>connectors/redis/QTRedis.cpp</itemPath>
       <itemPath>keyPressEventHandler.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>mainWindow.cpp.cc</itemPath>
@@ -30,6 +32,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>lib/hiredis/include/adapters/qt.h</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -44,9 +47,15 @@
       </qt>
       <compileType>
       </compileType>
+      <item path="connectors/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="connectors/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/hiredis/include/adapters/qt.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -81,9 +90,15 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="connectors/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="connectors/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib/hiredis/include/adapters/qt.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -104,14 +119,25 @@
         <modules>core gui widgets</modules>
       </qt>
       <compileType>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibFileItem>/usr/lib/libhiredis.so</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
-      <item path="keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
+      <item path="connectors/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="connectors/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="keyPressEventHandler.cpp" ex="false" tool="1" flavor2="9">
       </item>
       <item path="keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      <item path="lib/hiredis/include/adapters/qt.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="mainWindow.cpp.cc" ex="false" tool="1" flavor2="0">
+      <item path="main.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="mainWindow.cpp.cc" ex="false" tool="1" flavor2="9">
       </item>
       <item path="mainWindow.h" ex="false" tool="3" flavor2="0">
       </item>
