@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=client-qt
+PROJECTNAME=surirobot-client-qt
 
 # Active Configuration
 DEFAULTCONF=Debug

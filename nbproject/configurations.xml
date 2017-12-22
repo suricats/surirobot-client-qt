@@ -40,7 +40,7 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <qt>
-        <modules>core gui widgets</modules>
+        <modules>core gui widgets network</modules>
       </qt>
       <compileType>
       </compileType>
