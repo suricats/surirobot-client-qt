@@ -29,6 +29,7 @@
 #include <QtWidgets/qlayout.h>
 #include "keyPressEventHandler.h"
 #include "mainWindow.h"
+#include "connectors/redis/QTRedis.hpp"
 
 int main(int argc, char *argv[]) {
     std::cout << "Program started.  " << std::endl;
@@ -49,6 +50,11 @@ int main(int argc, char *argv[]) {
     window->showFullScreen();
     
     window->smartShow();
+    
+    QTRedis redis;
+    redis.run();
+    QObject::connect(&redis, &QTRedis::signalNewPerson, window, &mainWindow::changeText);
+    
     return app.exec();
 
 

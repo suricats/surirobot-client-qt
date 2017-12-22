@@ -28,6 +28,10 @@ public:
     void setText(const QString&);
     void setImage(QImage&);
     void updateWidgets();
+    
+public slots:
+    void changeText(const QString& text);
+    
 private:
     QWidget* imgWidget;
     QLabel* labelImage;
