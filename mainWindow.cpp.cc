@@ -58,4 +58,5 @@ void mainWindow::updateWidgets()
 
 void mainWindow::changeText(const QString& text) {
     this->setText(text);
+    this->updateWidgets();
 }

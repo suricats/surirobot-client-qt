@@ -46,10 +46,11 @@ int main(int argc, char *argv[]) {
     //Text
     QFont f( "Arial", 40, QFont::Bold);
     window->setTextFont(f);
-    window->setText("Salut !");
+    window->setText("             Salut !               ");
     window->showFullScreen();
     
     window->smartShow();
+    window->updateWidgets();
     
     QTRedis redis;
     redis.run();
