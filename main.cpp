@@ -17,40 +17,56 @@
 #include <QGridLayout>
 #include <QRect>
 #include <QDesktopWidget>
-/*
-#include <QPushButton>
-#include <QWidget>
-
- */
-
+#include <qnetwork.h>
 #include <iostream>
 #include <string>
 #include <unistd.h>
 #include <QtWidgets/qlayout.h>
 #include "keyPressEventHandler.h"
 #include "mainWindow.h"
+#include <QtNetwork>
+#include <QNetworkReply>
+
+
 #include "connectors/redis/QTRedis.hpp"
+
 
 int main(int argc, char *argv[]) {
     std::cout << "Program started.  " << std::endl;
 
-
     QApplication app(argc, argv);
     mainWindow* window = new mainWindow();
-    
+
     //Image
     QImage imageNormal;
     imageNormal.load("./img/Surirobot1.png");
     window->setImage(imageNormal);
-    
+
     //Text
-    QFont f( "Arial", 40, QFont::Bold);
+    QFont f("Roboto", 40, QFont::Bold);
     window->setTextFont(f);
     window->setText("             Salut !               ");
     window->showFullScreen();
-    
+
     window->smartShow();
     window->updateWidgets();
+
+    //API test
+    /*
+    QNetworkAccessManager networkManager;
+
+    QUrl url("http://www.wesh.com/");
+    QNetworkRequest request;
+    request.setUrl(url);
+    
+    QNetworkReply* currentReply = networkManager.get(request);
+    if (currentReply->error() != QNetworkReply::NoError)
+    {
+        window->setText((QString) currentReply->errorString());
+    }
+    else window->setText((QString) currentReply->readAll());
+   
+    */
     
     QTRedis redis;
     redis.run();
