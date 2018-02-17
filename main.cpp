@@ -45,16 +45,16 @@ int main(int argc, char *argv[]) {
     //Text
     QFont f("Roboto", 40, QFont::Bold);
     window->setTextFont(f);
-    window->setText("Salut !");
+    window->setText("             Salut !               ");
     window->showFullScreen();
 
     window->smartShow();
-    
+    window->updateWidgets();
+
     APICaller* worker = new APICaller;    
     QThread* APIThread = new QThread;    
     worker->set(APIThread);  
     APIThread->start();
-    //worker->MyWake();
     /*
     QTRedis redis;
     redis.run();
