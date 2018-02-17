@@ -36,6 +36,9 @@
     </logicalFolder>
     <itemPath>lib/hiredis/include/adapters/qt.h</itemPath>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>connectors</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="4">

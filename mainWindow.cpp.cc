@@ -12,7 +12,7 @@
  */
 
 #include "mainWindow.h"
-
+#define NB_WIDGETS 3
 mainWindow::mainWindow() {
     widget.setupUi(this);
     keyPressEventHandler* eKeyPress = new keyPressEventHandler();
@@ -61,6 +61,22 @@ void mainWindow::setImage(QImage& image)
     updateWidgets();
     
 }
+void mainWindow::setEditText()
+{
+    editText = new QTextEdit();
+    editText->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    editText->show();
+    updateWidgets();
+}
+QString mainWindow::getEditText()
+{
+    return editText->toPlainText();
+}
+void mainWindow::sendEditText()
+{
+    emit sendEditText_signal(editText->toPlainText());
+}
+
 void mainWindow::updateWidgets()
 {
     labelText->adjustSize();
@@ -69,7 +85,7 @@ void mainWindow::updateWidgets()
     labelText->move(this->width()/2-this->labelText->width()/2,this->height()/2-this->labelText->height()/2+imgWidget->height()/2);
 }
 
-void mainWindow::changeText(const QString& text) {
+void mainWindow::changeText(QString text) {
     this->setText(text);
     this->updateWidgets();
 }

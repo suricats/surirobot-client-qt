@@ -26,10 +26,10 @@
 #include "mainWindow.h"
 #include <QtNetwork>
 #include <QNetworkReply>
+#include <QTimer>
 
 #include "APICaller.h"
 //#include "connectors/redis/QTRedis.hpp"
-
 
 int main(int argc, char *argv[]) {
     std::cout << "Program started.  " << std::endl;
@@ -45,21 +45,35 @@ int main(int argc, char *argv[]) {
     //Text
     QFont f("Roboto", 40, QFont::Bold);
     window->setTextFont(f);
-    window->setText("             Salut !               ");
-    window->showFullScreen();
+    window->setText("Salut !");
 
+    //EditText
+    window->setEditText();
+    //window->show();
     window->smartShow();
     window->updateWidgets();
 
-    APICaller* worker = new APICaller;    
-    QThread* APIThread = new QThread;    
-    worker->set(APIThread);  
+
+    
+    
+    APICaller* APIworker = new APICaller;
+    QThread* APIThread = new QThread;
+    APIworker->set(APIThread);
+    QObject::connect(APIworker, SIGNAL(messageChanged(QString)), window, SLOT(changeText(QString)));
     APIThread->start();
+    
+    //Timer
+    QTimer* activeTimer = new QTimer(window);
+    activeTimer->setInterval(5*1000);
+    //activeTimer->setSingleShot(true);
+    QObject::connect(activeTimer, SIGNAL(timeout()), window, SLOT(sendEditText()));
+    QObject::connect(window,SIGNAL(sendEditText_signal(QString)),APIworker,SLOT(sendRequest(QString)));
+    activeTimer->start();
     /*
     QTRedis redis;
     redis.run();
     QObject::connect(&redis, &QTRedis::signalNewPerson, window, &mainWindow::changeText);
-    */
+     */
     return app.exec();
 
 

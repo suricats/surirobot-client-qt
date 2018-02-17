@@ -16,8 +16,11 @@
 
 #include "ui_mainWindow.h"
 #include "keyPressEventHandler.h"
+#include <iostream>
 #include <QApplication>
 #include <QLabel>
+#include <QTextEdit>
+
 class mainWindow : public QDialog {
     Q_OBJECT
 public:
@@ -26,15 +29,21 @@ public:
     void smartShow();
     void setTextFont(const QFont&);
     void setText(const QString&);
+    void setEditText();
+    QString getEditText();
     void setImage(QImage&);
     void updateWidgets();
     
+
 public slots:
-    void changeText(const QString& text);
-    
+    void changeText(QString text);
+    void sendEditText();
+signals:
+    void sendEditText_signal(QString text);
 private:
     QWidget* imgWidget;
     QLabel* labelImage;
+    QTextEdit* editText;
     QImage currentImage;
     QLabel* labelText;
     Ui::mainWindow widget;

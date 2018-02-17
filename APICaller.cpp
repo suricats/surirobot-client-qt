@@ -17,39 +17,45 @@
 APICaller::APICaller(QObject *parent) :
 QObject(parent) {
     nam = new QNetworkAccessManager(this);
-    QObject::connect(nam, SIGNAL(finished(QNetworkReply*)), this, SLOT(finishedSlot(QNetworkReply*)));
+    QObject::connect(nam, SIGNAL(finished(QNetworkReply*)), this, SLOT(receiveReply(QNetworkReply*)));
 }
 
-void APICaller::finishedSlot(QNetworkReply* reply) {
+void APICaller::receiveReply(QNetworkReply* reply) {
     std::cout << "Reply received" << std::endl;
     if (reply->error() != QNetworkReply::NoError) {
         std::cerr << "Error " << reply->error() << std::endl;
         std::cerr << reply->readAll().toStdString() << std::endl;
         nam->clearAccessCache();
+    } else {
+        QJsonObject jsonObject = QJsonDocument::fromJson(reply->readAll()).object();
+        std::cout << reply->readAll().toStdString() << std::endl;
+        QJsonArray messagesJson = jsonObject["results"].toObject()["messages"].toArray();
+        if (!messagesJson.isEmpty()) {
+            QJsonValueRef queryValue = messagesJson[0].toObject()["content"];
+            if (!queryValue.isNull() && !queryValue.isUndefined()) {
+                QString message = queryValue.toString();
+                std::cout << "message : " << message.toStdString() << std::endl;
+                emit messageChanged(message);
+            }
+        }
+
+
     }
-    //std::cout << reply->readAll().toStdString() << std::endl;
-    //parse the reply JSON and display result in the UI
-    QJsonObject jsonObject = QJsonDocument::fromJson(reply->readAll()).object();
-    QString message = jsonObject["results"].toObject()["messages"].toArray()[0].toObject()["content"].toString();
-    std::cout << "message : " << message.toStdString() << std::endl;
+
+
     reply->deleteLater();
 }
 
 void APICaller::set(QThread* thread) {
-    QObject::connect(thread, SIGNAL(started()), this, SLOT(doSend()));
+    //QObject::connect(thread, SIGNAL(started()), this, SLOT(sendRequest()));
     moveToThread(thread);
 }
 
-void APICaller::doSend() {
-    // Build your JSON string as usual
-    //QByteArray jsonString = "{\"method\":\"AuthenticatePlain\",\"loginName\":\"username@domain.com\",\"password\":\"mypass\"}";
-
-    // For your "Content-Length" header
-    //QByteArray postDataSize = QByteArray::number(jsonString.size());
+void APICaller::sendRequest(QString text) {
 
     // Time for building your request
     QUrl serviceURL("https://nlp.api.surirobot.net/getanswer");
-    
+
     /*
      * SEND FORM-DATA
     QUrlQuery postData;
@@ -59,21 +65,21 @@ void APICaller::doSend() {
     
     //postData.addQueryItem("lang","fr");
     serviceURL.setQuery(postData.query());
-    */
-    
+     */
+
     QJsonObject jsonObject;
-    jsonObject["text"] = "Salut !";
+    jsonObject["text"] = text;
     jsonObject["language"] = "fr";
     QJsonDocument jsonData(jsonObject);
     QByteArray data = jsonData.toJson();
-    std::cout << "Request : " << std::endl << data.toStdString() << std::endl;
+    //std::cout << "Request : " << std::endl << data.toStdString() << std::endl;
     QNetworkRequest request(serviceURL);
-    
+
     request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
     request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
     //request.setRawHeader("User-Agent", "My app name v0.1");
     //request.setRawHeader("X-Custom-User-Agent", "My app name v0.1");
     //request.setRawHeader("Content-Length", postDataSize);
-    nam->post(request,data);
+    nam->post(request, data);
 }
 

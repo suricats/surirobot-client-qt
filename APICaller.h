@@ -34,15 +34,17 @@ class APICaller : public QObject {
     QNetworkAccessManager* nam;
     QMutex syncPause;
     QWaitCondition pauseCond;
+    bool isBusy;
 
 public:
     explicit APICaller(QObject *parent = 0);
-
-public slots:
-
-    void doSend();
     void set(QThread* thread);
-    void finishedSlot(QNetworkReply* reply);
+public slots:
+    void sendRequest(QString text);
+    void receiveReply(QNetworkReply* reply);
+signals:
+    void messageChanged(QString text);
+
 };
 #endif /* APICALLER_H */
 
