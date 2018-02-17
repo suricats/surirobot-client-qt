@@ -14,7 +14,7 @@
 #include "QTRedis.hpp"
 #include <cstdio>
 #include <string>
-
+/*
 QTRedis::QTRedis() {
 }
 
@@ -52,5 +52,5 @@ void QTRedis::run() {
     m_adapter.setContext(m_ctx);
     redisAsyncCommand(m_ctx, onChange, this, "SUBSCRIBE face-recognition");
 }
-
+*/
 

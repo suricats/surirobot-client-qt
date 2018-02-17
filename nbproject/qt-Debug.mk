@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DUNICODE -D_UNICODE -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -fno-keep-inline-dllexport -march=nocona -mtune=core2 -Wa,-mbig-obj -g -Wextra -Wall -W $(DEFINES)
 CXXFLAGS      = -fno-keep-inline-dllexport -march=nocona -mtune=core2 -Wa,-mbig-obj -g -Wextra -Wall -W -fexceptions -mthreads $(DEFINES)
-INCPATH       = -Inbproject -I. -ID:/msys64/mingw64/include -ID:/msys64/mingw64/include/QtWidgets -ID:/msys64/mingw64/include/QtGui -ID:/msys64/mingw64/include/QtNetwork -ID:/msys64/mingw64/include/QtCore -I. -I. -ID:/msys64/mingw64/share/qt5/mkspecs/win32-g++ 
+INCPATH       = -Inbproject -I. -isystem D:/msys64/mingw64/include/QtWidgets -isystem D:/msys64/mingw64/include/QtGui -isystem D:/msys64/mingw64/include/QtNetwork -isystem D:/msys64/mingw64/include/QtCore -I. -I. -ID:/msys64/mingw64/share/qt5/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
 LIBS        =        -lglu32 -lopengl32 -lgdi32 -luser32 -lmingw32 -LD:/msys64/mingw64/lib D:/msys64/mingw64/lib/libqtmaind.a -lshell32 D:/msys64/mingw64/lib/libQt5Widgetsd.dll.a D:/msys64/mingw64/lib/libQt5Guid.dll.a D:/msys64/mingw64/lib/libQt5Networkd.dll.a D:/msys64/mingw64/lib/libQt5Cored.dll.a 
@@ -46,19 +46,29 @@ OBJECTS_DIR   = build/Debug/MinGW_64-Windows/
 
 ####### Files
 
-SOURCES       = keyPressEventHandler.cpp \
+SOURCES       = APICaller.cpp \
+		connectors/redis/QTRedis.cpp \
+		keyPressEventHandler.cpp \
 		main.cpp \
-		mainWindow.cpp.cc moc_keyPressEventHandler.cpp \
+		mainWindow.cpp.cc moc_APICaller.cpp \
+		moc_keyPressEventHandler.cpp \
 		moc_mainWindow.cpp
 OBJECTS       = build/Debug/MinGW_64-Windows/surirobot-client-qt_resource_res.o \
+		build/Debug/MinGW_64-Windows/APICaller.o \
+		build/Debug/MinGW_64-Windows/QTRedis.o \
 		build/Debug/MinGW_64-Windows/keyPressEventHandler.o \
 		build/Debug/MinGW_64-Windows/main.o \
 		build/Debug/MinGW_64-Windows/mainWindow.cpp.o \
+		build/Debug/MinGW_64-Windows/moc_APICaller.o \
 		build/Debug/MinGW_64-Windows/moc_keyPressEventHandler.o \
 		build/Debug/MinGW_64-Windows/moc_mainWindow.o
 
-DIST          =  keyPressEventHandler.h \
-		mainWindow.h keyPressEventHandler.cpp \
+DIST          =  APICaller.h \
+		keyPressEventHandler.h \
+		lib/hiredis/include/adapters/qt.h \
+		mainWindow.h APICaller.cpp \
+		connectors/redis/QTRedis.cpp \
+		keyPressEventHandler.cpp \
 		main.cpp \
 		mainWindow.cpp.cc
 QMAKE_TARGET  = surirobot-client-qt
@@ -430,10 +440,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) surirobot-client-qt.zip $(SOURCES) $(DIST) nbproject/nbproject/qt-Debug.pro D:/msys64/mingw64/share/qt5/mkspecs/features/spec_pre.prf D:/msys64/mingw64/share/qt5/mkspecs/qdevice.pri D:/msys64/mingw64/share/qt5/mkspecs/features/device_config.prf D:/msys64/mingw64/share/qt5/mkspecs/common/g++-base.conf D:/msys64/mingw64/share/qt5/mkspecs/common/angle.conf D:/msys64/mingw64/share/qt5/mkspecs/common/sanitize.conf D:/msys64/mingw64/share/qt5/mkspecs/common/gcc-base.conf D:/msys64/mingw64/share/qt5/mkspecs/qconfig.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3danimation.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3danimation_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dcore.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dcore_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dextras.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dextras_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dinput.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dinput_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dlogic.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dlogic_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquick.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquick_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickanimation.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickanimation_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickextras.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickextras_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickinput.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickinput_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickrender.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickrender_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickscene2d.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickscene2d_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3drender.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3drender_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_axbase.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_axbase_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_axcontainer.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_axcontainer_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_axserver.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_axserver_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_bluetooth.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_bluetooth_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_charts.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_charts_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_concurrent.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_concurrent_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_core.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_core_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_datavisualization.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_datavisualization_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_dbus.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_dbus_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_designer.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_designer_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_designercomponents_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_devicediscovery_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_eventdispatcher_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_fb_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_fontdatabase_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_gamepad.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_gamepad_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_gui.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_gui_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_help.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_help_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_location.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_location_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_multimedia.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_multimedia_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_multimediawidgets_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_network.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_network_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_networkauth.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_networkauth_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_nfc.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_nfc_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_opengl.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_opengl_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_openglextensions.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_packetprotocol_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_platformcompositor_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_positioning.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_positioning_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_printsupport.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_printsupport_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qml.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qml_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qmldebug_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qmldevtools_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qmltest.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qmltest_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quick.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quick_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quickcontrols2.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quickcontrols2_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quickparticles_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quicktemplates2_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quickwidgets.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quickwidgets_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_remoteobjects.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_remoteobjects_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_repparser.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_repparser_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_script.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_script_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_scripttools.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_scripttools_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_scxml.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_scxml_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_sensors.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_sensors_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_serialbus.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_serialbus_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_serialport.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_serialport_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_sql.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_sql_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_svg.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_svg_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_testlib.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_testlib_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_texttospeech.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_texttospeech_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_theme_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_uiplugin.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_uitools.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_uitools_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_webchannel.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_webchannel_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_websockets.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_websockets_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_widgets.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_widgets_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_winextras.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_winextras_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_xml.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_xml_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_xmlpatterns.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_xmlpatterns_private.pri D:/msys64/mingw64/share/qt5/mkspecs/features/qt_functions.prf D:/msys64/mingw64/share/qt5/mkspecs/features/qt_config.prf D:/msys64/mingw64/share/qt5/mkspecs/win32-g++/qmake.conf D:/msys64/mingw64/share/qt5/mkspecs/features/spec_post.prf .qmake.stash D:/msys64/mingw64/share/qt5/mkspecs/features/exclusive_builds.prf D:/msys64/mingw64/share/qt5/mkspecs/features/toolchain.prf D:/msys64/mingw64/share/qt5/mkspecs/features/default_pre.prf D:/msys64/mingw64/share/qt5/mkspecs/features/win32/default_pre.prf D:/msys64/mingw64/share/qt5/mkspecs/features/resolve_config.prf D:/msys64/mingw64/share/qt5/mkspecs/features/default_post.prf D:/msys64/mingw64/share/qt5/mkspecs/features/precompile_header.prf D:/msys64/mingw64/share/qt5/mkspecs/features/warn_on.prf D:/msys64/mingw64/share/qt5/mkspecs/features/qt.prf D:/msys64/mingw64/share/qt5/mkspecs/features/resources.prf D:/msys64/mingw64/share/qt5/mkspecs/features/moc.prf D:/msys64/mingw64/share/qt5/mkspecs/features/win32/opengl.prf D:/msys64/mingw64/share/qt5/mkspecs/features/uic.prf D:/msys64/mingw64/share/qt5/mkspecs/features/qmake_use.prf D:/msys64/mingw64/share/qt5/mkspecs/features/file_copies.prf D:/msys64/mingw64/share/qt5/mkspecs/features/win32/windows.prf D:/msys64/mingw64/share/qt5/mkspecs/features/testcase_targets.prf D:/msys64/mingw64/share/qt5/mkspecs/features/exceptions.prf D:/msys64/mingw64/share/qt5/mkspecs/features/yacc.prf D:/msys64/mingw64/share/qt5/mkspecs/features/lex.prf nbproject/qt-Debug.pro D:/msys64/mingw64/lib/qtmaind.prl D:/msys64/mingw64/lib/Qt5Widgetsd.prl D:/msys64/mingw64/lib/Qt5Guid.prl D:/msys64/mingw64/lib/Qt5Networkd.prl D:/msys64/mingw64/lib/Qt5Cored.prl    D:/msys64/mingw64/share/qt5/mkspecs/features/data/dummy.cpp keyPressEventHandler.h mainWindow.h keyPressEventHandler.cpp main.cpp mainWindow.cpp.cc mainWindow.ui    
+	$(ZIP) surirobot-client-qt.zip $(SOURCES) $(DIST) nbproject/nbproject/qt-Debug.pro D:/msys64/mingw64/share/qt5/mkspecs/features/spec_pre.prf D:/msys64/mingw64/share/qt5/mkspecs/qdevice.pri D:/msys64/mingw64/share/qt5/mkspecs/features/device_config.prf D:/msys64/mingw64/share/qt5/mkspecs/common/g++-base.conf D:/msys64/mingw64/share/qt5/mkspecs/common/angle.conf D:/msys64/mingw64/share/qt5/mkspecs/common/sanitize.conf D:/msys64/mingw64/share/qt5/mkspecs/common/gcc-base.conf D:/msys64/mingw64/share/qt5/mkspecs/qconfig.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3danimation.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3danimation_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dcore.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dcore_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dextras.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dextras_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dinput.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dinput_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dlogic.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dlogic_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquick.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquick_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickanimation.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickanimation_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickextras.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickextras_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickinput.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickinput_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickrender.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickrender_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickscene2d.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3dquickscene2d_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3drender.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_3drender_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_axbase.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_axbase_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_axcontainer.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_axcontainer_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_axserver.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_axserver_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_bluetooth.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_bluetooth_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_charts.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_charts_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_concurrent.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_concurrent_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_core.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_core_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_datavisualization.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_datavisualization_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_dbus.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_dbus_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_designer.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_designer_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_designercomponents_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_devicediscovery_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_eventdispatcher_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_fb_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_fontdatabase_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_gamepad.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_gamepad_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_gui.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_gui_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_help.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_help_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_location.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_location_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_multimedia.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_multimedia_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_multimediawidgets.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_multimediawidgets_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_network.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_network_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_networkauth.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_networkauth_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_nfc.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_nfc_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_opengl.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_opengl_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_openglextensions.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_packetprotocol_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_platformcompositor_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_positioning.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_positioning_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_printsupport.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_printsupport_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qml.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qml_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qmldebug_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qmldevtools_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qmltest.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qmltest_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quick.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quick_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quickcontrols2.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quickcontrols2_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quickparticles_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quicktemplates2_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quickwidgets.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_quickwidgets_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_remoteobjects.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_remoteobjects_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_repparser.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_repparser_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_script.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_script_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_scripttools.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_scripttools_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_scxml.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_scxml_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_sensors.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_sensors_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_serialbus.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_serialbus_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_serialport.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_serialport_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_sql.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_sql_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_svg.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_svg_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_testlib.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_testlib_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_texttospeech.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_texttospeech_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_theme_support_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_uiplugin.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_uitools.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_uitools_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_webchannel.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_webchannel_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_websockets.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_websockets_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_widgets.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_widgets_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_winextras.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_winextras_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_xml.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_xml_private.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_xmlpatterns.pri D:/msys64/mingw64/share/qt5/mkspecs/modules/qt_lib_xmlpatterns_private.pri D:/msys64/mingw64/share/qt5/mkspecs/features/qt_functions.prf D:/msys64/mingw64/share/qt5/mkspecs/features/qt_config.prf D:/msys64/mingw64/share/qt5/mkspecs/win32-g++/qmake.conf D:/msys64/mingw64/share/qt5/mkspecs/features/spec_post.prf .qmake.stash D:/msys64/mingw64/share/qt5/mkspecs/features/exclusive_builds.prf D:/msys64/mingw64/share/qt5/mkspecs/features/toolchain.prf D:/msys64/mingw64/share/qt5/mkspecs/features/default_pre.prf D:/msys64/mingw64/share/qt5/mkspecs/features/win32/default_pre.prf D:/msys64/mingw64/share/qt5/mkspecs/features/resolve_config.prf D:/msys64/mingw64/share/qt5/mkspecs/features/default_post.prf D:/msys64/mingw64/share/qt5/mkspecs/features/precompile_header.prf D:/msys64/mingw64/share/qt5/mkspecs/features/warn_on.prf D:/msys64/mingw64/share/qt5/mkspecs/features/qt.prf D:/msys64/mingw64/share/qt5/mkspecs/features/resources.prf D:/msys64/mingw64/share/qt5/mkspecs/features/moc.prf D:/msys64/mingw64/share/qt5/mkspecs/features/win32/opengl.prf D:/msys64/mingw64/share/qt5/mkspecs/features/uic.prf D:/msys64/mingw64/share/qt5/mkspecs/features/qmake_use.prf D:/msys64/mingw64/share/qt5/mkspecs/features/file_copies.prf D:/msys64/mingw64/share/qt5/mkspecs/features/win32/windows.prf D:/msys64/mingw64/share/qt5/mkspecs/features/testcase_targets.prf D:/msys64/mingw64/share/qt5/mkspecs/features/exceptions.prf D:/msys64/mingw64/share/qt5/mkspecs/features/yacc.prf D:/msys64/mingw64/share/qt5/mkspecs/features/lex.prf nbproject/qt-Debug.pro D:/msys64/mingw64/lib/qtmaind.prl D:/msys64/mingw64/lib/Qt5Widgetsd.prl D:/msys64/mingw64/lib/Qt5Guid.prl D:/msys64/mingw64/lib/Qt5Networkd.prl D:/msys64/mingw64/lib/Qt5Cored.prl    D:/msys64/mingw64/share/qt5/mkspecs/features/data/dummy.cpp APICaller.h keyPressEventHandler.h lib/hiredis/include/adapters/qt.h mainWindow.h APICaller.cpp connectors/redis/QTRedis.cpp keyPressEventHandler.cpp main.cpp mainWindow.cpp.cc mainWindow.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) build/Debug/MinGW_64-Windows/surirobot-client-qt_resource_res.o build/Debug/MinGW_64-Windows/keyPressEventHandler.o build/Debug/MinGW_64-Windows/main.o build/Debug/MinGW_64-Windows/mainWindow.cpp.o build/Debug/MinGW_64-Windows/moc_keyPressEventHandler.o build/Debug/MinGW_64-Windows/moc_mainWindow.o
+	-$(DEL_FILE) build/Debug/MinGW_64-Windows/surirobot-client-qt_resource_res.o build/Debug/MinGW_64-Windows/APICaller.o build/Debug/MinGW_64-Windows/QTRedis.o build/Debug/MinGW_64-Windows/keyPressEventHandler.o build/Debug/MinGW_64-Windows/main.o build/Debug/MinGW_64-Windows/mainWindow.cpp.o build/Debug/MinGW_64-Windows/moc_APICaller.o build/Debug/MinGW_64-Windows/moc_keyPressEventHandler.o build/Debug/MinGW_64-Windows/moc_mainWindow.o
 	-$(DEL_FILE) build/Debug/MinGW_64-Windows/surirobot-client-qt_resource_res.o
 
 distclean: clean 
@@ -459,263 +469,25 @@ compiler_moc_predefs_clean:
 moc_predefs.h: D:/msys64/mingw64/share/qt5/mkspecs/features/data/dummy.cpp
 	g++ -fno-keep-inline-dllexport -march=nocona -mtune=core2 -Wa,-mbig-obj -g -Wextra -Wall -W -dM -E -o moc_predefs.h D:/msys64/mingw64/share/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_keyPressEventHandler.cpp moc_mainWindow.cpp
+compiler_moc_header_make_all: moc_APICaller.cpp moc_keyPressEventHandler.cpp moc_mainWindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_keyPressEventHandler.cpp moc_mainWindow.cpp
-moc_keyPressEventHandler.cpp: D:/msys64/mingw64/include/QtCore/qobject.h \
-		D:/msys64/mingw64/include/QtCore/qobjectdefs.h \
-		D:/msys64/mingw64/include/QtCore/qnamespace.h \
-		D:/msys64/mingw64/include/QtCore/qglobal.h \
-		D:/msys64/mingw64/include/QtCore/qconfig-bootstrapped.h \
-		D:/msys64/mingw64/include/QtCore/qconfig.h \
-		D:/msys64/mingw64/include/QtCore/qtcore-config.h \
-		D:/msys64/mingw64/include/QtCore/qsystemdetection.h \
-		D:/msys64/mingw64/include/QtCore/qprocessordetection.h \
-		D:/msys64/mingw64/include/QtCore/qcompilerdetection.h \
-		D:/msys64/mingw64/include/QtCore/qtypeinfo.h \
-		D:/msys64/mingw64/include/QtCore/qsysinfo.h \
-		D:/msys64/mingw64/include/QtCore/qlogging.h \
-		D:/msys64/mingw64/include/QtCore/qflags.h \
-		D:/msys64/mingw64/include/QtCore/qatomic.h \
-		D:/msys64/mingw64/include/QtCore/qbasicatomic.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_bootstrap.h \
-		D:/msys64/mingw64/include/QtCore/qgenericatomic.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_cxx11.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_msvc.h \
-		D:/msys64/mingw64/include/QtCore/qglobalstatic.h \
-		D:/msys64/mingw64/include/QtCore/qmutex.h \
-		D:/msys64/mingw64/include/QtCore/qnumeric.h \
-		D:/msys64/mingw64/include/QtCore/qversiontagging.h \
-		D:/msys64/mingw64/include/QtCore/qobjectdefs_impl.h \
-		D:/msys64/mingw64/include/QtCore/qstring.h \
-		D:/msys64/mingw64/include/QtCore/qchar.h \
-		D:/msys64/mingw64/include/QtCore/qbytearray.h \
-		D:/msys64/mingw64/include/QtCore/qrefcount.h \
-		D:/msys64/mingw64/include/QtCore/qarraydata.h \
-		D:/msys64/mingw64/include/QtCore/qstringbuilder.h \
-		D:/msys64/mingw64/include/QtCore/qlist.h \
-		D:/msys64/mingw64/include/QtCore/qalgorithms.h \
-		D:/msys64/mingw64/include/QtCore/qiterator.h \
-		D:/msys64/mingw64/include/QtCore/qhashfunctions.h \
-		D:/msys64/mingw64/include/QtCore/qpair.h \
-		D:/msys64/mingw64/include/QtCore/qbytearraylist.h \
-		D:/msys64/mingw64/include/QtCore/qstringlist.h \
-		D:/msys64/mingw64/include/QtCore/qregexp.h \
-		D:/msys64/mingw64/include/QtCore/qstringmatcher.h \
-		D:/msys64/mingw64/include/QtCore/qcoreevent.h \
-		D:/msys64/mingw64/include/QtCore/qscopedpointer.h \
-		D:/msys64/mingw64/include/QtCore/qmetatype.h \
-		D:/msys64/mingw64/include/QtCore/qvarlengtharray.h \
-		D:/msys64/mingw64/include/QtCore/qcontainerfwd.h \
-		D:/msys64/mingw64/include/QtCore/qobject_impl.h \
-		D:/msys64/mingw64/include/QtGui/QKeyEvent \
-		D:/msys64/mingw64/include/QtGui/qevent.h \
-		D:/msys64/mingw64/include/QtGui/qtguiglobal.h \
-		D:/msys64/mingw64/include/QtGui/qtgui-config.h \
-		D:/msys64/mingw64/include/QtGui/qwindowdefs.h \
-		D:/msys64/mingw64/include/QtGui/qwindowdefs_win.h \
-		D:/msys64/mingw64/include/QtGui/qregion.h \
-		D:/msys64/mingw64/include/QtCore/qrect.h \
-		D:/msys64/mingw64/include/QtCore/qmargins.h \
-		D:/msys64/mingw64/include/QtCore/qsize.h \
-		D:/msys64/mingw64/include/QtCore/qpoint.h \
-		D:/msys64/mingw64/include/QtCore/qdatastream.h \
-		D:/msys64/mingw64/include/QtCore/qiodevice.h \
-		D:/msys64/mingw64/include/QtGui/qkeysequence.h \
-		D:/msys64/mingw64/include/QtCore/qvariant.h \
-		D:/msys64/mingw64/include/QtCore/qmap.h \
-		D:/msys64/mingw64/include/QtCore/qdebug.h \
-		D:/msys64/mingw64/include/QtCore/qhash.h \
-		D:/msys64/mingw64/include/QtCore/qtextstream.h \
-		D:/msys64/mingw64/include/QtCore/qlocale.h \
-		D:/msys64/mingw64/include/QtCore/qshareddata.h \
-		D:/msys64/mingw64/include/QtCore/qvector.h \
-		D:/msys64/mingw64/include/QtCore/qset.h \
-		D:/msys64/mingw64/include/QtCore/qcontiguouscache.h \
-		D:/msys64/mingw64/include/QtCore/qsharedpointer.h \
-		D:/msys64/mingw64/include/QtCore/qsharedpointer_impl.h \
-		D:/msys64/mingw64/include/QtCore/qurl.h \
-		D:/msys64/mingw64/include/QtCore/qurlquery.h \
-		D:/msys64/mingw64/include/QtCore/qfile.h \
-		D:/msys64/mingw64/include/QtCore/qfiledevice.h \
-		D:/msys64/mingw64/include/QtGui/qvector2d.h \
-		D:/msys64/mingw64/include/QtGui/qtouchdevice.h \
-		D:/msys64/mingw64/include/QtWidgets/QApplication \
-		D:/msys64/mingw64/include/QtWidgets/qapplication.h \
-		D:/msys64/mingw64/include/QtWidgets/qtwidgetsglobal.h \
-		D:/msys64/mingw64/include/QtWidgets/qtwidgets-config.h \
-		D:/msys64/mingw64/include/QtCore/qcoreapplication.h \
-		D:/msys64/mingw64/include/QtCore/qeventloop.h \
-		D:/msys64/mingw64/include/QtGui/qcursor.h \
-		D:/msys64/mingw64/include/QtWidgets/qdesktopwidget.h \
-		D:/msys64/mingw64/include/QtWidgets/qwidget.h \
-		D:/msys64/mingw64/include/QtGui/qpaintdevice.h \
-		D:/msys64/mingw64/include/QtGui/qpalette.h \
-		D:/msys64/mingw64/include/QtGui/qcolor.h \
-		D:/msys64/mingw64/include/QtGui/qrgb.h \
-		D:/msys64/mingw64/include/QtGui/qrgba64.h \
-		D:/msys64/mingw64/include/QtGui/qbrush.h \
-		D:/msys64/mingw64/include/QtGui/qmatrix.h \
-		D:/msys64/mingw64/include/QtGui/qpolygon.h \
-		D:/msys64/mingw64/include/QtCore/qline.h \
-		D:/msys64/mingw64/include/QtGui/qtransform.h \
-		D:/msys64/mingw64/include/QtGui/qpainterpath.h \
-		D:/msys64/mingw64/include/QtGui/qimage.h \
-		D:/msys64/mingw64/include/QtGui/qpixelformat.h \
-		D:/msys64/mingw64/include/QtGui/qpixmap.h \
-		D:/msys64/mingw64/include/QtGui/qfont.h \
-		D:/msys64/mingw64/include/QtGui/qfontmetrics.h \
-		D:/msys64/mingw64/include/QtGui/qfontinfo.h \
-		D:/msys64/mingw64/include/QtWidgets/qsizepolicy.h \
-		D:/msys64/mingw64/include/QtGui/qguiapplication.h \
-		D:/msys64/mingw64/include/QtGui/qinputmethod.h \
-		keyPressEventHandler.h \
+	-$(DEL_FILE) moc_APICaller.cpp moc_keyPressEventHandler.cpp moc_mainWindow.cpp
+moc_APICaller.cpp: APICaller.h \
 		moc_predefs.h \
 		D:/msys64/mingw64/bin/moc.exe
-	/D/msys64/mingw64/bin/moc.exe $(DEFINES) --include ./moc_predefs.h -ID:/msys64/mingw64/share/qt5/mkspecs/win32-g++ -I'C:/Users/Alain BERRIER/worskpace/surirobot/surirobot-client-qt/nbproject' -ID:/msys64/mingw64/include -ID:/msys64/mingw64/include/QtWidgets -ID:/msys64/mingw64/include/QtGui -ID:/msys64/mingw64/include/QtNetwork -ID:/msys64/mingw64/include/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include keyPressEventHandler.h -o moc_keyPressEventHandler.cpp
+	/D/msys64/mingw64/bin/moc.exe $(DEFINES) --include ./moc_predefs.h -ID:/msys64/mingw64/share/qt5/mkspecs/win32-g++ -I'C:/Users/Alain BERRIER/workspace/surirobot/surirobot-client-qt/nbproject' -ID:/msys64/mingw64/include/QtWidgets -ID:/msys64/mingw64/include/QtGui -ID:/msys64/mingw64/include/QtNetwork -ID:/msys64/mingw64/include/QtCore -I. -ID:/msys64/mingw64/include/c++/7.2.0 -ID:/msys64/mingw64/include/c++/7.2.0/x86_64-w64-mingw32 -ID:/msys64/mingw64/include/c++/7.2.0/backward -ID:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/7.2.0/include -ID:/msys64/mingw64/include -ID:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/7.2.0/include-fixed -ID:/msys64/mingw64/x86_64-w64-mingw32/include APICaller.h -o moc_APICaller.cpp
+
+moc_keyPressEventHandler.cpp: keyPressEventHandler.h \
+		moc_predefs.h \
+		D:/msys64/mingw64/bin/moc.exe
+	/D/msys64/mingw64/bin/moc.exe $(DEFINES) --include ./moc_predefs.h -ID:/msys64/mingw64/share/qt5/mkspecs/win32-g++ -I'C:/Users/Alain BERRIER/workspace/surirobot/surirobot-client-qt/nbproject' -ID:/msys64/mingw64/include/QtWidgets -ID:/msys64/mingw64/include/QtGui -ID:/msys64/mingw64/include/QtNetwork -ID:/msys64/mingw64/include/QtCore -I. -ID:/msys64/mingw64/include/c++/7.2.0 -ID:/msys64/mingw64/include/c++/7.2.0/x86_64-w64-mingw32 -ID:/msys64/mingw64/include/c++/7.2.0/backward -ID:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/7.2.0/include -ID:/msys64/mingw64/include -ID:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/7.2.0/include-fixed -ID:/msys64/mingw64/x86_64-w64-mingw32/include keyPressEventHandler.h -o moc_keyPressEventHandler.cpp
 
 moc_mainWindow.cpp: ui_mainWindow.h \
-		D:/msys64/mingw64/include/QtCore/QVariant \
-		D:/msys64/mingw64/include/QtCore/qvariant.h \
-		D:/msys64/mingw64/include/QtCore/qatomic.h \
-		D:/msys64/mingw64/include/QtCore/qglobal.h \
-		D:/msys64/mingw64/include/QtCore/qconfig-bootstrapped.h \
-		D:/msys64/mingw64/include/QtCore/qconfig.h \
-		D:/msys64/mingw64/include/QtCore/qtcore-config.h \
-		D:/msys64/mingw64/include/QtCore/qsystemdetection.h \
-		D:/msys64/mingw64/include/QtCore/qprocessordetection.h \
-		D:/msys64/mingw64/include/QtCore/qcompilerdetection.h \
-		D:/msys64/mingw64/include/QtCore/qtypeinfo.h \
-		D:/msys64/mingw64/include/QtCore/qsysinfo.h \
-		D:/msys64/mingw64/include/QtCore/qlogging.h \
-		D:/msys64/mingw64/include/QtCore/qflags.h \
-		D:/msys64/mingw64/include/QtCore/qglobalstatic.h \
-		D:/msys64/mingw64/include/QtCore/qmutex.h \
-		D:/msys64/mingw64/include/QtCore/qnumeric.h \
-		D:/msys64/mingw64/include/QtCore/qversiontagging.h \
-		D:/msys64/mingw64/include/QtCore/qbasicatomic.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_bootstrap.h \
-		D:/msys64/mingw64/include/QtCore/qgenericatomic.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_cxx11.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_msvc.h \
-		D:/msys64/mingw64/include/QtCore/qbytearray.h \
-		D:/msys64/mingw64/include/QtCore/qrefcount.h \
-		D:/msys64/mingw64/include/QtCore/qnamespace.h \
-		D:/msys64/mingw64/include/QtCore/qarraydata.h \
-		D:/msys64/mingw64/include/QtCore/qstring.h \
-		D:/msys64/mingw64/include/QtCore/qchar.h \
-		D:/msys64/mingw64/include/QtCore/qstringbuilder.h \
-		D:/msys64/mingw64/include/QtCore/qlist.h \
-		D:/msys64/mingw64/include/QtCore/qalgorithms.h \
-		D:/msys64/mingw64/include/QtCore/qiterator.h \
-		D:/msys64/mingw64/include/QtCore/qhashfunctions.h \
-		D:/msys64/mingw64/include/QtCore/qpair.h \
-		D:/msys64/mingw64/include/QtCore/qbytearraylist.h \
-		D:/msys64/mingw64/include/QtCore/qstringlist.h \
-		D:/msys64/mingw64/include/QtCore/qregexp.h \
-		D:/msys64/mingw64/include/QtCore/qstringmatcher.h \
-		D:/msys64/mingw64/include/QtCore/qmetatype.h \
-		D:/msys64/mingw64/include/QtCore/qvarlengtharray.h \
-		D:/msys64/mingw64/include/QtCore/qcontainerfwd.h \
-		D:/msys64/mingw64/include/QtCore/qobjectdefs.h \
-		D:/msys64/mingw64/include/QtCore/qobjectdefs_impl.h \
-		D:/msys64/mingw64/include/QtCore/qmap.h \
-		D:/msys64/mingw64/include/QtCore/qdebug.h \
-		D:/msys64/mingw64/include/QtCore/qhash.h \
-		D:/msys64/mingw64/include/QtCore/qtextstream.h \
-		D:/msys64/mingw64/include/QtCore/qiodevice.h \
-		D:/msys64/mingw64/include/QtCore/qobject.h \
-		D:/msys64/mingw64/include/QtCore/qcoreevent.h \
-		D:/msys64/mingw64/include/QtCore/qscopedpointer.h \
-		D:/msys64/mingw64/include/QtCore/qobject_impl.h \
-		D:/msys64/mingw64/include/QtCore/qlocale.h \
-		D:/msys64/mingw64/include/QtCore/qshareddata.h \
-		D:/msys64/mingw64/include/QtCore/qvector.h \
-		D:/msys64/mingw64/include/QtCore/qpoint.h \
-		D:/msys64/mingw64/include/QtCore/qset.h \
-		D:/msys64/mingw64/include/QtCore/qcontiguouscache.h \
-		D:/msys64/mingw64/include/QtCore/qsharedpointer.h \
-		D:/msys64/mingw64/include/QtCore/qsharedpointer_impl.h \
-		D:/msys64/mingw64/include/QtWidgets/QAction \
-		D:/msys64/mingw64/include/QtWidgets/qaction.h \
-		D:/msys64/mingw64/include/QtWidgets/qtwidgetsglobal.h \
-		D:/msys64/mingw64/include/QtGui/qtguiglobal.h \
-		D:/msys64/mingw64/include/QtGui/qtgui-config.h \
-		D:/msys64/mingw64/include/QtWidgets/qtwidgets-config.h \
-		D:/msys64/mingw64/include/QtGui/qkeysequence.h \
-		D:/msys64/mingw64/include/QtWidgets/qwidget.h \
-		D:/msys64/mingw64/include/QtGui/qwindowdefs.h \
-		D:/msys64/mingw64/include/QtGui/qwindowdefs_win.h \
-		D:/msys64/mingw64/include/QtCore/qmargins.h \
-		D:/msys64/mingw64/include/QtGui/qpaintdevice.h \
-		D:/msys64/mingw64/include/QtCore/qrect.h \
-		D:/msys64/mingw64/include/QtCore/qsize.h \
-		D:/msys64/mingw64/include/QtGui/qpalette.h \
-		D:/msys64/mingw64/include/QtGui/qcolor.h \
-		D:/msys64/mingw64/include/QtGui/qrgb.h \
-		D:/msys64/mingw64/include/QtGui/qrgba64.h \
-		D:/msys64/mingw64/include/QtGui/qbrush.h \
-		D:/msys64/mingw64/include/QtGui/qmatrix.h \
-		D:/msys64/mingw64/include/QtGui/qpolygon.h \
-		D:/msys64/mingw64/include/QtGui/qregion.h \
-		D:/msys64/mingw64/include/QtCore/qdatastream.h \
-		D:/msys64/mingw64/include/QtCore/qline.h \
-		D:/msys64/mingw64/include/QtGui/qtransform.h \
-		D:/msys64/mingw64/include/QtGui/qpainterpath.h \
-		D:/msys64/mingw64/include/QtGui/qimage.h \
-		D:/msys64/mingw64/include/QtGui/qpixelformat.h \
-		D:/msys64/mingw64/include/QtGui/qpixmap.h \
-		D:/msys64/mingw64/include/QtGui/qfont.h \
-		D:/msys64/mingw64/include/QtGui/qfontmetrics.h \
-		D:/msys64/mingw64/include/QtGui/qfontinfo.h \
-		D:/msys64/mingw64/include/QtWidgets/qsizepolicy.h \
-		D:/msys64/mingw64/include/QtGui/qcursor.h \
-		D:/msys64/mingw64/include/QtGui/qevent.h \
-		D:/msys64/mingw64/include/QtCore/qurl.h \
-		D:/msys64/mingw64/include/QtCore/qurlquery.h \
-		D:/msys64/mingw64/include/QtCore/qfile.h \
-		D:/msys64/mingw64/include/QtCore/qfiledevice.h \
-		D:/msys64/mingw64/include/QtGui/qvector2d.h \
-		D:/msys64/mingw64/include/QtGui/qtouchdevice.h \
-		D:/msys64/mingw64/include/QtGui/qicon.h \
-		D:/msys64/mingw64/include/QtWidgets/qactiongroup.h \
-		D:/msys64/mingw64/include/QtWidgets/QApplication \
-		D:/msys64/mingw64/include/QtWidgets/qapplication.h \
-		D:/msys64/mingw64/include/QtCore/qcoreapplication.h \
-		D:/msys64/mingw64/include/QtCore/qeventloop.h \
-		D:/msys64/mingw64/include/QtWidgets/qdesktopwidget.h \
-		D:/msys64/mingw64/include/QtGui/qguiapplication.h \
-		D:/msys64/mingw64/include/QtGui/qinputmethod.h \
-		D:/msys64/mingw64/include/QtWidgets/QButtonGroup \
-		D:/msys64/mingw64/include/QtWidgets/qbuttongroup.h \
-		D:/msys64/mingw64/include/QtWidgets/QDialog \
-		D:/msys64/mingw64/include/QtWidgets/qdialog.h \
-		D:/msys64/mingw64/include/QtWidgets/QHeaderView \
-		D:/msys64/mingw64/include/QtWidgets/qheaderview.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractitemview.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractscrollarea.h \
-		D:/msys64/mingw64/include/QtWidgets/qframe.h \
-		D:/msys64/mingw64/include/QtCore/qabstractitemmodel.h \
-		D:/msys64/mingw64/include/QtCore/qitemselectionmodel.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractitemdelegate.h \
-		D:/msys64/mingw64/include/QtWidgets/qstyleoption.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractspinbox.h \
-		D:/msys64/mingw64/include/QtGui/qvalidator.h \
-		D:/msys64/mingw64/include/QtCore/qregularexpression.h \
-		D:/msys64/mingw64/include/QtWidgets/qslider.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractslider.h \
-		D:/msys64/mingw64/include/QtWidgets/qstyle.h \
-		D:/msys64/mingw64/include/QtWidgets/qtabbar.h \
-		D:/msys64/mingw64/include/QtWidgets/qtabwidget.h \
-		D:/msys64/mingw64/include/QtWidgets/qrubberband.h \
 		keyPressEventHandler.h \
-		D:/msys64/mingw64/include/QtGui/QKeyEvent \
-		D:/msys64/mingw64/include/QtWidgets/QLabel \
-		D:/msys64/mingw64/include/QtWidgets/qlabel.h \
 		mainWindow.h \
 		moc_predefs.h \
 		D:/msys64/mingw64/bin/moc.exe
-	/D/msys64/mingw64/bin/moc.exe $(DEFINES) --include ./moc_predefs.h -ID:/msys64/mingw64/share/qt5/mkspecs/win32-g++ -I'C:/Users/Alain BERRIER/worskpace/surirobot/surirobot-client-qt/nbproject' -ID:/msys64/mingw64/include -ID:/msys64/mingw64/include/QtWidgets -ID:/msys64/mingw64/include/QtGui -ID:/msys64/mingw64/include/QtNetwork -ID:/msys64/mingw64/include/QtCore -I. -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include mainWindow.h -o moc_mainWindow.cpp
+	/D/msys64/mingw64/bin/moc.exe $(DEFINES) --include ./moc_predefs.h -ID:/msys64/mingw64/share/qt5/mkspecs/win32-g++ -I'C:/Users/Alain BERRIER/workspace/surirobot/surirobot-client-qt/nbproject' -ID:/msys64/mingw64/include/QtWidgets -ID:/msys64/mingw64/include/QtGui -ID:/msys64/mingw64/include/QtNetwork -ID:/msys64/mingw64/include/QtCore -I. -ID:/msys64/mingw64/include/c++/7.2.0 -ID:/msys64/mingw64/include/c++/7.2.0/x86_64-w64-mingw32 -ID:/msys64/mingw64/include/c++/7.2.0/backward -ID:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/7.2.0/include -ID:/msys64/mingw64/include -ID:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/7.2.0/include-fixed -ID:/msys64/mingw64/x86_64-w64-mingw32/include mainWindow.h -o moc_mainWindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -738,572 +510,28 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-build/Debug/MinGW_64-Windows/keyPressEventHandler.o: keyPressEventHandler.cpp keyPressEventHandler.h \
-		D:/msys64/mingw64/include/QtCore/qobject.h \
-		D:/msys64/mingw64/include/QtCore/qobjectdefs.h \
-		D:/msys64/mingw64/include/QtCore/qnamespace.h \
-		D:/msys64/mingw64/include/QtCore/qglobal.h \
-		D:/msys64/mingw64/include/QtCore/qconfig-bootstrapped.h \
-		D:/msys64/mingw64/include/QtCore/qconfig.h \
-		D:/msys64/mingw64/include/QtCore/qtcore-config.h \
-		D:/msys64/mingw64/include/QtCore/qsystemdetection.h \
-		D:/msys64/mingw64/include/QtCore/qprocessordetection.h \
-		D:/msys64/mingw64/include/QtCore/qcompilerdetection.h \
-		D:/msys64/mingw64/include/QtCore/qtypeinfo.h \
-		D:/msys64/mingw64/include/QtCore/qsysinfo.h \
-		D:/msys64/mingw64/include/QtCore/qlogging.h \
-		D:/msys64/mingw64/include/QtCore/qflags.h \
-		D:/msys64/mingw64/include/QtCore/qatomic.h \
-		D:/msys64/mingw64/include/QtCore/qbasicatomic.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_bootstrap.h \
-		D:/msys64/mingw64/include/QtCore/qgenericatomic.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_cxx11.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_msvc.h \
-		D:/msys64/mingw64/include/QtCore/qglobalstatic.h \
-		D:/msys64/mingw64/include/QtCore/qmutex.h \
-		D:/msys64/mingw64/include/QtCore/qnumeric.h \
-		D:/msys64/mingw64/include/QtCore/qversiontagging.h \
-		D:/msys64/mingw64/include/QtCore/qobjectdefs_impl.h \
-		D:/msys64/mingw64/include/QtCore/qstring.h \
-		D:/msys64/mingw64/include/QtCore/qchar.h \
-		D:/msys64/mingw64/include/QtCore/qbytearray.h \
-		D:/msys64/mingw64/include/QtCore/qrefcount.h \
-		D:/msys64/mingw64/include/QtCore/qarraydata.h \
-		D:/msys64/mingw64/include/QtCore/qstringbuilder.h \
-		D:/msys64/mingw64/include/QtCore/qlist.h \
-		D:/msys64/mingw64/include/QtCore/qalgorithms.h \
-		D:/msys64/mingw64/include/QtCore/qiterator.h \
-		D:/msys64/mingw64/include/QtCore/qhashfunctions.h \
-		D:/msys64/mingw64/include/QtCore/qpair.h \
-		D:/msys64/mingw64/include/QtCore/qbytearraylist.h \
-		D:/msys64/mingw64/include/QtCore/qstringlist.h \
-		D:/msys64/mingw64/include/QtCore/qregexp.h \
-		D:/msys64/mingw64/include/QtCore/qstringmatcher.h \
-		D:/msys64/mingw64/include/QtCore/qcoreevent.h \
-		D:/msys64/mingw64/include/QtCore/qscopedpointer.h \
-		D:/msys64/mingw64/include/QtCore/qmetatype.h \
-		D:/msys64/mingw64/include/QtCore/qvarlengtharray.h \
-		D:/msys64/mingw64/include/QtCore/qcontainerfwd.h \
-		D:/msys64/mingw64/include/QtCore/qobject_impl.h \
-		D:/msys64/mingw64/include/QtGui/QKeyEvent \
-		D:/msys64/mingw64/include/QtGui/qevent.h \
-		D:/msys64/mingw64/include/QtGui/qtguiglobal.h \
-		D:/msys64/mingw64/include/QtGui/qtgui-config.h \
-		D:/msys64/mingw64/include/QtGui/qwindowdefs.h \
-		D:/msys64/mingw64/include/QtGui/qwindowdefs_win.h \
-		D:/msys64/mingw64/include/QtGui/qregion.h \
-		D:/msys64/mingw64/include/QtCore/qrect.h \
-		D:/msys64/mingw64/include/QtCore/qmargins.h \
-		D:/msys64/mingw64/include/QtCore/qsize.h \
-		D:/msys64/mingw64/include/QtCore/qpoint.h \
-		D:/msys64/mingw64/include/QtCore/qdatastream.h \
-		D:/msys64/mingw64/include/QtCore/qiodevice.h \
-		D:/msys64/mingw64/include/QtGui/qkeysequence.h \
-		D:/msys64/mingw64/include/QtCore/qvariant.h \
-		D:/msys64/mingw64/include/QtCore/qmap.h \
-		D:/msys64/mingw64/include/QtCore/qdebug.h \
-		D:/msys64/mingw64/include/QtCore/qhash.h \
-		D:/msys64/mingw64/include/QtCore/qtextstream.h \
-		D:/msys64/mingw64/include/QtCore/qlocale.h \
-		D:/msys64/mingw64/include/QtCore/qshareddata.h \
-		D:/msys64/mingw64/include/QtCore/qvector.h \
-		D:/msys64/mingw64/include/QtCore/qset.h \
-		D:/msys64/mingw64/include/QtCore/qcontiguouscache.h \
-		D:/msys64/mingw64/include/QtCore/qsharedpointer.h \
-		D:/msys64/mingw64/include/QtCore/qsharedpointer_impl.h \
-		D:/msys64/mingw64/include/QtCore/qurl.h \
-		D:/msys64/mingw64/include/QtCore/qurlquery.h \
-		D:/msys64/mingw64/include/QtCore/qfile.h \
-		D:/msys64/mingw64/include/QtCore/qfiledevice.h \
-		D:/msys64/mingw64/include/QtGui/qvector2d.h \
-		D:/msys64/mingw64/include/QtGui/qtouchdevice.h \
-		D:/msys64/mingw64/include/QtWidgets/QApplication \
-		D:/msys64/mingw64/include/QtWidgets/qapplication.h \
-		D:/msys64/mingw64/include/QtWidgets/qtwidgetsglobal.h \
-		D:/msys64/mingw64/include/QtWidgets/qtwidgets-config.h \
-		D:/msys64/mingw64/include/QtCore/qcoreapplication.h \
-		D:/msys64/mingw64/include/QtCore/qeventloop.h \
-		D:/msys64/mingw64/include/QtGui/qcursor.h \
-		D:/msys64/mingw64/include/QtWidgets/qdesktopwidget.h \
-		D:/msys64/mingw64/include/QtWidgets/qwidget.h \
-		D:/msys64/mingw64/include/QtGui/qpaintdevice.h \
-		D:/msys64/mingw64/include/QtGui/qpalette.h \
-		D:/msys64/mingw64/include/QtGui/qcolor.h \
-		D:/msys64/mingw64/include/QtGui/qrgb.h \
-		D:/msys64/mingw64/include/QtGui/qrgba64.h \
-		D:/msys64/mingw64/include/QtGui/qbrush.h \
-		D:/msys64/mingw64/include/QtGui/qmatrix.h \
-		D:/msys64/mingw64/include/QtGui/qpolygon.h \
-		D:/msys64/mingw64/include/QtCore/qline.h \
-		D:/msys64/mingw64/include/QtGui/qtransform.h \
-		D:/msys64/mingw64/include/QtGui/qpainterpath.h \
-		D:/msys64/mingw64/include/QtGui/qimage.h \
-		D:/msys64/mingw64/include/QtGui/qpixelformat.h \
-		D:/msys64/mingw64/include/QtGui/qpixmap.h \
-		D:/msys64/mingw64/include/QtGui/qfont.h \
-		D:/msys64/mingw64/include/QtGui/qfontmetrics.h \
-		D:/msys64/mingw64/include/QtGui/qfontinfo.h \
-		D:/msys64/mingw64/include/QtWidgets/qsizepolicy.h \
-		D:/msys64/mingw64/include/QtGui/qguiapplication.h \
-		D:/msys64/mingw64/include/QtGui/qinputmethod.h
+build/Debug/MinGW_64-Windows/APICaller.o: APICaller.cpp APICaller.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_64-Windows/APICaller.o APICaller.cpp
+
+build/Debug/MinGW_64-Windows/QTRedis.o: connectors/redis/QTRedis.cpp connectors/redis/QTRedis.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_64-Windows/QTRedis.o connectors/redis/QTRedis.cpp
+
+build/Debug/MinGW_64-Windows/keyPressEventHandler.o: keyPressEventHandler.cpp keyPressEventHandler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_64-Windows/keyPressEventHandler.o keyPressEventHandler.cpp
 
-build/Debug/MinGW_64-Windows/main.o: main.cpp D:/msys64/mingw64/include/QtWidgets/QApplication \
-		D:/msys64/mingw64/include/QtWidgets/qapplication.h \
-		D:/msys64/mingw64/include/QtWidgets/qtwidgetsglobal.h \
-		D:/msys64/mingw64/include/QtGui/qtguiglobal.h \
-		D:/msys64/mingw64/include/QtCore/qglobal.h \
-		D:/msys64/mingw64/include/QtCore/qconfig-bootstrapped.h \
-		D:/msys64/mingw64/include/QtCore/qconfig.h \
-		D:/msys64/mingw64/include/QtCore/qtcore-config.h \
-		D:/msys64/mingw64/include/QtCore/qsystemdetection.h \
-		D:/msys64/mingw64/include/QtCore/qprocessordetection.h \
-		D:/msys64/mingw64/include/QtCore/qcompilerdetection.h \
-		D:/msys64/mingw64/include/QtCore/qtypeinfo.h \
-		D:/msys64/mingw64/include/QtCore/qsysinfo.h \
-		D:/msys64/mingw64/include/QtCore/qlogging.h \
-		D:/msys64/mingw64/include/QtCore/qflags.h \
-		D:/msys64/mingw64/include/QtCore/qatomic.h \
-		D:/msys64/mingw64/include/QtCore/qbasicatomic.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_bootstrap.h \
-		D:/msys64/mingw64/include/QtCore/qgenericatomic.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_cxx11.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_msvc.h \
-		D:/msys64/mingw64/include/QtCore/qglobalstatic.h \
-		D:/msys64/mingw64/include/QtCore/qmutex.h \
-		D:/msys64/mingw64/include/QtCore/qnumeric.h \
-		D:/msys64/mingw64/include/QtCore/qversiontagging.h \
-		D:/msys64/mingw64/include/QtGui/qtgui-config.h \
-		D:/msys64/mingw64/include/QtWidgets/qtwidgets-config.h \
-		D:/msys64/mingw64/include/QtCore/qcoreapplication.h \
-		D:/msys64/mingw64/include/QtCore/qstring.h \
-		D:/msys64/mingw64/include/QtCore/qchar.h \
-		D:/msys64/mingw64/include/QtCore/qbytearray.h \
-		D:/msys64/mingw64/include/QtCore/qrefcount.h \
-		D:/msys64/mingw64/include/QtCore/qnamespace.h \
-		D:/msys64/mingw64/include/QtCore/qarraydata.h \
-		D:/msys64/mingw64/include/QtCore/qstringbuilder.h \
-		D:/msys64/mingw64/include/QtCore/qobject.h \
-		D:/msys64/mingw64/include/QtCore/qobjectdefs.h \
-		D:/msys64/mingw64/include/QtCore/qobjectdefs_impl.h \
-		D:/msys64/mingw64/include/QtCore/qlist.h \
-		D:/msys64/mingw64/include/QtCore/qalgorithms.h \
-		D:/msys64/mingw64/include/QtCore/qiterator.h \
-		D:/msys64/mingw64/include/QtCore/qhashfunctions.h \
-		D:/msys64/mingw64/include/QtCore/qpair.h \
-		D:/msys64/mingw64/include/QtCore/qbytearraylist.h \
-		D:/msys64/mingw64/include/QtCore/qstringlist.h \
-		D:/msys64/mingw64/include/QtCore/qregexp.h \
-		D:/msys64/mingw64/include/QtCore/qstringmatcher.h \
-		D:/msys64/mingw64/include/QtCore/qcoreevent.h \
-		D:/msys64/mingw64/include/QtCore/qscopedpointer.h \
-		D:/msys64/mingw64/include/QtCore/qmetatype.h \
-		D:/msys64/mingw64/include/QtCore/qvarlengtharray.h \
-		D:/msys64/mingw64/include/QtCore/qcontainerfwd.h \
-		D:/msys64/mingw64/include/QtCore/qobject_impl.h \
-		D:/msys64/mingw64/include/QtCore/qeventloop.h \
-		D:/msys64/mingw64/include/QtGui/qwindowdefs.h \
-		D:/msys64/mingw64/include/QtGui/qwindowdefs_win.h \
-		D:/msys64/mingw64/include/QtCore/qpoint.h \
-		D:/msys64/mingw64/include/QtCore/qsize.h \
-		D:/msys64/mingw64/include/QtGui/qcursor.h \
-		D:/msys64/mingw64/include/QtWidgets/qdesktopwidget.h \
-		D:/msys64/mingw64/include/QtWidgets/qwidget.h \
-		D:/msys64/mingw64/include/QtCore/qmargins.h \
-		D:/msys64/mingw64/include/QtGui/qpaintdevice.h \
-		D:/msys64/mingw64/include/QtCore/qrect.h \
-		D:/msys64/mingw64/include/QtGui/qpalette.h \
-		D:/msys64/mingw64/include/QtGui/qcolor.h \
-		D:/msys64/mingw64/include/QtGui/qrgb.h \
-		D:/msys64/mingw64/include/QtGui/qrgba64.h \
-		D:/msys64/mingw64/include/QtGui/qbrush.h \
-		D:/msys64/mingw64/include/QtCore/qvector.h \
-		D:/msys64/mingw64/include/QtGui/qmatrix.h \
-		D:/msys64/mingw64/include/QtGui/qpolygon.h \
-		D:/msys64/mingw64/include/QtGui/qregion.h \
-		D:/msys64/mingw64/include/QtCore/qdatastream.h \
-		D:/msys64/mingw64/include/QtCore/qiodevice.h \
-		D:/msys64/mingw64/include/QtCore/qline.h \
-		D:/msys64/mingw64/include/QtGui/qtransform.h \
-		D:/msys64/mingw64/include/QtGui/qpainterpath.h \
-		D:/msys64/mingw64/include/QtGui/qimage.h \
-		D:/msys64/mingw64/include/QtGui/qpixelformat.h \
-		D:/msys64/mingw64/include/QtGui/qpixmap.h \
-		D:/msys64/mingw64/include/QtCore/qsharedpointer.h \
-		D:/msys64/mingw64/include/QtCore/qshareddata.h \
-		D:/msys64/mingw64/include/QtCore/qhash.h \
-		D:/msys64/mingw64/include/QtCore/qsharedpointer_impl.h \
-		D:/msys64/mingw64/include/QtGui/qfont.h \
-		D:/msys64/mingw64/include/QtGui/qfontmetrics.h \
-		D:/msys64/mingw64/include/QtGui/qfontinfo.h \
-		D:/msys64/mingw64/include/QtWidgets/qsizepolicy.h \
-		D:/msys64/mingw64/include/QtGui/qkeysequence.h \
-		D:/msys64/mingw64/include/QtGui/qevent.h \
-		D:/msys64/mingw64/include/QtCore/qvariant.h \
-		D:/msys64/mingw64/include/QtCore/qmap.h \
-		D:/msys64/mingw64/include/QtCore/qdebug.h \
-		D:/msys64/mingw64/include/QtCore/qtextstream.h \
-		D:/msys64/mingw64/include/QtCore/qlocale.h \
-		D:/msys64/mingw64/include/QtCore/qset.h \
-		D:/msys64/mingw64/include/QtCore/qcontiguouscache.h \
-		D:/msys64/mingw64/include/QtCore/qurl.h \
-		D:/msys64/mingw64/include/QtCore/qurlquery.h \
-		D:/msys64/mingw64/include/QtCore/qfile.h \
-		D:/msys64/mingw64/include/QtCore/qfiledevice.h \
-		D:/msys64/mingw64/include/QtGui/qvector2d.h \
-		D:/msys64/mingw64/include/QtGui/qtouchdevice.h \
-		D:/msys64/mingw64/include/QtGui/qguiapplication.h \
-		D:/msys64/mingw64/include/QtGui/qinputmethod.h \
-		D:/msys64/mingw64/include/QtGui/QImage \
-		D:/msys64/mingw64/include/QtWidgets/QLabel \
-		D:/msys64/mingw64/include/QtWidgets/qlabel.h \
-		D:/msys64/mingw64/include/QtWidgets/qframe.h \
-		D:/msys64/mingw64/include/QtWidgets/QGridLayout \
-		D:/msys64/mingw64/include/QtWidgets/qgridlayout.h \
-		D:/msys64/mingw64/include/QtWidgets/qlayout.h \
-		D:/msys64/mingw64/include/QtWidgets/qlayoutitem.h \
-		D:/msys64/mingw64/include/QtWidgets/qboxlayout.h \
-		D:/msys64/mingw64/include/QtCore/QRect \
-		D:/msys64/mingw64/include/QtWidgets/QDesktopWidget \
-		keyPressEventHandler.h \
-		D:/msys64/mingw64/include/QtGui/QKeyEvent \
+build/Debug/MinGW_64-Windows/main.o: main.cpp keyPressEventHandler.h \
 		mainWindow.h \
 		ui_mainWindow.h \
-		D:/msys64/mingw64/include/QtCore/QVariant \
-		D:/msys64/mingw64/include/QtWidgets/QAction \
-		D:/msys64/mingw64/include/QtWidgets/qaction.h \
-		D:/msys64/mingw64/include/QtGui/qicon.h \
-		D:/msys64/mingw64/include/QtWidgets/qactiongroup.h \
-		D:/msys64/mingw64/include/QtWidgets/QButtonGroup \
-		D:/msys64/mingw64/include/QtWidgets/qbuttongroup.h \
-		D:/msys64/mingw64/include/QtWidgets/QDialog \
-		D:/msys64/mingw64/include/QtWidgets/qdialog.h \
-		D:/msys64/mingw64/include/QtWidgets/QHeaderView \
-		D:/msys64/mingw64/include/QtWidgets/qheaderview.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractitemview.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractscrollarea.h \
-		D:/msys64/mingw64/include/QtCore/qabstractitemmodel.h \
-		D:/msys64/mingw64/include/QtCore/qitemselectionmodel.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractitemdelegate.h \
-		D:/msys64/mingw64/include/QtWidgets/qstyleoption.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractspinbox.h \
-		D:/msys64/mingw64/include/QtGui/qvalidator.h \
-		D:/msys64/mingw64/include/QtCore/qregularexpression.h \
-		D:/msys64/mingw64/include/QtWidgets/qslider.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractslider.h \
-		D:/msys64/mingw64/include/QtWidgets/qstyle.h \
-		D:/msys64/mingw64/include/QtWidgets/qtabbar.h \
-		D:/msys64/mingw64/include/QtWidgets/qtabwidget.h \
-		D:/msys64/mingw64/include/QtWidgets/qrubberband.h \
-		D:/msys64/mingw64/include/QtNetwork/QtNetwork \
-		D:/msys64/mingw64/include/QtNetwork/QtNetworkDepends \
-		D:/msys64/mingw64/include/QtCore/QtCore \
-		D:/msys64/mingw64/include/QtCore/QtCoreDepends \
-		D:/msys64/mingw64/include/QtCore/qabstractanimation.h \
-		D:/msys64/mingw64/include/QtCore/qabstracteventdispatcher.h \
-		D:/msys64/mingw64/include/QtCore/qabstractnativeeventfilter.h \
-		D:/msys64/mingw64/include/QtCore/qabstractproxymodel.h \
-		D:/msys64/mingw64/include/QtCore/qabstractstate.h \
-		D:/msys64/mingw64/include/QtCore/qabstracttransition.h \
-		D:/msys64/mingw64/include/QtCore/qanimationgroup.h \
-		D:/msys64/mingw64/include/QtCore/qarraydataops.h \
-		D:/msys64/mingw64/include/QtCore/qarraydatapointer.h \
-		D:/msys64/mingw64/include/QtCore/qbasictimer.h \
-		D:/msys64/mingw64/include/QtCore/qbitarray.h \
-		D:/msys64/mingw64/include/QtCore/qbuffer.h \
-		D:/msys64/mingw64/include/QtCore/qbytearraymatcher.h \
-		D:/msys64/mingw64/include/QtCore/qcache.h \
-		D:/msys64/mingw64/include/QtCore/qcollator.h \
-		D:/msys64/mingw64/include/QtCore/qcommandlineoption.h \
-		D:/msys64/mingw64/include/QtCore/qcommandlineparser.h \
-		D:/msys64/mingw64/include/QtCore/qcryptographichash.h \
-		D:/msys64/mingw64/include/QtCore/qdatetime.h \
-		D:/msys64/mingw64/include/QtCore/qdeadlinetimer.h \
-		D:/msys64/mingw64/include/QtCore/qelapsedtimer.h \
-		D:/msys64/mingw64/include/QtCore/qdir.h \
-		D:/msys64/mingw64/include/QtCore/qfileinfo.h \
-		D:/msys64/mingw64/include/QtCore/qdiriterator.h \
-		D:/msys64/mingw64/include/QtCore/qeasingcurve.h \
-		D:/msys64/mingw64/include/QtCore/qendian.h \
-		D:/msys64/mingw64/include/QtCore/qeventtransition.h \
-		D:/msys64/mingw64/include/QtCore/qexception.h \
-		D:/msys64/mingw64/include/QtCore/qfactoryinterface.h \
-		D:/msys64/mingw64/include/QtCore/qfileselector.h \
-		D:/msys64/mingw64/include/QtCore/QObject \
-		D:/msys64/mingw64/include/QtCore/QStringList \
-		D:/msys64/mingw64/include/QtCore/qfilesystemwatcher.h \
-		D:/msys64/mingw64/include/QtCore/qfinalstate.h \
-		D:/msys64/mingw64/include/QtCore/qfuture.h \
-		D:/msys64/mingw64/include/QtCore/qfutureinterface.h \
-		D:/msys64/mingw64/include/QtCore/qrunnable.h \
-		D:/msys64/mingw64/include/QtCore/qresultstore.h \
-		D:/msys64/mingw64/include/QtCore/qfuturesynchronizer.h \
-		D:/msys64/mingw64/include/QtCore/qfuturewatcher.h \
-		D:/msys64/mingw64/include/QtCore/qhistorystate.h \
-		D:/msys64/mingw64/include/QtCore/qidentityproxymodel.h \
-		D:/msys64/mingw64/include/QtCore/qisenum.h \
-		D:/msys64/mingw64/include/QtCore/qjsonarray.h \
-		D:/msys64/mingw64/include/QtCore/qjsonvalue.h \
-		D:/msys64/mingw64/include/QtCore/qjsondocument.h \
-		D:/msys64/mingw64/include/QtCore/qjsonobject.h \
-		D:/msys64/mingw64/include/QtCore/qlibrary.h \
-		D:/msys64/mingw64/include/QtCore/qlibraryinfo.h \
-		D:/msys64/mingw64/include/QtCore/qversionnumber.h \
-		D:/msys64/mingw64/include/QtCore/qlinkedlist.h \
-		D:/msys64/mingw64/include/QtCore/qlockfile.h \
-		D:/msys64/mingw64/include/QtCore/qloggingcategory.h \
-		D:/msys64/mingw64/include/QtCore/qmath.h \
-		D:/msys64/mingw64/include/QtCore/qmessageauthenticationcode.h \
-		D:/msys64/mingw64/include/QtCore/qmetaobject.h \
-		D:/msys64/mingw64/include/QtCore/qmimedata.h \
-		D:/msys64/mingw64/include/QtCore/qmimedatabase.h \
-		D:/msys64/mingw64/include/QtCore/qmimetype.h \
-		D:/msys64/mingw64/include/QtCore/qobjectcleanuphandler.h \
-		D:/msys64/mingw64/include/QtCore/qoperatingsystemversion.h \
-		D:/msys64/mingw64/include/QtCore/qparallelanimationgroup.h \
-		D:/msys64/mingw64/include/QtCore/qpauseanimation.h \
-		D:/msys64/mingw64/include/QtCore/qplugin.h \
-		D:/msys64/mingw64/include/QtCore/qpointer.h \
-		D:/msys64/mingw64/include/QtCore/qpluginloader.h \
-		D:/msys64/mingw64/include/QtCore/qprocess.h \
-		D:/msys64/mingw64/include/QtCore/qpropertyanimation.h \
-		D:/msys64/mingw64/include/QtCore/qvariantanimation.h \
-		D:/msys64/mingw64/include/QtCore/qqueue.h \
-		D:/msys64/mingw64/include/QtCore/qreadwritelock.h \
-		D:/msys64/mingw64/include/QtCore/qresource.h \
-		D:/msys64/mingw64/include/QtCore/qsavefile.h \
-		D:/msys64/mingw64/include/QtCore/qscopedvaluerollback.h \
-		D:/msys64/mingw64/include/QtCore/qsemaphore.h \
-		D:/msys64/mingw64/include/QtCore/qsequentialanimationgroup.h \
-		D:/msys64/mingw64/include/QtCore/qsettings.h \
-		D:/msys64/mingw64/include/QtCore/qsharedmemory.h \
-		D:/msys64/mingw64/include/QtCore/qsignalmapper.h \
-		D:/msys64/mingw64/include/QtCore/qsignaltransition.h \
-		D:/msys64/mingw64/include/QtCore/qsocketnotifier.h \
-		D:/msys64/mingw64/include/QtCore/qsortfilterproxymodel.h \
-		D:/msys64/mingw64/include/QtCore/qstack.h \
-		D:/msys64/mingw64/include/QtCore/qstandardpaths.h \
-		D:/msys64/mingw64/include/QtCore/qstate.h \
-		D:/msys64/mingw64/include/QtCore/qstatemachine.h \
-		D:/msys64/mingw64/include/QtCore/qstorageinfo.h \
-		D:/msys64/mingw64/include/QtCore/qstringlistmodel.h \
-		D:/msys64/mingw64/include/QtCore/qsystemsemaphore.h \
-		D:/msys64/mingw64/include/QtCore/qtemporarydir.h \
-		D:/msys64/mingw64/include/QtCore/QScopedPointer \
-		D:/msys64/mingw64/include/QtCore/qtemporaryfile.h \
-		D:/msys64/mingw64/include/QtCore/qtextboundaryfinder.h \
-		D:/msys64/mingw64/include/QtCore/qtextcodec.h \
-		D:/msys64/mingw64/include/QtCore/qthread.h \
-		D:/msys64/mingw64/include/QtCore/qthreadpool.h \
-		D:/msys64/mingw64/include/QtCore/qthreadstorage.h \
-		D:/msys64/mingw64/include/QtCore/qtimeline.h \
-		D:/msys64/mingw64/include/QtCore/qtimer.h \
-		D:/msys64/mingw64/include/QtCore/qtimezone.h \
-		D:/msys64/mingw64/include/QtCore/qtranslator.h \
-		D:/msys64/mingw64/include/QtCore/qtypetraits.h \
-		D:/msys64/mingw64/include/QtCore/quuid.h \
-		D:/msys64/mingw64/include/QtCore/qwaitcondition.h \
-		D:/msys64/mingw64/include/QtCore/qwineventnotifier.h \
-		D:/msys64/mingw64/include/QtCore/qxmlstream.h \
-		D:/msys64/mingw64/include/QtCore/qtcoreversion.h \
-		D:/msys64/mingw64/include/QtNetwork/qtnetworkglobal.h \
-		D:/msys64/mingw64/include/QtNetwork/qtnetwork-config.h \
-		D:/msys64/mingw64/include/QtNetwork/qabstractnetworkcache.h \
-		D:/msys64/mingw64/include/QtNetwork/qnetworkrequest.h \
-		D:/msys64/mingw64/include/QtCore/QSharedDataPointer \
-		D:/msys64/mingw64/include/QtCore/QString \
-		D:/msys64/mingw64/include/QtCore/QUrl \
-		D:/msys64/mingw64/include/QtNetwork/qabstractsocket.h \
-		D:/msys64/mingw64/include/QtNetwork/qauthenticator.h \
-		D:/msys64/mingw64/include/QtNetwork/qdnslookup.h \
-		D:/msys64/mingw64/include/QtNetwork/qhostaddress.h \
-		D:/msys64/mingw64/include/QtNetwork/qhostinfo.h \
-		D:/msys64/mingw64/include/QtNetwork/qhstspolicy.h \
-		D:/msys64/mingw64/include/QtNetwork/qhttpmultipart.h \
-		D:/msys64/mingw64/include/QtCore/QByteArray \
-		D:/msys64/mingw64/include/QtCore/QIODevice \
-		D:/msys64/mingw64/include/QtNetwork/QNetworkRequest \
-		D:/msys64/mingw64/include/QtNetwork/qlocalserver.h \
-		D:/msys64/mingw64/include/QtNetwork/qlocalsocket.h \
-		D:/msys64/mingw64/include/QtNetwork/qnetworkaccessmanager.h \
-		D:/msys64/mingw64/include/QtCore/QVector \
-		D:/msys64/mingw64/include/QtNetwork/QSslConfiguration \
-		D:/msys64/mingw64/include/QtNetwork/qsslconfiguration.h \
-		D:/msys64/mingw64/include/QtNetwork/qsslsocket.h \
-		D:/msys64/mingw64/include/QtNetwork/qtcpsocket.h \
-		D:/msys64/mingw64/include/QtNetwork/qsslerror.h \
-		D:/msys64/mingw64/include/QtNetwork/qsslcertificate.h \
-		D:/msys64/mingw64/include/QtNetwork/qssl.h \
-		D:/msys64/mingw64/include/QtCore/QFlags \
-		D:/msys64/mingw64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
-		D:/msys64/mingw64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
-		D:/msys64/mingw64/include/QtCore/QMetaType \
-		D:/msys64/mingw64/include/QtNetwork/qnetworkconfigmanager.h \
-		D:/msys64/mingw64/include/QtNetwork/qnetworkconfiguration.h \
-		D:/msys64/mingw64/include/QtNetwork/qnetworkcookie.h \
-		D:/msys64/mingw64/include/QtCore/QList \
-		D:/msys64/mingw64/include/QtNetwork/qnetworkcookiejar.h \
-		D:/msys64/mingw64/include/QtNetwork/qnetworkdatagram.h \
-		D:/msys64/mingw64/include/QtNetwork/qnetworkdiskcache.h \
-		D:/msys64/mingw64/include/QtNetwork/qnetworkinterface.h \
-		D:/msys64/mingw64/include/QtNetwork/qnetworkproxy.h \
-		D:/msys64/mingw64/include/QtNetwork/qnetworkreply.h \
-		D:/msys64/mingw64/include/QtNetwork/QNetworkAccessManager \
-		D:/msys64/mingw64/include/QtNetwork/qnetworksession.h \
-		D:/msys64/mingw64/include/QtNetwork/qsctpserver.h \
-		D:/msys64/mingw64/include/QtNetwork/qtcpserver.h \
-		D:/msys64/mingw64/include/QtNetwork/qsctpsocket.h \
-		D:/msys64/mingw64/include/QtNetwork/qsslcertificateextension.h \
-		D:/msys64/mingw64/include/QtNetwork/qsslcipher.h \
-		D:/msys64/mingw64/include/QtNetwork/qssldiffiehellmanparameters.h \
-		D:/msys64/mingw64/include/QtNetwork/qsslellipticcurve.h \
-		D:/msys64/mingw64/include/QtCore/QHash \
-		D:/msys64/mingw64/include/QtNetwork/qsslkey.h \
-		D:/msys64/mingw64/include/QtNetwork/qudpsocket.h \
-		D:/msys64/mingw64/include/QtNetwork/qtnetworkversion.h \
-		D:/msys64/mingw64/include/QtNetwork/QNetworkReply
+		APICaller.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_64-Windows/main.o main.cpp
 
 build/Debug/MinGW_64-Windows/mainWindow.cpp.o: mainWindow.cpp.cc mainWindow.h \
 		ui_mainWindow.h \
-		D:/msys64/mingw64/include/QtCore/QVariant \
-		D:/msys64/mingw64/include/QtCore/qvariant.h \
-		D:/msys64/mingw64/include/QtCore/qatomic.h \
-		D:/msys64/mingw64/include/QtCore/qglobal.h \
-		D:/msys64/mingw64/include/QtCore/qconfig-bootstrapped.h \
-		D:/msys64/mingw64/include/QtCore/qconfig.h \
-		D:/msys64/mingw64/include/QtCore/qtcore-config.h \
-		D:/msys64/mingw64/include/QtCore/qsystemdetection.h \
-		D:/msys64/mingw64/include/QtCore/qprocessordetection.h \
-		D:/msys64/mingw64/include/QtCore/qcompilerdetection.h \
-		D:/msys64/mingw64/include/QtCore/qtypeinfo.h \
-		D:/msys64/mingw64/include/QtCore/qsysinfo.h \
-		D:/msys64/mingw64/include/QtCore/qlogging.h \
-		D:/msys64/mingw64/include/QtCore/qflags.h \
-		D:/msys64/mingw64/include/QtCore/qglobalstatic.h \
-		D:/msys64/mingw64/include/QtCore/qmutex.h \
-		D:/msys64/mingw64/include/QtCore/qnumeric.h \
-		D:/msys64/mingw64/include/QtCore/qversiontagging.h \
-		D:/msys64/mingw64/include/QtCore/qbasicatomic.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_bootstrap.h \
-		D:/msys64/mingw64/include/QtCore/qgenericatomic.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_cxx11.h \
-		D:/msys64/mingw64/include/QtCore/qatomic_msvc.h \
-		D:/msys64/mingw64/include/QtCore/qbytearray.h \
-		D:/msys64/mingw64/include/QtCore/qrefcount.h \
-		D:/msys64/mingw64/include/QtCore/qnamespace.h \
-		D:/msys64/mingw64/include/QtCore/qarraydata.h \
-		D:/msys64/mingw64/include/QtCore/qstring.h \
-		D:/msys64/mingw64/include/QtCore/qchar.h \
-		D:/msys64/mingw64/include/QtCore/qstringbuilder.h \
-		D:/msys64/mingw64/include/QtCore/qlist.h \
-		D:/msys64/mingw64/include/QtCore/qalgorithms.h \
-		D:/msys64/mingw64/include/QtCore/qiterator.h \
-		D:/msys64/mingw64/include/QtCore/qhashfunctions.h \
-		D:/msys64/mingw64/include/QtCore/qpair.h \
-		D:/msys64/mingw64/include/QtCore/qbytearraylist.h \
-		D:/msys64/mingw64/include/QtCore/qstringlist.h \
-		D:/msys64/mingw64/include/QtCore/qregexp.h \
-		D:/msys64/mingw64/include/QtCore/qstringmatcher.h \
-		D:/msys64/mingw64/include/QtCore/qmetatype.h \
-		D:/msys64/mingw64/include/QtCore/qvarlengtharray.h \
-		D:/msys64/mingw64/include/QtCore/qcontainerfwd.h \
-		D:/msys64/mingw64/include/QtCore/qobjectdefs.h \
-		D:/msys64/mingw64/include/QtCore/qobjectdefs_impl.h \
-		D:/msys64/mingw64/include/QtCore/qmap.h \
-		D:/msys64/mingw64/include/QtCore/qdebug.h \
-		D:/msys64/mingw64/include/QtCore/qhash.h \
-		D:/msys64/mingw64/include/QtCore/qtextstream.h \
-		D:/msys64/mingw64/include/QtCore/qiodevice.h \
-		D:/msys64/mingw64/include/QtCore/qobject.h \
-		D:/msys64/mingw64/include/QtCore/qcoreevent.h \
-		D:/msys64/mingw64/include/QtCore/qscopedpointer.h \
-		D:/msys64/mingw64/include/QtCore/qobject_impl.h \
-		D:/msys64/mingw64/include/QtCore/qlocale.h \
-		D:/msys64/mingw64/include/QtCore/qshareddata.h \
-		D:/msys64/mingw64/include/QtCore/qvector.h \
-		D:/msys64/mingw64/include/QtCore/qpoint.h \
-		D:/msys64/mingw64/include/QtCore/qset.h \
-		D:/msys64/mingw64/include/QtCore/qcontiguouscache.h \
-		D:/msys64/mingw64/include/QtCore/qsharedpointer.h \
-		D:/msys64/mingw64/include/QtCore/qsharedpointer_impl.h \
-		D:/msys64/mingw64/include/QtWidgets/QAction \
-		D:/msys64/mingw64/include/QtWidgets/qaction.h \
-		D:/msys64/mingw64/include/QtWidgets/qtwidgetsglobal.h \
-		D:/msys64/mingw64/include/QtGui/qtguiglobal.h \
-		D:/msys64/mingw64/include/QtGui/qtgui-config.h \
-		D:/msys64/mingw64/include/QtWidgets/qtwidgets-config.h \
-		D:/msys64/mingw64/include/QtGui/qkeysequence.h \
-		D:/msys64/mingw64/include/QtWidgets/qwidget.h \
-		D:/msys64/mingw64/include/QtGui/qwindowdefs.h \
-		D:/msys64/mingw64/include/QtGui/qwindowdefs_win.h \
-		D:/msys64/mingw64/include/QtCore/qmargins.h \
-		D:/msys64/mingw64/include/QtGui/qpaintdevice.h \
-		D:/msys64/mingw64/include/QtCore/qrect.h \
-		D:/msys64/mingw64/include/QtCore/qsize.h \
-		D:/msys64/mingw64/include/QtGui/qpalette.h \
-		D:/msys64/mingw64/include/QtGui/qcolor.h \
-		D:/msys64/mingw64/include/QtGui/qrgb.h \
-		D:/msys64/mingw64/include/QtGui/qrgba64.h \
-		D:/msys64/mingw64/include/QtGui/qbrush.h \
-		D:/msys64/mingw64/include/QtGui/qmatrix.h \
-		D:/msys64/mingw64/include/QtGui/qpolygon.h \
-		D:/msys64/mingw64/include/QtGui/qregion.h \
-		D:/msys64/mingw64/include/QtCore/qdatastream.h \
-		D:/msys64/mingw64/include/QtCore/qline.h \
-		D:/msys64/mingw64/include/QtGui/qtransform.h \
-		D:/msys64/mingw64/include/QtGui/qpainterpath.h \
-		D:/msys64/mingw64/include/QtGui/qimage.h \
-		D:/msys64/mingw64/include/QtGui/qpixelformat.h \
-		D:/msys64/mingw64/include/QtGui/qpixmap.h \
-		D:/msys64/mingw64/include/QtGui/qfont.h \
-		D:/msys64/mingw64/include/QtGui/qfontmetrics.h \
-		D:/msys64/mingw64/include/QtGui/qfontinfo.h \
-		D:/msys64/mingw64/include/QtWidgets/qsizepolicy.h \
-		D:/msys64/mingw64/include/QtGui/qcursor.h \
-		D:/msys64/mingw64/include/QtGui/qevent.h \
-		D:/msys64/mingw64/include/QtCore/qurl.h \
-		D:/msys64/mingw64/include/QtCore/qurlquery.h \
-		D:/msys64/mingw64/include/QtCore/qfile.h \
-		D:/msys64/mingw64/include/QtCore/qfiledevice.h \
-		D:/msys64/mingw64/include/QtGui/qvector2d.h \
-		D:/msys64/mingw64/include/QtGui/qtouchdevice.h \
-		D:/msys64/mingw64/include/QtGui/qicon.h \
-		D:/msys64/mingw64/include/QtWidgets/qactiongroup.h \
-		D:/msys64/mingw64/include/QtWidgets/QApplication \
-		D:/msys64/mingw64/include/QtWidgets/qapplication.h \
-		D:/msys64/mingw64/include/QtCore/qcoreapplication.h \
-		D:/msys64/mingw64/include/QtCore/qeventloop.h \
-		D:/msys64/mingw64/include/QtWidgets/qdesktopwidget.h \
-		D:/msys64/mingw64/include/QtGui/qguiapplication.h \
-		D:/msys64/mingw64/include/QtGui/qinputmethod.h \
-		D:/msys64/mingw64/include/QtWidgets/QButtonGroup \
-		D:/msys64/mingw64/include/QtWidgets/qbuttongroup.h \
-		D:/msys64/mingw64/include/QtWidgets/QDialog \
-		D:/msys64/mingw64/include/QtWidgets/qdialog.h \
-		D:/msys64/mingw64/include/QtWidgets/QHeaderView \
-		D:/msys64/mingw64/include/QtWidgets/qheaderview.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractitemview.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractscrollarea.h \
-		D:/msys64/mingw64/include/QtWidgets/qframe.h \
-		D:/msys64/mingw64/include/QtCore/qabstractitemmodel.h \
-		D:/msys64/mingw64/include/QtCore/qitemselectionmodel.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractitemdelegate.h \
-		D:/msys64/mingw64/include/QtWidgets/qstyleoption.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractspinbox.h \
-		D:/msys64/mingw64/include/QtGui/qvalidator.h \
-		D:/msys64/mingw64/include/QtCore/qregularexpression.h \
-		D:/msys64/mingw64/include/QtWidgets/qslider.h \
-		D:/msys64/mingw64/include/QtWidgets/qabstractslider.h \
-		D:/msys64/mingw64/include/QtWidgets/qstyle.h \
-		D:/msys64/mingw64/include/QtWidgets/qtabbar.h \
-		D:/msys64/mingw64/include/QtWidgets/qtabwidget.h \
-		D:/msys64/mingw64/include/QtWidgets/qrubberband.h \
-		keyPressEventHandler.h \
-		D:/msys64/mingw64/include/QtGui/QKeyEvent \
-		D:/msys64/mingw64/include/QtWidgets/QLabel \
-		D:/msys64/mingw64/include/QtWidgets/qlabel.h
+		keyPressEventHandler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_64-Windows/mainWindow.cpp.o mainWindow.cpp.cc
+
+build/Debug/MinGW_64-Windows/moc_APICaller.o: moc_APICaller.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_64-Windows/moc_APICaller.o moc_APICaller.cpp
 
 build/Debug/MinGW_64-Windows/moc_keyPressEventHandler.o: moc_keyPressEventHandler.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/MinGW_64-Windows/moc_keyPressEventHandler.o moc_keyPressEventHandler.cpp

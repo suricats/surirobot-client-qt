@@ -27,8 +27,8 @@
 #include <QtNetwork>
 #include <QNetworkReply>
 
-
-#include "connectors/redis/QTRedis.hpp"
+#include "APICaller.h"
+//#include "connectors/redis/QTRedis.hpp"
 
 
 int main(int argc, char *argv[]) {
@@ -49,27 +49,17 @@ int main(int argc, char *argv[]) {
     window->showFullScreen();
 
     window->smartShow();
-
-    //API test
-    QNetworkAccessManager networkManager;
-
-    QUrl url("http://www.wesh.com/");
-    QNetworkRequest request;
-    request.setUrl(url);
     
-    QNetworkReply* currentReply = networkManager.get(request);
-    if (currentReply->error() != QNetworkReply::NoError)
-    {
-        window->setText((QString) currentReply->errorString());
-    }
-    else window->setText((QString) currentReply->readAll());
-   
-
-    
+    APICaller* worker = new APICaller;    
+    QThread* APIThread = new QThread;    
+    worker->set(APIThread);  
+    APIThread->start();
+    //worker->MyWake();
+    /*
     QTRedis redis;
     redis.run();
     QObject::connect(&redis, &QTRedis::signalNewPerson, window, &mainWindow::changeText);
-    
+    */
     return app.exec();
 
 

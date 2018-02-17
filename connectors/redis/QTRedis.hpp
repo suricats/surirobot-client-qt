@@ -15,6 +15,7 @@
 #define QTREDIS_HPP
 
 #include <iostream>
+/*
 #include <hiredis/adapters/qt.h>
 
 class QTRedis : public QObject {
@@ -36,6 +37,6 @@ private:
     RedisQtAdapter m_adapter;
 
 };
-
+*/
 #endif /* QTREDIS_HPP */
 
