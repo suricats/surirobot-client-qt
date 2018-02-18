@@ -25,9 +25,8 @@
 
 #ifndef __HIREDIS_QT_H__
 #define __HIREDIS_QT_H__
-
 #include <QSocketNotifier>
-#include "../async.h"
+#include <hiredis/async.h>
 
 static void RedisQtAddRead(void *);
 static void RedisQtDelRead(void *);

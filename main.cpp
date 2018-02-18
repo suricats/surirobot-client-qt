@@ -27,7 +27,7 @@
 #include <QNetworkReply>
 #include <QTimer>
 
-#include "APICaller.h"
+#include "ConverseAPICaller.h"
 #include "connectors/redis/QTRedis.hpp"
 
 int main(int argc, char *argv[]) {
@@ -49,23 +49,12 @@ int main(int argc, char *argv[]) {
     //EditText
     window->setEditText();
     
-    
     //Show
     window->smartShow();
-
-        
-    //Timer dispaly fixer
-    QTimer* displayFixer = new QTimer(window);
-    displayFixer->setInterval(100);
-    displayFixer->setSingleShot(true);
-    QObject::connect(displayFixer, SIGNAL(timeout()), window, SLOT(updateSlot()));
-    displayFixer->start();
     
-    APICaller* APIworker = new APICaller;
-    QThread* APIThread = new QThread;
-    APIworker->set(APIThread);
+    ConverseAPICaller* APIworker = new ConverseAPICaller();
     QObject::connect(APIworker, SIGNAL(messageChanged(QString)), window, SLOT(changeText(QString)));
-    APIThread->start();
+    APIworker->start();
     
     //Timer for test
     QTimer* activeTimer = new QTimer(window);
@@ -76,7 +65,7 @@ int main(int argc, char *argv[]) {
     
     //Redis for face recognition
     QTRedis* redis = new QTRedis();
-    redis->run();
+    redis->start();
     QObject::connect(redis, &QTRedis::signalNewPerson, window, &mainWindow::changeText);
      
     return app.exec();

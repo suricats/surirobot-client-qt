@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   QTRedis.cpp
  * Author: tberdy
@@ -12,30 +6,41 @@
  */
 
 #include "QTRedis.hpp"
+#include <hiredis/async.h>
 #include <cstdio>
 #include <string>
 
 QTRedis::QTRedis() {
+    currentThread = new QThread;
+    moveToThread(currentThread);
 }
 
 QTRedis::~QTRedis() {
+    delete m_ctx;
+    currentThread->quit();
+    delete currentThread;
+}
+
+void QTRedis::start() {
+    currentThread->start();
+    run();
 }
 
 void onChange(redisAsyncContext*, void* r, void* privdata) {
-    redisReply * reply = static_cast<redisReply *>(r);
-    QTRedis * obj = static_cast<QTRedis*>(privdata);
+    redisReply * reply = static_cast<redisReply *> (r);
+    QTRedis * obj = static_cast<QTRedis*> (privdata);
     if (reply == NULL) return;
     if (reply->type == REDIS_REPLY_ARRAY) {
         std::string type(reply->element[0]->str);
         std::string channel(reply->element[1]->str);
-        
+
         if (type.compare("message") == 0 && channel.compare("face-recognition") == 0) {
             std::string message(reply->element[2]->str);
             emit obj->signalNewPerson(QString::fromUtf8(reply->element[2]->str));
         }
     }
-    
-    
+
+
 }
 
 void QTRedis::run() {

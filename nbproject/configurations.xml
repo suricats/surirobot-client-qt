@@ -4,10 +4,11 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>APICaller.h</itemPath>
+      <itemPath>ConverseAPICaller.h</itemPath>
       <itemPath>connectors/redis/QTRedis.hpp</itemPath>
       <itemPath>keyPressEventHandler.h</itemPath>
       <itemPath>mainWindow.h</itemPath>
+      <itemPath>qt.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -17,7 +18,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>APICaller.cpp</itemPath>
+      <itemPath>ConverseAPICaller.cpp</itemPath>
       <itemPath>connectors/redis/QTRedis.cpp</itemPath>
       <itemPath>keyPressEventHandler.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -34,7 +35,6 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
-    <itemPath>lib/hiredis/include/adapters/qt.h</itemPath>
   </logicalFolder>
   <sourceRootList>
     <Elem>connectors</Elem>
@@ -56,17 +56,15 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
-      <item path="APICaller.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="APICaller.h" ex="false" tool="3" flavor2="0">
+      <item path="ConverseAPICaller.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="connectors/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="lib/hiredis/include/adapters/qt.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -75,6 +73,8 @@
       <item path="mainWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="mainWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="qt.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="4">
@@ -101,9 +101,9 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="APICaller.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="APICaller.h" ex="false" tool="3" flavor2="0">
+      <item path="ConverseAPICaller.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="connectors/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -113,8 +113,6 @@
       </item>
       <item path="keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="lib/hiredis/include/adapters/qt.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="mainWindow.cpp.cc" ex="false" tool="1" flavor2="0">
@@ -122,6 +120,8 @@
       <item path="mainWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="mainWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="qt.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="linux-debug" type="4">
@@ -140,9 +140,9 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="APICaller.cpp" ex="false" tool="1" flavor2="0">
+      <item path="ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="APICaller.h" ex="false" tool="3" flavor2="0">
+      <item path="ConverseAPICaller.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="connectors/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -152,8 +152,6 @@
       </item>
       <item path="keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="lib/hiredis/include/adapters/qt.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="9">
       </item>
       <item path="mainWindow.cpp.cc" ex="false" tool="1" flavor2="9">
@@ -161,6 +159,8 @@
       <item path="mainWindow.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="mainWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="qt.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

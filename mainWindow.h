@@ -20,6 +20,7 @@
 #include <QApplication>
 #include <QLabel>
 #include <QTextEdit>
+#include <QTimer>
 
 class mainWindow : public QDialog {
     Q_OBJECT

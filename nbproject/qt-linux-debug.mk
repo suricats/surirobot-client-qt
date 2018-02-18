@@ -48,25 +48,25 @@ OBJECTS_DIR   = build/linux-debug/GNU-Linux/
 
 ####### Files
 
-SOURCES       = APICaller.cpp \
+SOURCES       = ConverseAPICaller.cpp \
 		connectors/redis/QTRedis.cpp \
 		keyPressEventHandler.cpp \
 		main.cpp \
-		mainWindow.cpp.cc moc_APICaller.cpp \
+		mainWindow.cpp.cc moc_ConverseAPICaller.cpp \
 		moc_QTRedis.cpp \
 		moc_keyPressEventHandler.cpp \
-		moc_qt.cpp \
-		moc_mainWindow.cpp
-OBJECTS       = build/linux-debug/GNU-Linux/APICaller.o \
+		moc_mainWindow.cpp \
+		moc_qt.cpp
+OBJECTS       = build/linux-debug/GNU-Linux/ConverseAPICaller.o \
 		build/linux-debug/GNU-Linux/QTRedis.o \
 		build/linux-debug/GNU-Linux/keyPressEventHandler.o \
 		build/linux-debug/GNU-Linux/main.o \
 		build/linux-debug/GNU-Linux/mainWindow.cpp.o \
-		build/linux-debug/GNU-Linux/moc_APICaller.o \
+		build/linux-debug/GNU-Linux/moc_ConverseAPICaller.o \
 		build/linux-debug/GNU-Linux/moc_QTRedis.o \
 		build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o \
-		build/linux-debug/GNU-Linux/moc_qt.o \
-		build/linux-debug/GNU-Linux/moc_mainWindow.o
+		build/linux-debug/GNU-Linux/moc_mainWindow.o \
+		build/linux-debug/GNU-Linux/moc_qt.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -123,11 +123,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		nbproject/nbproject/qt-linux-debug.pro APICaller.h \
+		nbproject/nbproject/qt-linux-debug.pro ConverseAPICaller.h \
 		connectors/redis/QTRedis.hpp \
 		keyPressEventHandler.h \
-		lib/hiredis/include/adapters/qt.h \
-		mainWindow.h APICaller.cpp \
+		mainWindow.h \
+		qt.h ConverseAPICaller.cpp \
 		connectors/redis/QTRedis.cpp \
 		keyPressEventHandler.cpp \
 		main.cpp \
@@ -300,8 +300,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents APICaller.h connectors/redis/QTRedis.hpp keyPressEventHandler.h lib/hiredis/include/adapters/qt.h mainWindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents APICaller.cpp connectors/redis/QTRedis.cpp keyPressEventHandler.cpp main.cpp mainWindow.cpp.cc $(DISTDIR)/
+	$(COPY_FILE) --parents ConverseAPICaller.h connectors/redis/QTRedis.hpp keyPressEventHandler.h mainWindow.h qt.h $(DISTDIR)/
+	$(COPY_FILE) --parents ConverseAPICaller.cpp connectors/redis/QTRedis.cpp keyPressEventHandler.cpp main.cpp mainWindow.cpp.cc $(DISTDIR)/
 	$(COPY_FILE) --parents mainWindow.ui $(DISTDIR)/
 
 
@@ -325,34 +325,25 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_APICaller.cpp moc_QTRedis.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_mainWindow.cpp
+compiler_moc_header_make_all: moc_ConverseAPICaller.cpp moc_QTRedis.cpp moc_keyPressEventHandler.cpp moc_mainWindow.cpp moc_qt.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_APICaller.cpp moc_QTRedis.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_mainWindow.cpp
-moc_APICaller.cpp: APICaller.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include APICaller.h -o moc_APICaller.cpp
+	-$(DEL_FILE) moc_ConverseAPICaller.cpp moc_QTRedis.cpp moc_keyPressEventHandler.cpp moc_mainWindow.cpp moc_qt.cpp
+moc_ConverseAPICaller.cpp: ConverseAPICaller.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ConverseAPICaller.h -o moc_ConverseAPICaller.cpp
 
-moc_QTRedis.cpp: lib/hiredis/include/adapters/qt.h \
-		lib/hiredis/include/async.h \
-		lib/hiredis/include/hiredis.h \
-		lib/hiredis/include/read.h \
-		lib/hiredis/include/sds.h \
-		connectors/redis/QTRedis.hpp
+moc_QTRedis.cpp: connectors/redis/QTRedis.hpp
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include connectors/redis/QTRedis.hpp -o moc_QTRedis.cpp
 
 moc_keyPressEventHandler.cpp: keyPressEventHandler.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include keyPressEventHandler.h -o moc_keyPressEventHandler.cpp
 
-moc_qt.cpp: lib/hiredis/include/async.h \
-		lib/hiredis/include/hiredis.h \
-		lib/hiredis/include/read.h \
-		lib/hiredis/include/sds.h \
-		lib/hiredis/include/adapters/qt.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include lib/hiredis/include/adapters/qt.h -o moc_qt.cpp
-
 moc_mainWindow.cpp: ui_mainWindow.h \
 		keyPressEventHandler.h \
 		mainWindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainWindow.h -o moc_mainWindow.cpp
+
+moc_qt.cpp: qt.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include qt.h -o moc_qt.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -372,15 +363,10 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-build/linux-debug/GNU-Linux/APICaller.o: APICaller.cpp APICaller.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/APICaller.o APICaller.cpp
+build/linux-debug/GNU-Linux/ConverseAPICaller.o: ConverseAPICaller.cpp ConverseAPICaller.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/ConverseAPICaller.o ConverseAPICaller.cpp
 
-build/linux-debug/GNU-Linux/QTRedis.o: connectors/redis/QTRedis.cpp connectors/redis/QTRedis.hpp \
-		lib/hiredis/include/adapters/qt.h \
-		lib/hiredis/include/async.h \
-		lib/hiredis/include/hiredis.h \
-		lib/hiredis/include/read.h \
-		lib/hiredis/include/sds.h
+build/linux-debug/GNU-Linux/QTRedis.o: connectors/redis/QTRedis.cpp connectors/redis/QTRedis.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/QTRedis.o connectors/redis/QTRedis.cpp
 
 build/linux-debug/GNU-Linux/keyPressEventHandler.o: keyPressEventHandler.cpp keyPressEventHandler.h
@@ -389,13 +375,8 @@ build/linux-debug/GNU-Linux/keyPressEventHandler.o: keyPressEventHandler.cpp key
 build/linux-debug/GNU-Linux/main.o: main.cpp keyPressEventHandler.h \
 		mainWindow.h \
 		ui_mainWindow.h \
-		APICaller.h \
-		connectors/redis/QTRedis.hpp \
-		lib/hiredis/include/adapters/qt.h \
-		lib/hiredis/include/async.h \
-		lib/hiredis/include/hiredis.h \
-		lib/hiredis/include/read.h \
-		lib/hiredis/include/sds.h
+		ConverseAPICaller.h \
+		connectors/redis/QTRedis.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/main.o main.cpp
 
 build/linux-debug/GNU-Linux/mainWindow.cpp.o: mainWindow.cpp.cc mainWindow.h \
@@ -403,8 +384,8 @@ build/linux-debug/GNU-Linux/mainWindow.cpp.o: mainWindow.cpp.cc mainWindow.h \
 		keyPressEventHandler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/mainWindow.cpp.o mainWindow.cpp.cc
 
-build/linux-debug/GNU-Linux/moc_APICaller.o: moc_APICaller.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_APICaller.o moc_APICaller.cpp
+build/linux-debug/GNU-Linux/moc_ConverseAPICaller.o: moc_ConverseAPICaller.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_ConverseAPICaller.o moc_ConverseAPICaller.cpp
 
 build/linux-debug/GNU-Linux/moc_QTRedis.o: moc_QTRedis.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_QTRedis.o moc_QTRedis.cpp
@@ -412,11 +393,11 @@ build/linux-debug/GNU-Linux/moc_QTRedis.o: moc_QTRedis.cpp
 build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o: moc_keyPressEventHandler.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o moc_keyPressEventHandler.cpp
 
-build/linux-debug/GNU-Linux/moc_qt.o: moc_qt.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_qt.o moc_qt.cpp
-
 build/linux-debug/GNU-Linux/moc_mainWindow.o: moc_mainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_mainWindow.o moc_mainWindow.cpp
+
+build/linux-debug/GNU-Linux/moc_qt.o: moc_qt.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_qt.o moc_qt.cpp
 
 ####### Install
 

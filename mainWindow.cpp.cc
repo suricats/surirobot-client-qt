@@ -43,6 +43,12 @@ void mainWindow::smartShow()
 {
     showFullScreen();
     updateWidgets();
+    //Timer display fixer
+    QTimer* displayFixer = new QTimer(this);
+    displayFixer->setInterval(100);
+    displayFixer->setSingleShot(true);
+    QObject::connect(displayFixer, SIGNAL(timeout()), this, SLOT(updateSlot()));
+    displayFixer->start();
 }
 void mainWindow::setTextFont(const QFont& f)
 {

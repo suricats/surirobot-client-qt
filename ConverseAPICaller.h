@@ -28,17 +28,16 @@
 #include <QMutex>    
 #include <iostream>
 
-class APICaller : public QObject {
+class ConverseAPICaller : public QObject {
     Q_OBJECT
-
-    QNetworkAccessManager* nam;
-    QMutex syncPause;
-    QWaitCondition pauseCond;
-    bool isBusy;
-
+private:
+    QNetworkAccessManager* networkManager;
+    QThread* currentThread;
 public:
-    explicit APICaller(QObject *parent = 0);
-    void set(QThread* thread);
+    bool isBusy;
+    explicit ConverseAPICaller(QObject *parent = 0);
+    virtual ~ConverseAPICaller();
+    void start();
 public slots:
     void sendRequest(QString text);
     void receiveReply(QNetworkReply* reply);
