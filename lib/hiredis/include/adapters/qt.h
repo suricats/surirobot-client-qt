@@ -25,7 +25,7 @@
 
 #ifndef __HIREDIS_QT_H__
 #define __HIREDIS_QT_H__
-/*
+
 #include <QSocketNotifier>
 #include "../async.h"
 
@@ -132,5 +132,5 @@ class RedisQtAdapter : public QObject {
         QSocketNotifier * m_read;
         QSocketNotifier * m_write;
 };
-*/
+
 #endif /* !__HIREDIS_QT_H__ */

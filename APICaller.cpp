@@ -38,7 +38,7 @@ void APICaller::receiveReply(QNetworkReply* reply) {
                 emit messageChanged(message);
             }
         }
-
+        else emit messageChanged(QString("Can't find message."));
 
     }
 
@@ -75,7 +75,7 @@ void APICaller::sendRequest(QString text) {
     //std::cout << "Request : " << std::endl << data.toStdString() << std::endl;
     QNetworkRequest request(serviceURL);
 
-    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+    //request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
     request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
     //request.setRawHeader("User-Agent", "My app name v0.1");
     //request.setRawHeader("X-Custom-User-Agent", "My app name v0.1");

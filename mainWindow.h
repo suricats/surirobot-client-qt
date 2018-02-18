@@ -38,6 +38,7 @@ public:
 public slots:
     void changeText(QString text);
     void sendEditText();
+    void updateSlot();
 signals:
     void sendEditText_signal(QString text);
 private:

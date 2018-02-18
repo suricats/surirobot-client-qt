@@ -43,14 +43,18 @@
   <confs>
     <conf name="Debug" type="4">
       <toolsSet>
-        <compilerSet>MinGW_64|MinGW</compilerSet>
+        <compilerSet>GNU|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <qt>
+        <destdir>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}</destdir>
         <modules>core gui widgets network</modules>
       </qt>
       <compileType>
+        <ccTool>
+          <standard>8</standard>
+        </ccTool>
       </compileType>
       <item path="APICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -127,12 +131,12 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <qt>
-        <modules>core gui widgets</modules>
+        <modules>core gui widgets network</modules>
       </qt>
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>/usr/lib/libhiredis.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libhiredis.so</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

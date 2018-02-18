@@ -14,7 +14,7 @@
 #include "QTRedis.hpp"
 #include <cstdio>
 #include <string>
-/*
+
 QTRedis::QTRedis() {
 }
 
@@ -24,7 +24,7 @@ QTRedis::~QTRedis() {
 void onChange(redisAsyncContext*, void* r, void* privdata) {
     redisReply * reply = static_cast<redisReply *>(r);
     QTRedis * obj = static_cast<QTRedis*>(privdata);
-    if (reply == nullptr) return;
+    if (reply == NULL) return;
     if (reply->type == REDIS_REPLY_ARRAY) {
         std::string type(reply->element[0]->str);
         std::string channel(reply->element[1]->str);
@@ -32,7 +32,6 @@ void onChange(redisAsyncContext*, void* r, void* privdata) {
         if (type.compare("message") == 0 && channel.compare("face-recognition") == 0) {
             std::string message(reply->element[2]->str);
             emit obj->signalNewPerson(QString::fromUtf8(reply->element[2]->str));
-            //emit obj->signalNewPerson();
         }
     }
     
@@ -52,5 +51,4 @@ void QTRedis::run() {
     m_adapter.setContext(m_ctx);
     redisAsyncCommand(m_ctx, onChange, this, "SUBSCRIBE face-recognition");
 }
-*/
 

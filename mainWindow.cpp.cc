@@ -84,7 +84,10 @@ void mainWindow::updateWidgets()
     imgWidget->move(this->width()/2-imgWidget->width()/2,this->height()/2-imgWidget->height()/2);
     labelText->move(this->width()/2-this->labelText->width()/2,this->height()/2-this->labelText->height()/2+imgWidget->height()/2);
 }
-
+void mainWindow::updateSlot()
+{
+    updateWidgets();
+}
 void mainWindow::changeText(QString text) {
     this->setText(text);
     this->updateWidgets();

@@ -17,7 +17,6 @@
 #include <QGridLayout>
 #include <QRect>
 #include <QDesktopWidget>
-#include <qnetwork.h>
 #include <iostream>
 #include <string>
 #include <unistd.h>
@@ -29,7 +28,7 @@
 #include <QTimer>
 
 #include "APICaller.h"
-//#include "connectors/redis/QTRedis.hpp"
+#include "connectors/redis/QTRedis.hpp"
 
 int main(int argc, char *argv[]) {
     std::cout << "Program started.  " << std::endl;
@@ -39,7 +38,7 @@ int main(int argc, char *argv[]) {
 
     //Image
     QImage imageNormal;
-    imageNormal.load("./img/Surirobot1.png");
+    imageNormal.load("./img/SuriRobot1.png");
     window->setImage(imageNormal);
 
     //Text
@@ -49,12 +48,18 @@ int main(int argc, char *argv[]) {
 
     //EditText
     window->setEditText();
-    //window->show();
-    window->smartShow();
-    window->updateWidgets();
-
-
     
+    
+    //Show
+    window->smartShow();
+
+        
+    //Timer dispaly fixer
+    QTimer* displayFixer = new QTimer(window);
+    displayFixer->setInterval(100);
+    displayFixer->setSingleShot(true);
+    QObject::connect(displayFixer, SIGNAL(timeout()), window, SLOT(updateSlot()));
+    displayFixer->start();
     
     APICaller* APIworker = new APICaller;
     QThread* APIThread = new QThread;
@@ -62,18 +67,18 @@ int main(int argc, char *argv[]) {
     QObject::connect(APIworker, SIGNAL(messageChanged(QString)), window, SLOT(changeText(QString)));
     APIThread->start();
     
-    //Timer
+    //Timer for test
     QTimer* activeTimer = new QTimer(window);
     activeTimer->setInterval(5*1000);
-    //activeTimer->setSingleShot(true);
     QObject::connect(activeTimer, SIGNAL(timeout()), window, SLOT(sendEditText()));
     QObject::connect(window,SIGNAL(sendEditText_signal(QString)),APIworker,SLOT(sendRequest(QString)));
     activeTimer->start();
-    /*
-    QTRedis redis;
-    redis.run();
-    QObject::connect(&redis, &QTRedis::signalNewPerson, window, &mainWindow::changeText);
-     */
+    
+    //Redis for face recognition
+    QTRedis* redis = new QTRedis();
+    redis->run();
+    QObject::connect(redis, &QTRedis::signalNewPerson, window, &mainWindow::changeText);
+     
     return app.exec();
 
 
