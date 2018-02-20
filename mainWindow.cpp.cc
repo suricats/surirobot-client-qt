@@ -10,7 +10,6 @@
  *
  * Created on 21 décembre 2017, 16:22
  */
-
 #include "mainWindow.h"
 #define NB_WIDGETS 3
 mainWindow::mainWindow() {
@@ -22,11 +21,25 @@ mainWindow::mainWindow() {
     imgWidget = new QWidget(this);
     labelImage = new QLabel(imgWidget);
     labelImage->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+     //Font
+    QFont f("Roboto", 40, QFont::Bold);
+    //Text Up
+    labelTextUp = new QLabel(this);
+    labelTextUp->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    labelTextUp->setFont(f);
+    labelTextUp->setText("N/A");
     
-    //Text
-    labelText = new QLabel(this);
-    labelText->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    labelText->setText("N/A");
+    //Text Middle
+    labelTextMiddle = new QLabel(this);
+    labelTextMiddle->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    labelTextMiddle->setFont(f);
+    labelTextMiddle->setText("N/A");
+    
+    //Text Down
+    labelTextDown = new QLabel(this);
+    labelTextDown->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    labelTextDown->setFont(f);
+    labelTextDown->setText("N/A");
     
     //Background color
     QPalette pal = palette();
@@ -49,15 +62,26 @@ void mainWindow::smartShow()
     displayFixer->setSingleShot(true);
     QObject::connect(displayFixer, SIGNAL(timeout()), this, SLOT(updateSlot()));
     displayFixer->start();
+    
 }
-void mainWindow::setTextFont(const QFont& f)
+void mainWindow::setTextUpFont(const QFont& f)
 {
-    labelText->setFont(f);
+    labelTextUp->setFont(f);
     updateWidgets();
 }
-void mainWindow::setText(const QString& text)
+void mainWindow::setTextUp(const QString& text)
 {
-    labelText->setText(text);
+    labelTextUp->setText(text);
+    updateWidgets();
+}
+void mainWindow::setTextMiddle(const QString& text)
+{
+    labelTextMiddle->setText(text);
+    updateWidgets();
+}
+void mainWindow::setTextDown(const QString& text)
+{
+    labelTextDown->setText(text);
     updateWidgets();
 }
 void mainWindow::setImage(QImage& image)
@@ -80,21 +104,37 @@ QString mainWindow::getEditText()
 }
 void mainWindow::sendEditText()
 {
-    emit sendEditText_signal(editText->toPlainText());
+    emit sendEditTextSignal(editText->toPlainText());
 }
 
 void mainWindow::updateWidgets()
 {
-    labelText->adjustSize();
+    labelTextUp->adjustSize();
+    labelTextMiddle->adjustSize();
+    labelTextDown->adjustSize();
     imgWidget->adjustSize();
-    imgWidget->move(this->width()/2-imgWidget->width()/2,this->height()/2-imgWidget->height()/2);
-    labelText->move(this->width()/2-this->labelText->width()/2,this->height()/2-this->labelText->height()/2+imgWidget->height()/2);
+    
+    imgWidget->move(this->width()/2-imgWidget->width()/2,this->height()/3-imgWidget->height()/2);
+    labelTextUp->move(this->width()/2-this->labelTextUp->width()/2,this->height()/3-this->labelTextUp->height()/2+imgWidget->height()/2);
+    labelTextMiddle->move(this->width()/2-this->labelTextUp->width()/2,this->height()/3-this->labelTextUp->height()/2+imgWidget->height()/2+this->labelTextUp->height());
+    labelTextDown->move(this->width()/2-this->labelTextUp->width()/2,this->height()/3-this->labelTextUp->height()/2+imgWidget->height()/2+this->labelTextUp->height()+this->labelTextMiddle->height());
 }
 void mainWindow::updateSlot()
 {
     updateWidgets();
 }
-void mainWindow::changeText(QString text) {
-    this->setText(text);
+
+///SIGNALS
+void mainWindow::setTextUpSignal(QString text) {
+    this->setTextUp(text);
+    this->updateWidgets();
+}
+
+void mainWindow::setTextMiddleSignal(QString text) {
+    this->setTextMiddle(text);
+    this->updateWidgets();
+}
+void mainWindow::setTextDownSignal(QString text) {
+    this->setTextDown(text);
     this->updateWidgets();
 }

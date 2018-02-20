@@ -28,8 +28,10 @@ public:
     mainWindow();
     virtual ~mainWindow();
     void smartShow();
-    void setTextFont(const QFont&);
-    void setText(const QString&);
+    void setTextUpFont(const QFont&);
+    void setTextUp(const QString&);
+    void setTextMiddle(const QString&);
+    void setTextDown(const QString&);
     void setEditText();
     QString getEditText();
     void setImage(QImage&);
@@ -37,17 +39,21 @@ public:
     
 
 public slots:
-    void changeText(QString text);
+    void setTextUpSignal(QString text);
+    void setTextMiddleSignal(QString text);
+    void setTextDownSignal(QString text);
     void sendEditText();
     void updateSlot();
 signals:
-    void sendEditText_signal(QString text);
+    void sendEditTextSignal(QString text);
 private:
     QWidget* imgWidget;
     QLabel* labelImage;
     QTextEdit* editText;
     QImage currentImage;
-    QLabel* labelText;
+    QLabel* labelTextUp;
+    QLabel* labelTextMiddle;
+    QLabel* labelTextDown;
     Ui::mainWindow widget;
 };
 

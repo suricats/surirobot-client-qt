@@ -21,7 +21,10 @@ sudo apt-get install qt5-default qt5-doc
 ```bash
 sudo apt-get install libhiredis-dev
 ```
-
+4. [WIP] Install OpenAL, Phonon  and SNDFile
+```bash
+sudo apt-get install libopenal-dev libalut-dev libsndfile1-dev libphonon4qt5-dev
+```
 4. Clone and open project
 5. Use **linux-debug** build configuration or
 * Add a linker to HiRedis library: **Properties > Linker > Librairies > Add Library File > Find libhiredis.so**

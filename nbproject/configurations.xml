@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>ConverseAPICaller.h</itemPath>
+      <itemPath>EmotionalAPICaller.h</itemPath>
       <itemPath>connectors/redis/QTRedis.hpp</itemPath>
       <itemPath>keyPressEventHandler.h</itemPath>
       <itemPath>mainWindow.h</itemPath>
@@ -19,6 +20,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>ConverseAPICaller.cpp</itemPath>
+      <itemPath>EmotionalAPICaller.cpp</itemPath>
       <itemPath>connectors/redis/QTRedis.cpp</itemPath>
       <itemPath>keyPressEventHandler.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -59,6 +61,10 @@
       <item path="ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ConverseAPICaller.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EmotionalAPICaller.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="connectors/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -105,6 +111,10 @@
       </item>
       <item path="ConverseAPICaller.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EmotionalAPICaller.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="connectors/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="connectors/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
@@ -143,6 +153,10 @@
       <item path="ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="ConverseAPICaller.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EmotionalAPICaller.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="connectors/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
