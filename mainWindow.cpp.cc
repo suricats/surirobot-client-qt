@@ -58,8 +58,8 @@ void mainWindow::smartShow()
     updateWidgets();
     //Timer display fixer
     QTimer* displayFixer = new QTimer(this);
-    displayFixer->setInterval(100);
-    displayFixer->setSingleShot(true);
+    displayFixer->setInterval(3000);
+    //displayFixer->setSingleShot(true);
     QObject::connect(displayFixer, SIGNAL(timeout()), this, SLOT(updateSlot()));
     displayFixer->start();
     

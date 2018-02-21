@@ -147,6 +147,7 @@
         <linkerTool>
           <linkerLibItems>
             <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libhiredis.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libQt5Multimedia.so</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
