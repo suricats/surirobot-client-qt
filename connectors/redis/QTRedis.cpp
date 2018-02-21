@@ -1,7 +1,7 @@
-/* 
+/*
  * File:   QTRedis.cpp
  * Author: tberdy
- * 
+ *
  * Created on 21 décembre 2017, 21:11
  */
 
@@ -45,7 +45,7 @@ void onChange(redisAsyncContext*, void* r, void* privdata) {
 
 void QTRedis::run() {
 
-    m_ctx = redisAsyncConnect("localhost", 6379);
+    m_ctx = redisAsyncConnect("surirobot-redis", 6379);
 
     if (m_ctx->err) {
         std::cerr << "Error: " << m_ctx->errstr << std::endl;
@@ -56,4 +56,3 @@ void QTRedis::run() {
     m_adapter.setContext(m_ctx);
     redisAsyncCommand(m_ctx, onChange, this, "SUBSCRIBE face-recognition");
 }
-
