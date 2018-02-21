@@ -20,7 +20,7 @@
 #include <QtNetwork>
 #include <QNetworkReply>
 #include <QTimer>
-#include <QCamera>
+//#include <QCamera>
 #include "ConverseAPICaller.h"
 #include "connectors/redis/QTRedis.hpp"
 #include "EmotionalAPICaller.h"
