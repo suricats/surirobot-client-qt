@@ -12,6 +12,7 @@ RUN apt-get install -y --fix-missing \
     software-properties-common \
     libhiredis-dev \
     qt5-default \
+    qtmultimedia5-dev \
     && apt-get clean && rm -rf /tmp/* /var/tmp/*
 
 RUN cd ~ && \
