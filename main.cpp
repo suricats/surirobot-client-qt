@@ -30,10 +30,11 @@
 
 int main(int argc, char *argv[]) {
     std::cout << "Program started.  " << std::endl;
-
-    QApplication app(argc, argv);
-    mainWindow* window = new mainWindow();
     
+    QApplication app(argc, argv);
+    std::cout << "Hey";
+    mainWindow* window = new mainWindow();
+    if(QCameraInfo::availableCameras().count() <= 0) window->setTextDown("No available camera.");
         
     //Image
     QImage imageNormal;
@@ -67,7 +68,7 @@ int main(int argc, char *argv[]) {
     //QObject::connect(window,SIGNAL(sendEditTextSignal(QString)),emotionalWorker,SLOT(sendRequest(QString)));
     activeTimer->start();
     
-    if(QCameraInfo::availableCameras().count() <= 0) window->setTextDown("No available camera.");
+    
     
     //Redis for face recognition
     QTRedis* redis = new QTRedis();

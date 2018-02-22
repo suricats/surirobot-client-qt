@@ -15,7 +15,10 @@ QObject(parent) {
     currentThread = new QThread;
     moveToThread(currentThread);
     camera = new QCamera();
+    captureTimer = new QTimer();
+    std::cout << "Hi";
     recorder = new QCameraImageCapture(camera);
+    std::cout << "Hey";
     recorder->setCaptureDestination(QCameraImageCapture::CaptureToFile);
     //Set the capture timer (every 0,5 seconds)
     captureTimer->setInterval(500);
