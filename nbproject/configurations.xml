@@ -144,6 +144,9 @@
         <modules>core gui widgets network</modules>
       </qt>
       <compileType>
+        <ccTool>
+          <standard>8</standard>
+        </ccTool>
         <linkerTool>
           <linkerLibItems>
             <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libhiredis.so</linkerLibFileItem>

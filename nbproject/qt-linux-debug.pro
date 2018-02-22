@@ -22,3 +22,9 @@ QMAKE_CXX = g++
 DEFINES += 
 INCLUDEPATH += 
 LIBS += -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libhiredis.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libQt5Multimedia.so  
+equals(QT_MAJOR_VERSION, 4) {
+QMAKE_CXXFLAGS += -std=c++11
+}
+equals(QT_MAJOR_VERSION, 5) {
+CONFIG += c++11
+}

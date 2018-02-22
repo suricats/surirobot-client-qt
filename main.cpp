@@ -33,7 +33,8 @@ int main(int argc, char *argv[]) {
 
     QApplication app(argc, argv);
     mainWindow* window = new mainWindow();
-
+    
+        
     //Image
     QImage imageNormal;
     imageNormal.load("./img/SuriRobot1.png");
@@ -63,8 +64,10 @@ int main(int argc, char *argv[]) {
     activeTimer->setInterval(5*1000);
     QObject::connect(activeTimer, SIGNAL(timeout()), window, SLOT(sendEditText()));
     QObject::connect(window,SIGNAL(sendEditTextSignal(QString)),converseWorker,SLOT(sendRequest(QString)));
-    QObject::connect(window,SIGNAL(sendEditTextSignal(QString)),emotionalWorker,SLOT(sendRequest(QString)));
+    //QObject::connect(window,SIGNAL(sendEditTextSignal(QString)),emotionalWorker,SLOT(sendRequest(QString)));
     activeTimer->start();
+    
+    if(QCameraInfo::availableCameras().count() <= 0) window->setTextDown("No available camera.");
     
     //Redis for face recognition
     QTRedis* redis = new QTRedis();

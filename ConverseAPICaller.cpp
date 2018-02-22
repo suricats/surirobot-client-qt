@@ -28,7 +28,7 @@ void ConverseAPICaller::receiveReply(QNetworkReply* reply) {
         networkManager->clearAccessCache();
     } else {
         QJsonObject jsonObject = QJsonDocument::fromJson(reply->readAll()).object();
-        std::cout << reply->readAll().toStdString() << std::endl;
+        std::cout << "NLPAPI" << reply->readAll().toStdString() << std::endl;
         QJsonArray messagesJson = jsonObject["results"].toObject()["messages"].toArray();
         if (!messagesJson.isEmpty()) {
             QJsonValueRef queryValue = messagesJson[0].toObject()["content"];

@@ -27,21 +27,33 @@
 #include <QWaitCondition>
 #include <QMutex>    
 #include <iostream>
+#include <vector>
+#include <QtMultimedia/QtMultimedia>
+#include <QtMultimedia/QCamera>
+#include <QtMultimedia/QCameraInfo>
+#include <QTime>
 
 class EmotionalAPICaller : public QObject {
     Q_OBJECT
 private:
     QNetworkAccessManager* networkManager;
     QThread* currentThread;
+    QCamera* camera;
+    QCameraImageCapture* recorder;
+    QTimer* captureTimer;
+    std::vector<QString> imageVec;
 public:
     bool isBusy;
     explicit EmotionalAPICaller(QObject *parent = 0);
     virtual ~EmotionalAPICaller();
     void start();
 public slots:
-    void sendRequest(QString text);
+    void sendRequest();
     void receiveReply(QNetworkReply* reply);
+    void captureImage();
+    void imageCaptured(int id, const QImage& preview);
 signals:
+    
     void messageChanged(QString text);
 
 };

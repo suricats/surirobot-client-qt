@@ -14,13 +14,24 @@ QObject(parent) {
     QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(receiveReply(QNetworkReply*)));
     currentThread = new QThread;
     moveToThread(currentThread);
+    camera = new QCamera();
+    recorder = new QCameraImageCapture(camera);
+    recorder->setCaptureDestination(QCameraImageCapture::CaptureToFile);
+    //Set the capture timer (every 0,5 seconds)
+    captureTimer->setInterval(500);
+    QObject::connect(captureTimer, SIGNAL(timeout()), this, SLOT(captureImage()));
+    QObject::connect(recorder, SIGNAL(imageCaptured(int, const QImage&)), this, SLOT(imageCaptured(int, const QImage&)));
+    imageVec.clear();
+
 }
-EmotionalAPICaller::~EmotionalAPICaller()
-{
+
+EmotionalAPICaller::~EmotionalAPICaller() {
     currentThread->quit();
+
     delete currentThread;
     delete networkManager;
 }
+
 void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
     if (reply->error() != QNetworkReply::NoError) {
         std::cerr << "Error " << reply->error() << std::endl;
@@ -28,39 +39,54 @@ void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
         networkManager->clearAccessCache();
     } else {
         QJsonObject jsonObject = QJsonDocument::fromJson(reply->readAll()).object();
-        std::cout << reply->readAll().toStdString() << std::endl;
-        QJsonArray messagesJson = jsonObject["results"].toObject()["messages"].toArray();
-        if (!messagesJson.isEmpty()) {
-            QJsonValueRef queryValue = messagesJson[0].toObject()["content"];
-            if (!queryValue.isNull() && !queryValue.isUndefined()) {
-                QString message = queryValue.toString();
-                std::cout << "message : " << message.toStdString() << std::endl;
-                emit messageChanged(message);
-            }
-        }
-        else emit messageChanged(QString("Can't find message."));
+        std::cout << "EmoAPI : " << reply->readAll().toStdString() << std::endl;
+        QString message = jsonObject["scores"].toString("No emotion detected");
+        std::cout << "Message : " << message.toStdString() << std::endl;
+        emit messageChanged(message);
+
 
     }
     reply->deleteLater();
 }
 
-void EmotionalAPICaller::start() {
-    currentThread->start();
-    
+void EmotionalAPICaller::captureImage() {
+    recorder->capture();
 }
 
-void EmotionalAPICaller::sendRequest(QString text) {
+void EmotionalAPICaller::imageCaptured(int id, const QImage& preview) {
+    QByteArray ba;
+    QBuffer buffer(&ba);
+    buffer.open(QIODevice::WriteOnly);
+    preview.save(&buffer, "BMP");
+    QByteArray arr = qCompress(buffer.buffer(), 5);
+    QString a = arr.toBase64();
+    imageVec.push_back(a);
+    if (imageVec.size() > 5) emit sendRequest();
+}
 
-    QUrl serviceURL("https://nlp.api.surirobot.net/getanswer");
+void EmotionalAPICaller::start() {
+    currentThread->start();
+    camera->setCaptureMode(QCamera::CaptureStillImage);
+    camera->start();
+    captureTimer->start();
+
+}
+
+void EmotionalAPICaller::sendRequest() {
+
+    QUrl serviceURL("https://emotional.api.surirobot.net/");
 
     QJsonObject jsonObject;
     QJsonArray pictures;
-    pictures.append(QJsonValue(text));
-    jsonObject["pictures"] = pictures;
+    for (QString str : imageVec) {
+        pictures.append(QJsonValue(str));
+    }
+    //jsonObject["pictures"] = QJsonValue(imageVec.at(0));
+    imageVec.clear();
     QJsonDocument jsonData(jsonObject);
     QByteArray data = jsonData.toJson();
     QNetworkRequest request(serviceURL);
-
+    std::cout << "Request sent to EmotionalAPI" << data.toStdString() << std::endl;
     //request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
     request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
     //request.setRawHeader("User-Agent", "My app name v0.1");
