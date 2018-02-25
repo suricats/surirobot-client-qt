@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     mainWindow* window = new mainWindow();
     
-    if(QCameraInfo::availableCameras().count() <= 0) window->setTextDown("No available camera.");
+    //if(QCameraInfo::availableCameras().count() <= 0) window->setTextDown("No available camera.");
     
     //Image
     QImage imageNormal;
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
     converseWorker->start();
     
     //Emotional API
-    APICaller* emotionalWorker = new EmotionalAPICaller("https://emotional.api.surirobot.net");
+    APICaller* emotionalWorker = new EmotionalAPICaller("https://emotional.api.surirobot.net/emotions/actions/retrieve-facial-emotion");
     QObject::connect(emotionalWorker,SIGNAL(newReply(QString)),window,SLOT(setTextDownSignal(QString)));
     emotionalWorker->start();
     

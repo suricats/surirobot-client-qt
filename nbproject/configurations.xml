@@ -7,6 +7,7 @@
       <itemPath>src/api/APICaller.hpp</itemPath>
       <itemPath>src/api/ConverseAPICaller.hpp</itemPath>
       <itemPath>src/api/EmotionalAPICaller.hpp</itemPath>
+      <itemPath>src/api/EmotionalAPICaller_old.hpp</itemPath>
       <itemPath>src/redis/QTRedis.hpp</itemPath>
       <itemPath>src/keyPressEventHandler.h</itemPath>
       <itemPath>src/ui/mainWindow.h</itemPath>
@@ -23,6 +24,7 @@
       <itemPath>src/api/APICaller.cpp</itemPath>
       <itemPath>src/api/ConverseAPICaller.cpp</itemPath>
       <itemPath>src/api/EmotionalAPICaller.cpp</itemPath>
+      <itemPath>src/api/EmotionalAPICaller_old.cpp</itemPath>
       <itemPath>src/redis/QTRedis.cpp</itemPath>
       <itemPath>src/keyPressEventHandler.cpp</itemPath>
       <itemPath>src/main.cpp</itemPath>
@@ -71,6 +73,10 @@
       <item path="src/api/EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/api/EmotionalAPICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/api/EmotionalAPICaller_old.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/api/EmotionalAPICaller_old.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -125,6 +131,10 @@
       </item>
       <item path="src/api/EmotionalAPICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/api/EmotionalAPICaller_old.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/api/EmotionalAPICaller_old.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
@@ -161,6 +171,9 @@
           <linkerLibItems>
             <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libhiredis.so</linkerLibFileItem>
             <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libQt5Multimedia.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libopencv_core.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libopencv_highgui.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libopencv_imgproc.so</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

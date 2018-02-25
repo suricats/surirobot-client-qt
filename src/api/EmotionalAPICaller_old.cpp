@@ -3,23 +3,27 @@
 
 EmotionalAPICaller::EmotionalAPICaller(QString text) :
 APICaller(text) {
-    if (!cap.open(-1)) std::cerr << "Error - No camera found" << std::endl;
+    if(QCameraInfo::availableCameras().count() <= 0) camera = new QCamera();
+    else camera = new QCamera(QCameraInfo::availableCameras().first());
     captureTimer = new QTimer();
+    recorder = new QCameraImageCapture(camera);
+    recorder->setCaptureDestination(QCameraImageCapture::CaptureToFile);
     //Set the capture timer (every 0,5 seconds)
-    captureTimer->setInterval(100);
+    captureTimer->setInterval(500);
     QObject::connect(captureTimer, SIGNAL(timeout()), this, SLOT(captureImage()));
+    QObject::connect(recorder, SIGNAL(imageCaptured(int, const QImage&)), this, SLOT(imageCaptured(int, const QImage&)));
     imageVec.clear();
 
 }
 
 EmotionalAPICaller::~EmotionalAPICaller() {
+    delete camera;
     captureTimer->stop();
     delete captureTimer;
     imageVec.clear();
 }
 
 void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
-    isBusy = false;
     if (reply->error() != QNetworkReply::NoError) {
         std::cerr << "Error " << reply->error() << std::endl;
         std::cerr << reply->readAll().toStdString() << std::endl;
@@ -37,23 +41,10 @@ void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
 }
 
 void EmotionalAPICaller::captureImage() {
-
-    cv::Mat frame;
-    cap >> frame;
-    cv::Mat dst;
-    cv::resize(frame, dst, cv::Size(150, 150));
-    cv::imshow("Camera", dst);
-    std::vector<uint8_t> buffer;
-    cv::imencode(".png", dst, buffer);
-    QByteArray byteArray = QByteArray::fromRawData((const char*) buffer.data(), buffer.size());
-    QString base64Image(byteArray.toBase64());
-    imageVec.push_back(base64Image);
-    if (imageVec.size() > 10) emit sendRequest();
-
+    recorder->capture();
+    camera->unlock();
 }
 
-/*
- 
 void EmotionalAPICaller::imageCaptured(int id, const QImage& preview) {
     QByteArray ba;
     QBuffer buffer(&ba);
@@ -64,31 +55,29 @@ void EmotionalAPICaller::imageCaptured(int id, const QImage& preview) {
     imageVec.push_back(a);
     if (imageVec.size() > 5) emit sendRequest();
 }
- */
+
 void EmotionalAPICaller::start() const {
     APICaller::start();
-
+    camera->setCaptureMode(QCamera::CaptureStillImage);
+    camera->start();
+    camera->searchAndLock();
     captureTimer->start();
 
 }
 
 void EmotionalAPICaller::sendRequest(QString text) {
-    if (!isBusy) {
-        QJsonObject jsonObject;
-        QJsonArray pictures;
-        for (QString str : imageVec) {
-            pictures.append(QJsonValue(str));
-        }
-        jsonObject["pictures"] = pictures;
-        QJsonDocument jsonData(jsonObject);
-        imageVec.clear();
-        QByteArray data = jsonData.toJson();
-        QNetworkRequest request(url);
-        std::cout << "Sended to Emotional API : " << "..."/*data.toStdString()*/ << std::endl;
-        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
-        isBusy = true;
-        networkManager->post(request, data);
+    QJsonObject jsonObject;
+    QJsonArray pictures;
+    for (QString str : imageVec) {
+        pictures.append(QJsonValue(str));
     }
-
+    imageVec.clear();
+    QJsonDocument jsonData(jsonObject);
+    QByteArray data = jsonData.toJson();
+    QNetworkRequest request(url);
+    std::cout << "Sended to Emotional API : " << data.toStdString() << std::endl;
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+    
+    networkManager->post(request, data);
 }
 

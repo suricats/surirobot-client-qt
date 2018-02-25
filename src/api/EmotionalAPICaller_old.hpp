@@ -1,18 +1,18 @@
+
 #ifndef EMOTIONALAPICALLER_HPP
 #define EMOTIONALAPICALLER_HPP
 
 #include "APICaller.hpp"
-#include <vector>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
+#include <QtMultimedia/QtMultimedia>
+#include <QtMultimedia/QCamera>
 
 class EmotionalAPICaller : public APICaller {
     Q_OBJECT
 private:
+    QCamera* camera;
+    QCameraImageCapture* recorder;
     QTimer* captureTimer;
     std::vector<QString> imageVec;
-    cv::VideoCapture cap;
 public:
     explicit EmotionalAPICaller(QString text);
     virtual ~EmotionalAPICaller();
@@ -21,7 +21,7 @@ public slots:
     void sendRequest(QString text = "") override;
     void receiveReply(QNetworkReply* reply) override;
     void captureImage();
-    //void imageCaptured(int id, const QImage& preview);
+    void imageCaptured(int id, const QImage& preview);
 
 };
 

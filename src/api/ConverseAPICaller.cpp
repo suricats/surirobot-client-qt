@@ -3,12 +3,14 @@
 
 ConverseAPICaller::ConverseAPICaller(QString text) :
 APICaller(text) {
-    
+
 }
-ConverseAPICaller::~ConverseAPICaller()
-{
+
+ConverseAPICaller::~ConverseAPICaller() {
 }
+
 void ConverseAPICaller::receiveReply(QNetworkReply* reply) {
+    isBusy=false;
     if (reply->error() != QNetworkReply::NoError) {
         std::cerr << "Error  " << reply->error() << " : " << reply->readAll().toStdString() << std::endl;
         networkManager->clearAccessCache();
@@ -22,14 +24,13 @@ void ConverseAPICaller::receiveReply(QNetworkReply* reply) {
                 QString message = queryValue.toString();
                 emit newReply(message);
             }
-        }
-        else emit newReply(QString("Can't find message."));
+        } else emit newReply(QString("Can't find message."));
 
     }
     reply->deleteLater();
 }
-void ConverseAPICaller::sendRequest(QString text) {
 
+void ConverseAPICaller::sendRequest(QString text) {
     /*
     SEND FORM-DATA
     QUrlQuery postData;
@@ -39,20 +40,25 @@ void ConverseAPICaller::sendRequest(QString text) {
     
     //postData.addQueryItem("lang","fr");
     serviceURL.setQuery(postData.query());
-     */
-    //Create the json request
-    QJsonObject jsonObject;
-    jsonObject["text"] = text;
-    jsonObject["language"] = "fr";
-    QJsonDocument jsonData(jsonObject);
-    QByteArray data = jsonData.toJson();
-    QNetworkRequest request(url);
-    std::cout << "Sended to Converse API : " << data.toStdString() << std::endl;
-    //request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
-    //request.setRawHeader("User-Agent", "My app name v0.1");
-    //request.setRawHeader("X-Custom-User-Agent", "My app name v0.1");
-    //request.setRawHeader("Content-Length", postDataSize);
-    networkManager->post(request, data);
+    */
+    if (text != "" && !isBusy) {
+        
+        //Create the json request
+        QJsonObject jsonObject;
+        jsonObject["text"] = text;
+        jsonObject["language"] = "fr";
+        QJsonDocument jsonData(jsonObject);
+        QByteArray data = jsonData.toJson();
+        QNetworkRequest request(url);
+        std::cout << "Sended to Converse API : " << data.toStdString() << std::endl;
+        //request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+        //request.setRawHeader("User-Agent", "My app name v0.1");
+        //request.setRawHeader("X-Custom-User-Agent", "My app name v0.1");
+        //request.setRawHeader("Content-Length", postDataSize);
+        isBusy=true;
+        networkManager->post(request, data);
+    }
+
 }
 
