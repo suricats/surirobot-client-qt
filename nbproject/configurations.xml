@@ -4,27 +4,29 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>ConverseAPICaller.h</itemPath>
-      <itemPath>EmotionalAPICaller.h</itemPath>
-      <itemPath>connectors/redis/QTRedis.hpp</itemPath>
-      <itemPath>keyPressEventHandler.h</itemPath>
-      <itemPath>mainWindow.h</itemPath>
-      <itemPath>qt.h</itemPath>
+      <itemPath>src/api/APICaller.hpp</itemPath>
+      <itemPath>src/api/ConverseAPICaller.hpp</itemPath>
+      <itemPath>src/api/EmotionalAPICaller.hpp</itemPath>
+      <itemPath>src/redis/QTRedis.hpp</itemPath>
+      <itemPath>src/keyPressEventHandler.h</itemPath>
+      <itemPath>src/ui/mainWindow.h</itemPath>
+      <itemPath>src/qt.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
-      <itemPath>mainWindow.ui</itemPath>
+      <itemPath>src/ui/mainWindow.ui</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>ConverseAPICaller.cpp</itemPath>
-      <itemPath>EmotionalAPICaller.cpp</itemPath>
-      <itemPath>connectors/redis/QTRedis.cpp</itemPath>
-      <itemPath>keyPressEventHandler.cpp</itemPath>
-      <itemPath>main.cpp</itemPath>
-      <itemPath>mainWindow.cpp.cc</itemPath>
+      <itemPath>src/api/APICaller.cpp</itemPath>
+      <itemPath>src/api/ConverseAPICaller.cpp</itemPath>
+      <itemPath>src/api/EmotionalAPICaller.cpp</itemPath>
+      <itemPath>src/redis/QTRedis.cpp</itemPath>
+      <itemPath>src/keyPressEventHandler.cpp</itemPath>
+      <itemPath>src/main.cpp</itemPath>
+      <itemPath>src/ui/mainWindow.cpp.cc</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -39,7 +41,7 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>connectors</Elem>
+    <Elem>src</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -58,29 +60,33 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
-      <item path="ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/api/APICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ConverseAPICaller.h" ex="false" tool="3" flavor2="0">
+      <item path="src/api/APICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/api/ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EmotionalAPICaller.h" ex="false" tool="3" flavor2="0">
+      <item path="src/api/ConverseAPICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="connectors/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/api/EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/api/EmotionalAPICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
+      <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="mainWindow.cpp.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="mainWindow.h" ex="false" tool="3" flavor2="0">
+      <item path="src/qt.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="mainWindow.ui" ex="false" tool="3" flavor2="0">
+      <item path="src/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="qt.h" ex="false" tool="3" flavor2="0">
+      <item path="src/ui/mainWindow.cpp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ui/mainWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ui/mainWindow.ui" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="4">
@@ -107,31 +113,35 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/api/APICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ConverseAPICaller.h" ex="false" tool="3" flavor2="0">
+      <item path="src/api/APICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/api/ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EmotionalAPICaller.h" ex="false" tool="3" flavor2="0">
+      <item path="src/api/ConverseAPICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="connectors/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/api/EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="connectors/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/api/EmotionalAPICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
+      <item path="src/keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="mainWindow.cpp.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/qt.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="mainWindow.h" ex="false" tool="3" flavor2="0">
+      <item path="src/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="mainWindow.ui" ex="false" tool="3" flavor2="0">
+      <item path="src/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="qt.h" ex="false" tool="3" flavor2="0">
+      <item path="src/ui/mainWindow.cpp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ui/mainWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ui/mainWindow.ui" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="linux-debug" type="4">
@@ -154,31 +164,35 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/api/APICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="ConverseAPICaller.h" ex="false" tool="3" flavor2="0">
+      <item path="src/api/APICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/api/ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="EmotionalAPICaller.h" ex="false" tool="3" flavor2="0">
+      <item path="src/api/ConverseAPICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="connectors/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/api/EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="connectors/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
+      <item path="src/api/EmotionalAPICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="keyPressEventHandler.cpp" ex="false" tool="1" flavor2="9">
+      <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="9">
       </item>
-      <item path="keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
+      <item path="src/keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="main.cpp" ex="false" tool="1" flavor2="9">
+      <item path="src/main.cpp" ex="false" tool="1" flavor2="9">
       </item>
-      <item path="mainWindow.cpp.cc" ex="false" tool="1" flavor2="9">
+      <item path="src/qt.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="mainWindow.h" ex="false" tool="3" flavor2="0">
+      <item path="src/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="mainWindow.ui" ex="false" tool="3" flavor2="0">
+      <item path="src/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="qt.h" ex="false" tool="3" flavor2="0">
+      <item path="src/ui/mainWindow.cpp.cc" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="src/ui/mainWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ui/mainWindow.ui" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

@@ -48,29 +48,33 @@ OBJECTS_DIR   = build/linux-debug/GNU-Linux/
 
 ####### Files
 
-SOURCES       = ConverseAPICaller.cpp \
-		EmotionalAPICaller.cpp \
-		connectors/redis/QTRedis.cpp \
-		keyPressEventHandler.cpp \
-		main.cpp \
-		mainWindow.cpp.cc moc_ConverseAPICaller.cpp \
+SOURCES       = src/api/APICaller.cpp \
+		src/api/ConverseAPICaller.cpp \
+		src/api/EmotionalAPICaller.cpp \
+		src/keyPressEventHandler.cpp \
+		src/main.cpp \
+		src/redis/QTRedis.cpp \
+		src/ui/mainWindow.cpp.cc moc_APICaller.cpp \
+		moc_ConverseAPICaller.cpp \
 		moc_EmotionalAPICaller.cpp \
-		moc_QTRedis.cpp \
 		moc_keyPressEventHandler.cpp \
-		moc_mainWindow.cpp \
-		moc_qt.cpp
-OBJECTS       = build/linux-debug/GNU-Linux/ConverseAPICaller.o \
+		moc_qt.cpp \
+		moc_QTRedis.cpp \
+		moc_mainWindow.cpp
+OBJECTS       = build/linux-debug/GNU-Linux/APICaller.o \
+		build/linux-debug/GNU-Linux/ConverseAPICaller.o \
 		build/linux-debug/GNU-Linux/EmotionalAPICaller.o \
-		build/linux-debug/GNU-Linux/QTRedis.o \
 		build/linux-debug/GNU-Linux/keyPressEventHandler.o \
 		build/linux-debug/GNU-Linux/main.o \
+		build/linux-debug/GNU-Linux/QTRedis.o \
 		build/linux-debug/GNU-Linux/mainWindow.cpp.o \
+		build/linux-debug/GNU-Linux/moc_APICaller.o \
 		build/linux-debug/GNU-Linux/moc_ConverseAPICaller.o \
 		build/linux-debug/GNU-Linux/moc_EmotionalAPICaller.o \
-		build/linux-debug/GNU-Linux/moc_QTRedis.o \
 		build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o \
-		build/linux-debug/GNU-Linux/moc_mainWindow.o \
-		build/linux-debug/GNU-Linux/moc_qt.o
+		build/linux-debug/GNU-Linux/moc_qt.o \
+		build/linux-debug/GNU-Linux/moc_QTRedis.o \
+		build/linux-debug/GNU-Linux/moc_mainWindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -130,17 +134,19 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		nbproject/nbproject/qt-linux-debug.pro ConverseAPICaller.h \
-		EmotionalAPICaller.h \
-		connectors/redis/QTRedis.hpp \
-		keyPressEventHandler.h \
-		mainWindow.h \
-		qt.h ConverseAPICaller.cpp \
-		EmotionalAPICaller.cpp \
-		connectors/redis/QTRedis.cpp \
-		keyPressEventHandler.cpp \
-		main.cpp \
-		mainWindow.cpp.cc
+		nbproject/nbproject/qt-linux-debug.pro src/api/APICaller.hpp \
+		src/api/ConverseAPICaller.hpp \
+		src/api/EmotionalAPICaller.hpp \
+		src/keyPressEventHandler.h \
+		src/qt.h \
+		src/redis/QTRedis.hpp \
+		src/ui/mainWindow.h src/api/APICaller.cpp \
+		src/api/ConverseAPICaller.cpp \
+		src/api/EmotionalAPICaller.cpp \
+		src/keyPressEventHandler.cpp \
+		src/main.cpp \
+		src/redis/QTRedis.cpp \
+		src/ui/mainWindow.cpp.cc
 QMAKE_TARGET  = surirobot-client-qt
 DESTDIR       = dist/linux-debug/GNU-Linux/#avoid trailing-slash linebreak
 TARGET        = dist/linux-debug/GNU-Linux/surirobot-client-qt
@@ -317,9 +323,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ConverseAPICaller.h EmotionalAPICaller.h connectors/redis/QTRedis.hpp keyPressEventHandler.h mainWindow.h qt.h $(DISTDIR)/
-	$(COPY_FILE) --parents ConverseAPICaller.cpp EmotionalAPICaller.cpp connectors/redis/QTRedis.cpp keyPressEventHandler.cpp main.cpp mainWindow.cpp.cc $(DISTDIR)/
-	$(COPY_FILE) --parents mainWindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents src/api/APICaller.hpp src/api/ConverseAPICaller.hpp src/api/EmotionalAPICaller.hpp src/keyPressEventHandler.h src/qt.h src/redis/QTRedis.hpp src/ui/mainWindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/api/APICaller.cpp src/api/ConverseAPICaller.cpp src/api/EmotionalAPICaller.cpp src/keyPressEventHandler.cpp src/main.cpp src/redis/QTRedis.cpp src/ui/mainWindow.cpp.cc $(DISTDIR)/
+	$(COPY_FILE) --parents src/ui/mainWindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -342,36 +348,41 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_QTRedis.cpp moc_keyPressEventHandler.cpp moc_mainWindow.cpp moc_qt.cpp
+compiler_moc_header_make_all: moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_QTRedis.cpp moc_mainWindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_QTRedis.cpp moc_keyPressEventHandler.cpp moc_mainWindow.cpp moc_qt.cpp
-moc_ConverseAPICaller.cpp: ConverseAPICaller.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ConverseAPICaller.h -o moc_ConverseAPICaller.cpp
+	-$(DEL_FILE) moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_QTRedis.cpp moc_mainWindow.cpp
+moc_APICaller.cpp: src/api/APICaller.hpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/api/APICaller.hpp -o moc_APICaller.cpp
 
-moc_EmotionalAPICaller.cpp: EmotionalAPICaller.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include EmotionalAPICaller.h -o moc_EmotionalAPICaller.cpp
+moc_ConverseAPICaller.cpp: src/api/APICaller.hpp \
+		src/api/ConverseAPICaller.hpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/api/ConverseAPICaller.hpp -o moc_ConverseAPICaller.cpp
 
-moc_QTRedis.cpp: connectors/redis/QTRedis.hpp
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include connectors/redis/QTRedis.hpp -o moc_QTRedis.cpp
+moc_EmotionalAPICaller.cpp: src/api/APICaller.hpp \
+		src/api/EmotionalAPICaller.hpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/api/EmotionalAPICaller.hpp -o moc_EmotionalAPICaller.cpp
 
-moc_keyPressEventHandler.cpp: keyPressEventHandler.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include keyPressEventHandler.h -o moc_keyPressEventHandler.cpp
+moc_keyPressEventHandler.cpp: src/keyPressEventHandler.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/keyPressEventHandler.h -o moc_keyPressEventHandler.cpp
 
-moc_mainWindow.cpp: ui_mainWindow.h \
-		keyPressEventHandler.h \
-		mainWindow.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainWindow.h -o moc_mainWindow.cpp
+moc_qt.cpp: src/qt.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/qt.h -o moc_qt.cpp
 
-moc_qt.cpp: qt.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include qt.h -o moc_qt.cpp
+moc_QTRedis.cpp: src/redis/QTRedis.hpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/redis/QTRedis.hpp -o moc_QTRedis.cpp
+
+moc_mainWindow.cpp: src/ui/ui_mainWindow.h \
+		src/keyPressEventHandler.h \
+		src/ui/mainWindow.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/ui/mainWindow.h -o moc_mainWindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
 compiler_uic_make_all: ui_mainWindow.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_mainWindow.h
-ui_mainWindow.h: mainWindow.ui
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic mainWindow.ui -o ui_mainWindow.h
+ui_mainWindow.h: src/ui/mainWindow.ui
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic src/ui/mainWindow.ui -o ui_mainWindow.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -383,30 +394,39 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-build/linux-debug/GNU-Linux/ConverseAPICaller.o: ConverseAPICaller.cpp ConverseAPICaller.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/ConverseAPICaller.o ConverseAPICaller.cpp
+build/linux-debug/GNU-Linux/APICaller.o: src/api/APICaller.cpp src/api/APICaller.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/APICaller.o src/api/APICaller.cpp
 
-build/linux-debug/GNU-Linux/EmotionalAPICaller.o: EmotionalAPICaller.cpp EmotionalAPICaller.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/EmotionalAPICaller.o EmotionalAPICaller.cpp
+build/linux-debug/GNU-Linux/ConverseAPICaller.o: src/api/ConverseAPICaller.cpp src/api/ConverseAPICaller.hpp \
+		src/api/APICaller.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/ConverseAPICaller.o src/api/ConverseAPICaller.cpp
 
-build/linux-debug/GNU-Linux/QTRedis.o: connectors/redis/QTRedis.cpp connectors/redis/QTRedis.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/QTRedis.o connectors/redis/QTRedis.cpp
+build/linux-debug/GNU-Linux/EmotionalAPICaller.o: src/api/EmotionalAPICaller.cpp src/api/EmotionalAPICaller.hpp \
+		src/api/APICaller.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/EmotionalAPICaller.o src/api/EmotionalAPICaller.cpp
 
-build/linux-debug/GNU-Linux/keyPressEventHandler.o: keyPressEventHandler.cpp keyPressEventHandler.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/keyPressEventHandler.o keyPressEventHandler.cpp
+build/linux-debug/GNU-Linux/keyPressEventHandler.o: src/keyPressEventHandler.cpp src/keyPressEventHandler.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/keyPressEventHandler.o src/keyPressEventHandler.cpp
 
-build/linux-debug/GNU-Linux/main.o: main.cpp keyPressEventHandler.h \
-		mainWindow.h \
-		ui_mainWindow.h \
-		ConverseAPICaller.h \
-		connectors/redis/QTRedis.hpp \
-		EmotionalAPICaller.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/main.o main.cpp
+build/linux-debug/GNU-Linux/main.o: src/main.cpp src/keyPressEventHandler.h \
+		src/ui/mainWindow.h \
+		src/ui/ui_mainWindow.h \
+		src/api/ConverseAPICaller.hpp \
+		src/api/APICaller.hpp \
+		src/api/EmotionalAPICaller.hpp \
+		src/redis/QTRedis.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/main.o src/main.cpp
 
-build/linux-debug/GNU-Linux/mainWindow.cpp.o: mainWindow.cpp.cc mainWindow.h \
-		ui_mainWindow.h \
-		keyPressEventHandler.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/mainWindow.cpp.o mainWindow.cpp.cc
+build/linux-debug/GNU-Linux/QTRedis.o: src/redis/QTRedis.cpp src/redis/QTRedis.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/QTRedis.o src/redis/QTRedis.cpp
+
+build/linux-debug/GNU-Linux/mainWindow.cpp.o: src/ui/mainWindow.cpp.cc src/ui/mainWindow.h \
+		src/ui/ui_mainWindow.h \
+		src/keyPressEventHandler.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/mainWindow.cpp.o src/ui/mainWindow.cpp.cc
+
+build/linux-debug/GNU-Linux/moc_APICaller.o: moc_APICaller.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_APICaller.o moc_APICaller.cpp
 
 build/linux-debug/GNU-Linux/moc_ConverseAPICaller.o: moc_ConverseAPICaller.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_ConverseAPICaller.o moc_ConverseAPICaller.cpp
@@ -414,17 +434,17 @@ build/linux-debug/GNU-Linux/moc_ConverseAPICaller.o: moc_ConverseAPICaller.cpp
 build/linux-debug/GNU-Linux/moc_EmotionalAPICaller.o: moc_EmotionalAPICaller.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_EmotionalAPICaller.o moc_EmotionalAPICaller.cpp
 
-build/linux-debug/GNU-Linux/moc_QTRedis.o: moc_QTRedis.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_QTRedis.o moc_QTRedis.cpp
-
 build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o: moc_keyPressEventHandler.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o moc_keyPressEventHandler.cpp
 
-build/linux-debug/GNU-Linux/moc_mainWindow.o: moc_mainWindow.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_mainWindow.o moc_mainWindow.cpp
-
 build/linux-debug/GNU-Linux/moc_qt.o: moc_qt.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_qt.o moc_qt.cpp
+
+build/linux-debug/GNU-Linux/moc_QTRedis.o: moc_QTRedis.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_QTRedis.o moc_QTRedis.cpp
+
+build/linux-debug/GNU-Linux/moc_mainWindow.o: moc_mainWindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_mainWindow.o moc_mainWindow.cpp
 
 ####### Install
 

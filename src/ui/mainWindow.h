@@ -15,7 +15,7 @@
 #define _MAINWINDOW_H
 
 #include "ui_mainWindow.h"
-#include "keyPressEventHandler.h"
+#include "../keyPressEventHandler.h"
 #include <iostream>
 #include <QApplication>
 #include <QLabel>

@@ -1,49 +1,33 @@
-/*
- * File:   main.cpp
- * Author: Thomas
- *
- * Created on 10 octobre 2017, 22:28
- */
 
+//QT includes
 #include <QApplication>
-#include <QImage>
-#include <QtWidgets/QLabel>
-#include <QGridLayout>
-#include <QRect>
-#include <QDesktopWidget>
-#include <iostream>
-#include <string>
-#include <unistd.h>
-#include <QtWidgets/qlayout.h>
-#include "keyPressEventHandler.h"
-#include "mainWindow.h"
-#include <QtNetwork>
-#include <QNetworkReply>
 #include <QTimer>
 #include <QtMultimedia/QtMultimedia>
 #include <QtMultimedia/QCamera>
-#include <QtMultimedia/QCameraInfo>
 
-#include "ConverseAPICaller.h"
-#include "connectors/redis/QTRedis.hpp"
-#include "EmotionalAPICaller.h"
+//Other includes    
+#include <iostream>
+#include "keyPressEventHandler.h"
+#include "ui/mainWindow.h"
+#include "api/ConverseAPICaller.hpp"
+#include "api/EmotionalAPICaller.hpp"
+#include "redis/QTRedis.hpp"
 
 int main(int argc, char *argv[]) {
     std::cout << "Program started.  " << std::endl;
     
     QApplication app(argc, argv);
-    std::cout << "Hey";
     mainWindow* window = new mainWindow();
+    
     if(QCameraInfo::availableCameras().count() <= 0) window->setTextDown("No available camera.");
-        
+    
     //Image
     QImage imageNormal;
-    imageNormal.load("./img/SuriRobot1.png");
+    imageNormal.load("res/SuriRobot1.png");
     window->setImage(imageNormal);
 
    
     //Camera
-    
     //EditText
     window->setEditText();
     
@@ -51,14 +35,15 @@ int main(int argc, char *argv[]) {
     window->smartShow();
     
     //Converse API
-    ConverseAPICaller* converseWorker = new ConverseAPICaller();
-    QObject::connect(converseWorker, SIGNAL(messageChanged(QString)), window, SLOT(setTextUpSignal(QString)));
+    APICaller* converseWorker = new ConverseAPICaller("https://nlp.api.surirobot.net/getanswer");
+    QObject::connect(converseWorker, SIGNAL(newReply(QString)), window, SLOT(setTextUpSignal(QString)));
     converseWorker->start();
     
     //Emotional API
-    EmotionalAPICaller* emotionalWorker = new EmotionalAPICaller();
-    QObject::connect(emotionalWorker,SIGNAL(messageChanged(QString)),window,SLOT(setTextDownSignal(QString)));
+    APICaller* emotionalWorker = new EmotionalAPICaller("https://emotional.api.surirobot.net");
+    QObject::connect(emotionalWorker,SIGNAL(newReply(QString)),window,SLOT(setTextDownSignal(QString)));
     emotionalWorker->start();
+    
     
     //Timer for test
     QTimer* activeTimer = new QTimer(window);
@@ -67,7 +52,6 @@ int main(int argc, char *argv[]) {
     QObject::connect(window,SIGNAL(sendEditTextSignal(QString)),converseWorker,SLOT(sendRequest(QString)));
     //QObject::connect(window,SIGNAL(sendEditTextSignal(QString)),emotionalWorker,SLOT(sendRequest(QString)));
     activeTimer->start();
-    
     
     
     //Redis for face recognition

@@ -1,24 +1,12 @@
-/* 
- * File:   APICaller.cpp
- * Author: Alain BERRIER
- * 
- * Created on 8 février 2018, 20:40
- */
 
+#include "EmotionalAPICaller.hpp"
 
-#include "EmotionalAPICaller.h"
-
-EmotionalAPICaller::EmotionalAPICaller(QObject *parent) :
-QObject(parent) {
-    networkManager = new QNetworkAccessManager(this);
-    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(receiveReply(QNetworkReply*)));
-    currentThread = new QThread;
-    moveToThread(currentThread);
-    camera = new QCamera();
+EmotionalAPICaller::EmotionalAPICaller(QString text) :
+APICaller(text) {
+    if(QCameraInfo::availableCameras().count() <= 0) camera = new QCamera();
+    else camera = new QCamera(QCameraInfo::availableCameras().first());
     captureTimer = new QTimer();
-    std::cout << "Hi";
     recorder = new QCameraImageCapture(camera);
-    std::cout << "Hey";
     recorder->setCaptureDestination(QCameraImageCapture::CaptureToFile);
     //Set the capture timer (every 0,5 seconds)
     captureTimer->setInterval(500);
@@ -29,10 +17,10 @@ QObject(parent) {
 }
 
 EmotionalAPICaller::~EmotionalAPICaller() {
-    currentThread->quit();
-
-    delete currentThread;
-    delete networkManager;
+    delete camera;
+    captureTimer->stop();
+    delete captureTimer;
+    imageVec.clear();
 }
 
 void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
@@ -45,7 +33,7 @@ void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
         std::cout << "EmoAPI : " << reply->readAll().toStdString() << std::endl;
         QString message = jsonObject["scores"].toString("No emotion detected");
         std::cout << "Message : " << message.toStdString() << std::endl;
-        emit messageChanged(message);
+        emit newReply(message);
 
 
     }
@@ -54,6 +42,7 @@ void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
 
 void EmotionalAPICaller::captureImage() {
     recorder->capture();
+    camera->unlock();
 }
 
 void EmotionalAPICaller::imageCaptured(int id, const QImage& preview) {
@@ -67,34 +56,28 @@ void EmotionalAPICaller::imageCaptured(int id, const QImage& preview) {
     if (imageVec.size() > 5) emit sendRequest();
 }
 
-void EmotionalAPICaller::start() {
-    currentThread->start();
+void EmotionalAPICaller::start() const {
+    APICaller::start();
     camera->setCaptureMode(QCamera::CaptureStillImage);
     camera->start();
+    camera->searchAndLock();
     captureTimer->start();
 
 }
 
-void EmotionalAPICaller::sendRequest() {
-
-    QUrl serviceURL("https://emotional.api.surirobot.net/");
-
+void EmotionalAPICaller::sendRequest(QString text) {
     QJsonObject jsonObject;
     QJsonArray pictures;
     for (QString str : imageVec) {
         pictures.append(QJsonValue(str));
     }
-    //jsonObject["pictures"] = QJsonValue(imageVec.at(0));
     imageVec.clear();
     QJsonDocument jsonData(jsonObject);
     QByteArray data = jsonData.toJson();
-    QNetworkRequest request(serviceURL);
-    std::cout << "Request sent to EmotionalAPI" << data.toStdString() << std::endl;
-    //request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+    QNetworkRequest request(url);
+    std::cout << "Sended to Emotional API : " << data.toStdString() << std::endl;
     request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
-    //request.setRawHeader("User-Agent", "My app name v0.1");
-    //request.setRawHeader("X-Custom-User-Agent", "My app name v0.1");
-    //request.setRawHeader("Content-Length", postDataSize);
+    
     networkManager->post(request, data);
 }
 
