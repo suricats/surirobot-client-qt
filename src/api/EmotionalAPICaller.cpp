@@ -51,7 +51,7 @@ void EmotionalAPICaller::captureImage() {
     QString base64Image(byteArray.toBase64());
 
     std::stringstream ss;
-    ss << "data:image/" << ext << ";base64,";
+    ss << "data:image/" << ext << ";base64";
     std::string s = ss.str() + base64Image.toStdString();
     base64Image = QString::fromStdString(s);
     imageVec.push_back(base64Image);
@@ -85,15 +85,17 @@ void EmotionalAPICaller::sendRequest(QString text) {
     if (!isBusy) {
         QJsonObject jsonObject;
         QJsonArray pictures;
+        QString firstStr;
         for (QString str : imageVec) {
             pictures.append(QJsonValue(str));
+            //firstStr = str;
         }
         jsonObject["pictures"] = pictures;
         QJsonDocument jsonData(jsonObject);
         imageVec.clear();
         QByteArray data = jsonData.toJson();
         QNetworkRequest request(url);
-        std::cout << "Sended to Emotional API : " << "..."/*data.toStdString()*/ << std::endl;
+        std::cout << "Sended to Emotional API : " << "..." /*firstStr.toStdString()*/ << std::endl;
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
         isBusy = true;
         networkManager->post(request, data);

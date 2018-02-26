@@ -9,6 +9,7 @@
       <itemPath>src/api/EmotionalAPICaller.hpp</itemPath>
       <itemPath>src/api/EmotionalAPICaller_old.hpp</itemPath>
       <itemPath>src/redis/QTRedis.hpp</itemPath>
+      <itemPath>src/SpeechRecording.cpp</itemPath>
       <itemPath>src/SpeechRecording.hpp</itemPath>
       <itemPath>src/keyPressEventHandler.h</itemPath>
       <itemPath>src/ui/mainWindow.h</itemPath>
@@ -27,7 +28,6 @@
       <itemPath>src/api/EmotionalAPICaller.cpp</itemPath>
       <itemPath>src/api/EmotionalAPICaller_old.cpp</itemPath>
       <itemPath>src/redis/QTRedis.cpp</itemPath>
-      <itemPath>src/SpeechRecording.cpp</itemPath>
       <itemPath>src/keyPressEventHandler.cpp</itemPath>
       <itemPath>src/main.cpp</itemPath>
       <itemPath>src/ui/mainWindow.cpp.cc</itemPath>
