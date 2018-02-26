@@ -46,11 +46,14 @@ void EmotionalAPICaller::captureImage() {
     std::string a = "Camera n°" + std::to_string(imageVec.size());
     cv::imshow(a, dst);
     std::vector<uint8_t> buffer;
-    cv::imencode("."+ext, dst, buffer);
+    cv::imencode("." + ext, dst, buffer);
     QByteArray byteArray = QByteArray::fromRawData((const char*) buffer.data(), buffer.size());
     QString base64Image(byteArray.toBase64());
-    std::string str =  "data:image/"+ext+";base64,"
-    base64Image = QString(str) + base64Image;
+
+    std::stringstream ss;
+    ss << "data:image/" << ext << ";base64,";
+    std::string s = ss.str() + base64Image.toStdString();
+    base64Image = QString::fromStdString(s);
     imageVec.push_back(base64Image);
     if (imageVec.size() > 10) emit sendRequest();
 
