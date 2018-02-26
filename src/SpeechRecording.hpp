@@ -1,55 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-/* 
- * File:   SpeechRecording.hpp
- * Author: flabulous
- *
- * Created on 26 février 2018, 12:41
- */
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
 #include <semaphore.h>
 #include <fcntl.h>
-#include <cstdlib>
-#include <cstring>
-#include <ctime>
+#include <string>
 #include <iomanip>
 #include <vector>
 #include <sndfile.h>
 
-
+#include "conf.hpp"
+#include <uuid/uuid.h>
 //Library to handle Audio
 #include <AL/al.h>
 #include <AL/alc.h>
 
+
+#include <QString>
+#include <QObject>
+#include <QThread>
 #ifndef SPEECHRECORDING_HPP
 #define SPEECHRECORDING_HPP
 
-class SpeechRecording {
+class SpeechRecording : public QObject {
+    Q_OBJECT
 private:
+    QThread* currentThread;
     //Devices to handle microphone
     ALCdevice *Device = NULL;
     ALCdevice *CaptureDevice = NULL;
     //Check if really necessary here
-            //maybe replace sem_wait(semaph); by a simple Sleep(1000);
+    //maybe replace sem_wait(semaph); by a simple Sleep(1000);
     sem_t *semaph;
     bool isTalking;
     //List of all devices
     std::vector<std::string> Devices;
     // We will stock our samples in vector of Int16
     std::vector<ALshort> Samples;
-    
+
 public:
     SpeechRecording();
     ~SpeechRecording();
-
-
+    void start();
+    
     ////////////////////////////////////////////////////////////
     /// Initialise OpenAL (open device and create context
     ///
@@ -100,10 +91,10 @@ public:
     ///
     void* thread_IsPersonTalking(void* isTalking);
 
-    ////////////
-    /// recordXSeconds
-    ///////////
+    public slots:
     int recordXSeconds(float second = 6);
+signals:
+    void newSoundCreated(QString text);
 };
 
 #endif /* SPEECHRECORDING_HPP */

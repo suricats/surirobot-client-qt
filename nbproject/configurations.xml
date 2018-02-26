@@ -8,9 +8,11 @@
       <itemPath>src/api/ConverseAPICaller.hpp</itemPath>
       <itemPath>src/api/EmotionalAPICaller.hpp</itemPath>
       <itemPath>src/api/EmotionalAPICaller_old.hpp</itemPath>
+      <itemPath>src/api/NLPAPICaller.hpp</itemPath>
       <itemPath>src/redis/QTRedis.hpp</itemPath>
       <itemPath>src/SpeechRecording.cpp</itemPath>
       <itemPath>src/SpeechRecording.hpp</itemPath>
+      <itemPath>src/conf.hpp</itemPath>
       <itemPath>src/keyPressEventHandler.h</itemPath>
       <itemPath>src/ui/mainWindow.h</itemPath>
       <itemPath>src/qt.h</itemPath>
@@ -27,6 +29,7 @@
       <itemPath>src/api/ConverseAPICaller.cpp</itemPath>
       <itemPath>src/api/EmotionalAPICaller.cpp</itemPath>
       <itemPath>src/api/EmotionalAPICaller_old.cpp</itemPath>
+      <itemPath>src/api/NLPAPICaller.cpp</itemPath>
       <itemPath>src/redis/QTRedis.cpp</itemPath>
       <itemPath>src/keyPressEventHandler.cpp</itemPath>
       <itemPath>src/main.cpp</itemPath>
@@ -83,6 +86,12 @@
       <item path="src/api/EmotionalAPICaller_old.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/api/EmotionalAPICaller_old.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/conf.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -145,6 +154,12 @@
       </item>
       <item path="src/api/EmotionalAPICaller_old.hpp" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/conf.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
@@ -186,6 +201,7 @@
             <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libopencv_imgproc.so</linkerLibFileItem>
             <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libopenal.so</linkerLibFileItem>
             <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libsndfile.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libuuid.so</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -204,6 +220,12 @@
       <item path="src/api/EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/api/EmotionalAPICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/conf.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="9">
       </item>

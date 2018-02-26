@@ -36,7 +36,7 @@ DISTNAME      = surirobot-client-qt1.0.0
 DISTDIR = /home/alain/workspace/surirobot-client-qt/build/linux-debug/GNU-Linux/surirobot-client-qt1.0.0
 LINK          = g++
 LFLAGS        = -m64
-LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libhiredis.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libQt5Multimedia.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libopencv_core.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libopencv_highgui.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libopenal.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libsndfile.so -lQt5Widgets -lQt5Gui -lQt5Network -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libhiredis.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libQt5Multimedia.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libopencv_core.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libopencv_highgui.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libopenal.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libsndfile.so -Wl,-rpath,/usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/libuuid.so -lQt5Widgets -lQt5Gui -lQt5Network -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,12 +52,15 @@ SOURCES       = src/SpeechRecording.cpp \
 		src/api/APICaller.cpp \
 		src/api/ConverseAPICaller.cpp \
 		src/api/EmotionalAPICaller.cpp \
+		src/api/NLPAPICaller.cpp \
 		src/keyPressEventHandler.cpp \
 		src/main.cpp \
 		src/redis/QTRedis.cpp \
-		src/ui/mainWindow.cpp.cc moc_APICaller.cpp \
+		src/ui/mainWindow.cpp.cc moc_SpeechRecording.cpp \
+		moc_APICaller.cpp \
 		moc_ConverseAPICaller.cpp \
 		moc_EmotionalAPICaller.cpp \
+		moc_NLPAPICaller.cpp \
 		moc_keyPressEventHandler.cpp \
 		moc_qt.cpp \
 		moc_QTRedis.cpp \
@@ -66,13 +69,16 @@ OBJECTS       = build/linux-debug/GNU-Linux/SpeechRecording.o \
 		build/linux-debug/GNU-Linux/APICaller.o \
 		build/linux-debug/GNU-Linux/ConverseAPICaller.o \
 		build/linux-debug/GNU-Linux/EmotionalAPICaller.o \
+		build/linux-debug/GNU-Linux/NLPAPICaller.o \
 		build/linux-debug/GNU-Linux/keyPressEventHandler.o \
 		build/linux-debug/GNU-Linux/main.o \
 		build/linux-debug/GNU-Linux/QTRedis.o \
 		build/linux-debug/GNU-Linux/mainWindow.cpp.o \
+		build/linux-debug/GNU-Linux/moc_SpeechRecording.o \
 		build/linux-debug/GNU-Linux/moc_APICaller.o \
 		build/linux-debug/GNU-Linux/moc_ConverseAPICaller.o \
 		build/linux-debug/GNU-Linux/moc_EmotionalAPICaller.o \
+		build/linux-debug/GNU-Linux/moc_NLPAPICaller.o \
 		build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o \
 		build/linux-debug/GNU-Linux/moc_qt.o \
 		build/linux-debug/GNU-Linux/moc_QTRedis.o \
@@ -140,6 +146,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		src/api/APICaller.hpp \
 		src/api/ConverseAPICaller.hpp \
 		src/api/EmotionalAPICaller.hpp \
+		src/api/NLPAPICaller.hpp \
+		src/conf.hpp \
 		src/keyPressEventHandler.h \
 		src/qt.h \
 		src/redis/QTRedis.hpp \
@@ -147,6 +155,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		src/api/APICaller.cpp \
 		src/api/ConverseAPICaller.cpp \
 		src/api/EmotionalAPICaller.cpp \
+		src/api/NLPAPICaller.cpp \
 		src/keyPressEventHandler.cpp \
 		src/main.cpp \
 		src/redis/QTRedis.cpp \
@@ -327,8 +336,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents src/SpeechRecording.hpp src/api/APICaller.hpp src/api/ConverseAPICaller.hpp src/api/EmotionalAPICaller.hpp src/keyPressEventHandler.h src/qt.h src/redis/QTRedis.hpp src/ui/mainWindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/SpeechRecording.cpp src/api/APICaller.cpp src/api/ConverseAPICaller.cpp src/api/EmotionalAPICaller.cpp src/keyPressEventHandler.cpp src/main.cpp src/redis/QTRedis.cpp src/ui/mainWindow.cpp.cc $(DISTDIR)/
+	$(COPY_FILE) --parents src/SpeechRecording.hpp src/api/APICaller.hpp src/api/ConverseAPICaller.hpp src/api/EmotionalAPICaller.hpp src/api/NLPAPICaller.hpp src/conf.hpp src/keyPressEventHandler.h src/qt.h src/redis/QTRedis.hpp src/ui/mainWindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/SpeechRecording.cpp src/api/APICaller.cpp src/api/ConverseAPICaller.cpp src/api/EmotionalAPICaller.cpp src/api/NLPAPICaller.cpp src/keyPressEventHandler.cpp src/main.cpp src/redis/QTRedis.cpp src/ui/mainWindow.cpp.cc $(DISTDIR)/
 	$(COPY_FILE) --parents src/ui/mainWindow.ui $(DISTDIR)/
 
 
@@ -352,9 +361,13 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_QTRedis.cpp moc_mainWindow.cpp
+compiler_moc_header_make_all: moc_SpeechRecording.cpp moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_NLPAPICaller.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_QTRedis.cpp moc_mainWindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_QTRedis.cpp moc_mainWindow.cpp
+	-$(DEL_FILE) moc_SpeechRecording.cpp moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_NLPAPICaller.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_QTRedis.cpp moc_mainWindow.cpp
+moc_SpeechRecording.cpp: src/conf.hpp \
+		src/SpeechRecording.hpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/SpeechRecording.hpp -o moc_SpeechRecording.cpp
+
 moc_APICaller.cpp: src/api/APICaller.hpp
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/api/APICaller.hpp -o moc_APICaller.cpp
 
@@ -365,6 +378,10 @@ moc_ConverseAPICaller.cpp: src/api/APICaller.hpp \
 moc_EmotionalAPICaller.cpp: src/api/APICaller.hpp \
 		src/api/EmotionalAPICaller.hpp
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/api/EmotionalAPICaller.hpp -o moc_EmotionalAPICaller.cpp
+
+moc_NLPAPICaller.cpp: src/api/APICaller.hpp \
+		src/api/NLPAPICaller.hpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/api/NLPAPICaller.hpp -o moc_NLPAPICaller.cpp
 
 moc_keyPressEventHandler.cpp: src/keyPressEventHandler.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/keyPressEventHandler.h -o moc_keyPressEventHandler.cpp
@@ -398,7 +415,8 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-build/linux-debug/GNU-Linux/SpeechRecording.o: src/SpeechRecording.cpp src/SpeechRecording.hpp
+build/linux-debug/GNU-Linux/SpeechRecording.o: src/SpeechRecording.cpp src/SpeechRecording.hpp \
+		src/conf.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/SpeechRecording.o src/SpeechRecording.cpp
 
 build/linux-debug/GNU-Linux/APICaller.o: src/api/APICaller.cpp src/api/APICaller.hpp
@@ -412,6 +430,10 @@ build/linux-debug/GNU-Linux/EmotionalAPICaller.o: src/api/EmotionalAPICaller.cpp
 		src/api/APICaller.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/EmotionalAPICaller.o src/api/EmotionalAPICaller.cpp
 
+build/linux-debug/GNU-Linux/NLPAPICaller.o: src/api/NLPAPICaller.cpp src/api/NLPAPICaller.hpp \
+		src/api/APICaller.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/NLPAPICaller.o src/api/NLPAPICaller.cpp
+
 build/linux-debug/GNU-Linux/keyPressEventHandler.o: src/keyPressEventHandler.cpp src/keyPressEventHandler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/keyPressEventHandler.o src/keyPressEventHandler.cpp
 
@@ -421,7 +443,10 @@ build/linux-debug/GNU-Linux/main.o: src/main.cpp src/keyPressEventHandler.h \
 		src/api/ConverseAPICaller.hpp \
 		src/api/APICaller.hpp \
 		src/api/EmotionalAPICaller.hpp \
-		src/redis/QTRedis.hpp
+		src/SpeechRecording.hpp \
+		src/conf.hpp \
+		src/redis/QTRedis.hpp \
+		src/api/NLPAPICaller.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/main.o src/main.cpp
 
 build/linux-debug/GNU-Linux/QTRedis.o: src/redis/QTRedis.cpp src/redis/QTRedis.hpp
@@ -432,6 +457,9 @@ build/linux-debug/GNU-Linux/mainWindow.cpp.o: src/ui/mainWindow.cpp.cc src/ui/ma
 		src/keyPressEventHandler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/mainWindow.cpp.o src/ui/mainWindow.cpp.cc
 
+build/linux-debug/GNU-Linux/moc_SpeechRecording.o: moc_SpeechRecording.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_SpeechRecording.o moc_SpeechRecording.cpp
+
 build/linux-debug/GNU-Linux/moc_APICaller.o: moc_APICaller.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_APICaller.o moc_APICaller.cpp
 
@@ -440,6 +468,9 @@ build/linux-debug/GNU-Linux/moc_ConverseAPICaller.o: moc_ConverseAPICaller.cpp
 
 build/linux-debug/GNU-Linux/moc_EmotionalAPICaller.o: moc_EmotionalAPICaller.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_EmotionalAPICaller.o moc_EmotionalAPICaller.cpp
+
+build/linux-debug/GNU-Linux/moc_NLPAPICaller.o: moc_NLPAPICaller.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_NLPAPICaller.o moc_NLPAPICaller.cpp
 
 build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o: moc_keyPressEventHandler.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o moc_keyPressEventHandler.cpp

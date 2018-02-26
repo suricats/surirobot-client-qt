@@ -11,7 +11,9 @@
 #include "ui/mainWindow.h"
 #include "api/ConverseAPICaller.hpp"
 #include "api/EmotionalAPICaller.hpp"
+#include "SpeechRecording.hpp"
 #include "redis/QTRedis.hpp"
+#include "api/NLPAPICaller.hpp"
 
 int main(int argc, char *argv[]) {
     std::cout << "Program started.  " << std::endl;
@@ -20,6 +22,7 @@ int main(int argc, char *argv[]) {
     mainWindow* window = new mainWindow();
     
     //if(QCameraInfo::availableCameras().count() <= 0) window->setTextDown("No available camera.");
+    
     
     //Image
     QImage imageNormal;
@@ -35,7 +38,7 @@ int main(int argc, char *argv[]) {
     window->smartShow();
     
     //Converse API
-    APICaller* converseWorker = new ConverseAPICaller("https://nlp.api.surirobot.net/getanswer");
+    APICaller* converseWorker = new NLPAPICaller("https://nlp.api.surirobot.net/getanswer");
     QObject::connect(converseWorker, SIGNAL(newReply(QString)), window, SLOT(setTextUpSignal(QString)));
     converseWorker->start();
     
@@ -44,6 +47,10 @@ int main(int argc, char *argv[]) {
     QObject::connect(emotionalWorker,SIGNAL(newReply(QString)),window,SLOT(setTextDownSignal(QString)));
     emotionalWorker->start();
     
+    //Record sound
+    SpeechRecording* audioRecord = new SpeechRecording;
+    audioRecord->start();
+    audioRecord->recordXSeconds(6);
     
     //Timer for test
     QTimer* activeTimer = new QTimer(window);

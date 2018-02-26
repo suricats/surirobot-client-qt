@@ -20,6 +20,7 @@ EmotionalAPICaller::~EmotionalAPICaller() {
 
 void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
     isBusy = false;
+    imageVec.clear();
     if (reply->error() != QNetworkReply::NoError) {
         std::cerr << "Error " << reply->error() << std::endl;
         std::cerr << reply->readAll().toStdString() << std::endl;
@@ -37,25 +38,27 @@ void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
 }
 
 void EmotionalAPICaller::captureImage() {
+    if (imageVec.size() <= 10) {
+        cv::Mat frame;
+        cap >> frame;
+        cv::Mat dst;
+        cv::resize(frame, dst, cv::Size(150, 150));
+        std::string ext = "jpeg";
+        std::string a = "Camera n°" + std::to_string(imageVec.size());
+        cv::imshow(a, dst);
+        std::vector<uint8_t> buffer;
+        cv::imencode("." + ext, dst, buffer);
+        QByteArray byteArray = QByteArray::fromRawData((const char*) buffer.data(), buffer.size());
+        QString base64Image(byteArray.toBase64());
 
-    cv::Mat frame;
-    cap >> frame;
-    cv::Mat dst;
-    cv::resize(frame, dst, cv::Size(150, 150));
-    std::string ext = "jpeg";
-    std::string a = "Camera n°" + std::to_string(imageVec.size());
-    cv::imshow(a, dst);
-    std::vector<uint8_t> buffer;
-    cv::imencode("." + ext, dst, buffer);
-    QByteArray byteArray = QByteArray::fromRawData((const char*) buffer.data(), buffer.size());
-    QString base64Image(byteArray.toBase64());
+        std::stringstream ss;
+        ss << "data:image/" << ext << ";base64";
+        std::string s = ss.str() + base64Image.toStdString();
+        base64Image = QString::fromStdString(s);
+        imageVec.push_back(base64Image);
+        if (imageVec.size() > 10) emit sendRequest();
+    }
 
-    std::stringstream ss;
-    ss << "data:image/" << ext << ";base64";
-    std::string s = ss.str() + base64Image.toStdString();
-    base64Image = QString::fromStdString(s);
-    imageVec.push_back(base64Image);
-    if (imageVec.size() > 10) emit sendRequest();
 
 
 
