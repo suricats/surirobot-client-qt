@@ -21,9 +21,9 @@ sudo apt-get install qt5-default qtmultimedia5-dev qt5-doc
 ```bash
 sudo apt-get install libhiredis-dev
 ```
-4. Install GStream(Obsolete) and OpenCV
+4. Install OpenAL, SNDFile and OpenCV
 ```bash
-sudo apt-get install libqt5gstreamer-dev libopencv-dev
+sudo apt-get install libopenal-dev libalut-dev libsndfile1-dev libqt5gstreamer-dev libopencv-dev
 ```
 4. Clone and open project
 5. Use **linux-debug** build configuration or
