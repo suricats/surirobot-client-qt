@@ -25,8 +25,8 @@ sudo apt-get install libhiredis-dev
 ```bash
 sudo apt-get install libopenal-dev libalut-dev libsndfile1-dev libqt5gstreamer-dev libopencv-dev
 ```
-4. Clone and open project
-5. Use **linux-debug** build configuration or
+5. Clone and open project
+6. Use **linux-debug** build configuration or
 * Add a linker to HiRedis library: **Properties > Linker > Librairies > Add Library File > Find libhiredis.so**
 * Other steps.. [WIP] 
 * Enable QtNetwork : **Properties > Qt > Check 'QtNetwork'**
