@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     window->setEditText();
     
     //Show
-    //window->smartShow();
+    window->smartShow();
     
     //Converse API
     APICaller* converseWorker = new ConverseAPICaller("https://converse.api.surirobot.net/converse");
