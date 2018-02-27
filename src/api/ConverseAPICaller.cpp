@@ -32,22 +32,21 @@ void ConverseAPICaller::sendRequest(QString filepath) {
 
         QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
         //Language
-        /*
+        
         QHttpPart textPart;
         textPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"language\""));
         textPart.setBody("fr");
-        */
         //Audio
         QHttpPart audioPart;
         audioPart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("audio/x-wav"));
         audioPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"audio\""));
         QFile *file = new QFile("tmp/bd212fcc-c7e0-4092-9e90-5f628486307e.wav");
-        std::cout << "File size :" << file->size() << std::endl;
+        std::cout << "File size :" << file->size()/1000 << "Ko" << std::endl;
         file->open(QIODevice::ReadOnly);
         audioPart.setBodyDevice(file);
         file->setParent(multiPart); // we cannot delete the file now, so delete it with the multiPart
         multiPart->append(audioPart);
-        //multiPart->append(textPart);
+        multiPart->append(textPart);
 
 
         
