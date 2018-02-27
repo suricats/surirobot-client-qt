@@ -16,10 +16,10 @@
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>-10</x>
+     <x>-40</x>
      <y>0</y>
      <width>1061</width>
-     <height>681</height>
+     <height>691</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -28,7 +28,7 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QPushButton" name="ButtonM">
+   <widget class="QPushButton" name="ButtonManuel">
     <property name="geometry">
      <rect>
       <x>860</x>
@@ -41,7 +41,7 @@
      <string>Manuel</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="ButtonMic">
+   <widget class="QPushButton" name="MicButton">
     <property name="geometry">
      <rect>
       <x>860</x>
@@ -55,7 +55,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../../img/mic.png</normaloff>../../img/mic.png</iconset>
+      <normaloff>../../../../img/mic.png</normaloff>../../../../img/mic.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -64,43 +64,64 @@
      </size>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QLabel" name="labelImage">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>420</y>
-      <width>251</width>
-      <height>181</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>GroupBox</string>
-    </property>
-    <widget class="QWidget" name="verticalLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>261</width>
-       <height>191</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout"/>
-    </widget>
-   </widget>
-   <widget class="QLabel" name="labelPicture">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>120</y>
-      <width>381</width>
-      <height>241</height>
+      <x>270</x>
+      <y>110</y>
+      <width>401</width>
+      <height>251</height>
      </rect>
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
+   <widget class="QLabel" name="labelTextUp">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>390</y>
+      <width>261</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelTextMiddle">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>430</y>
+      <width>261</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelTextBottom">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>470</y>
+      <width>261</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <zorder>ButtonManuel</zorder>
+   <zorder>MicButton</zorder>
+   <zorder>labelImage</zorder>
+   <zorder>labelTextMiddle</zorder>
+   <zorder>labelTextBottom</zorder>
+   <zorder>labelTextUp</zorder>
   </widget>
  </widget>
  <resources/>

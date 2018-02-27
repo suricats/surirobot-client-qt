@@ -15,12 +15,9 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFrame>
-#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -28,12 +25,12 @@ class Ui_mainWindow
 {
 public:
     QFrame *frame;
-    QPushButton *ButtonM;
-    QPushButton *ButtonMic;
-    QGroupBox *groupBox;
-    QWidget *verticalLayoutWidget;
-    QVBoxLayout *verticalLayout;
-    QLabel *labelPicture;
+    QPushButton *ButtonManuel;
+    QPushButton *MicButton;
+    QLabel *labelImage;
+    QLabel *labelTextUp;
+    QLabel *labelTextMiddle;
+    QLabel *labelTextBottom;
 
     void setupUi(QDialog *mainWindow)
     {
@@ -42,31 +39,37 @@ public:
         mainWindow->resize(990, 680);
         frame = new QFrame(mainWindow);
         frame->setObjectName(QStringLiteral("frame"));
-        frame->setGeometry(QRect(-10, 0, 1061, 681));
+        frame->setGeometry(QRect(-40, 0, 1061, 691));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
-        ButtonM = new QPushButton(frame);
-        ButtonM->setObjectName(QStringLiteral("ButtonM"));
-        ButtonM->setGeometry(QRect(860, 110, 99, 27));
-        ButtonMic = new QPushButton(frame);
-        ButtonMic->setObjectName(QStringLiteral("ButtonMic"));
-        ButtonMic->setGeometry(QRect(860, 430, 91, 71));
+        ButtonManuel = new QPushButton(frame);
+        ButtonManuel->setObjectName(QStringLiteral("ButtonManuel"));
+        ButtonManuel->setGeometry(QRect(860, 110, 99, 27));
+        MicButton = new QPushButton(frame);
+        MicButton->setObjectName(QStringLiteral("MicButton"));
+        MicButton->setGeometry(QRect(860, 430, 91, 71));
         QIcon icon;
-        icon.addFile(QStringLiteral("../../img/mic.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ButtonMic->setIcon(icon);
-        ButtonMic->setIconSize(QSize(30, 30));
-        groupBox = new QGroupBox(frame);
-        groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(350, 420, 251, 181));
-        verticalLayoutWidget = new QWidget(groupBox);
-        verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(0, 0, 261, 191));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        labelPicture = new QLabel(frame);
-        labelPicture->setObjectName(QStringLiteral("labelPicture"));
-        labelPicture->setGeometry(QRect(290, 120, 381, 241));
+        icon.addFile(QStringLiteral("../../../../img/mic.png"), QSize(), QIcon::Normal, QIcon::Off);
+        MicButton->setIcon(icon);
+        MicButton->setIconSize(QSize(30, 30));
+        labelImage = new QLabel(frame);
+        labelImage->setObjectName(QStringLiteral("labelImage"));
+        labelImage->setGeometry(QRect(270, 110, 401, 251));
+        labelTextUp = new QLabel(frame);
+        labelTextUp->setObjectName(QStringLiteral("labelTextUp"));
+        labelTextUp->setGeometry(QRect(370, 390, 261, 41));
+        labelTextMiddle = new QLabel(frame);
+        labelTextMiddle->setObjectName(QStringLiteral("labelTextMiddle"));
+        labelTextMiddle->setGeometry(QRect(370, 430, 261, 41));
+        labelTextBottom = new QLabel(frame);
+        labelTextBottom->setObjectName(QStringLiteral("labelTextBottom"));
+        labelTextBottom->setGeometry(QRect(370, 470, 261, 41));
+        ButtonManuel->raise();
+        MicButton->raise();
+        labelImage->raise();
+        labelTextMiddle->raise();
+        labelTextBottom->raise();
+        labelTextUp->raise();
 
         retranslateUi(mainWindow);
 
@@ -76,10 +79,12 @@ public:
     void retranslateUi(QDialog *mainWindow)
     {
         mainWindow->setWindowTitle(QApplication::translate("mainWindow", "mainWindow", 0));
-        ButtonM->setText(QApplication::translate("mainWindow", "Manuel", 0));
-        ButtonMic->setText(QString());
-        groupBox->setTitle(QApplication::translate("mainWindow", "GroupBox", 0));
-        labelPicture->setText(QApplication::translate("mainWindow", "<html><head/><body><p><br/></p></body></html>", 0));
+        ButtonManuel->setText(QApplication::translate("mainWindow", "Manuel", 0));
+        MicButton->setText(QString());
+        labelImage->setText(QApplication::translate("mainWindow", "<html><head/><body><p><br/></p></body></html>", 0));
+        labelTextUp->setText(QApplication::translate("mainWindow", "TextLabel", 0));
+        labelTextMiddle->setText(QApplication::translate("mainWindow", "TextLabel", 0));
+        labelTextBottom->setText(QApplication::translate("mainWindow", "TextLabel", 0));
     } // retranslateUi
 
 };
