@@ -41,6 +41,11 @@ mainWindow::mainWindow() {
     labelTextDown->setFont(f);
     labelTextDown->setText("N/A");
     
+    //Microphone button
+    MicButton = new QPushButton(this);
+    MicButton->setIcon(QIcon("../../img/mic.png"));
+    MicButton->setIconSize(QSize(65,65));
+
     //Background color
     QPalette pal = palette();
 

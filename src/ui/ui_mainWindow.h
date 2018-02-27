@@ -15,7 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHeaderView>
-
+#include <QPixmap>
 QT_BEGIN_NAMESPACE
 
 class Ui_mainWindow
