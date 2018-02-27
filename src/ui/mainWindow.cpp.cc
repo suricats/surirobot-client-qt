@@ -12,7 +12,10 @@
  */
 #include "mainWindow.h"
 #define NB_WIDGETS 3
-mainWindow::mainWindow() {
+mainWindow::mainWindow()
+{
+	
+	//ui->setupUi(this);
     widget.setupUi(this);
     keyPressEventHandler* eKeyPress = new keyPressEventHandler();
     installEventFilter(eKeyPress);
@@ -37,10 +40,20 @@ mainWindow::mainWindow() {
     
     //Text Down
     labelTextDown = new QLabel(this);
-    labelTextDown->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+   labelTextDown->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     labelTextDown->setFont(f);
     labelTextDown->setText("N/A");
     
+    //Microphone button
+    MicButton = new QPushButton(this);
+    MicButton->setIcon(QIcon("img/mic.png"));
+    MicButton->setIconSize(QSize(65,65));
+    QPalette paltt = MicButton->palette();
+    paltt.setColor(QPalette::Button, QColor(Qt::white));
+   MicButton->setAutoFillBackground(true);
+    MicButton->setPalette(paltt);
+    MicButton->update();
+
     //Background color
     QPalette pal = palette();
 
@@ -51,6 +64,7 @@ mainWindow::mainWindow() {
 }
 
 mainWindow::~mainWindow() {
+	
 }
 void mainWindow::smartShow()
 {
