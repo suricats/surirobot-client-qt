@@ -23,7 +23,7 @@ sudo apt-get install libhiredis-dev
 ```
 4. Install OpenAL, SNDFile, MPG123 UUID and OpenCV
 ```bash
-sudo apt-get install libopenal-dev libalut-dev libsndfile1-dev libopencv-dev uuid-dev mpg123
+sudo apt-get install libopenal-dev libalut-dev libsndfile1-dev libopencv-dev uuid-dev libmpg123-dev libao-dev
 ```
 5. Clone and open project
 6. Use **linux-debug** build configuration or
