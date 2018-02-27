@@ -423,7 +423,8 @@ build/linux-debug/GNU-Linux/APICaller.o: src/api/APICaller.cpp src/api/APICaller
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/APICaller.o src/api/APICaller.cpp
 
 build/linux-debug/GNU-Linux/ConverseAPICaller.o: src/api/ConverseAPICaller.cpp src/api/ConverseAPICaller.hpp \
-		src/api/APICaller.hpp
+		src/api/APICaller.hpp \
+		src/conf.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/ConverseAPICaller.o src/api/ConverseAPICaller.cpp
 
 build/linux-debug/GNU-Linux/EmotionalAPICaller.o: src/api/EmotionalAPICaller.cpp src/api/EmotionalAPICaller.hpp \
@@ -431,7 +432,8 @@ build/linux-debug/GNU-Linux/EmotionalAPICaller.o: src/api/EmotionalAPICaller.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/EmotionalAPICaller.o src/api/EmotionalAPICaller.cpp
 
 build/linux-debug/GNU-Linux/NLPAPICaller.o: src/api/NLPAPICaller.cpp src/api/NLPAPICaller.hpp \
-		src/api/APICaller.hpp
+		src/api/APICaller.hpp \
+		src/conf.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/NLPAPICaller.o src/api/NLPAPICaller.cpp
 
 build/linux-debug/GNU-Linux/keyPressEventHandler.o: src/keyPressEventHandler.cpp src/keyPressEventHandler.h

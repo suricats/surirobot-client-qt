@@ -41,7 +41,9 @@ int main(int argc, char *argv[]) {
     APICaller* converseWorker = new ConverseAPICaller("https://converse.api.surirobot.net/converse");
     QObject::connect(converseWorker, SIGNAL(newReply(QString)), window, SLOT(setTextUpSignal(QString)));
     converseWorker->start();
-    
+    SpeechRecording* audioRecord = new SpeechRecording;
+    QObject::connect(audioRecord,SIGNAL(newSoundCreated(QString)),converseWorker,SLOT(sendRequest(QString)))
+    audioRecord->start();
     
     //NLP API
     //APICaller* nlpWorker = new NLPAPICaller("https://nlp.api.surirobot.net/getanswer");
@@ -54,8 +56,7 @@ int main(int argc, char *argv[]) {
     //emotionalWorker->start();
     
     //Record sound
-    SpeechRecording* audioRecord = new SpeechRecording;
-    audioRecord->start();
+    
     //audioRecord->recordXSeconds(2);
     
     //Timer for test
