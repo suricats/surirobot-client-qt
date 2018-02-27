@@ -35,22 +35,28 @@ int main(int argc, char *argv[]) {
     window->setEditText();
     
     //Show
-    window->smartShow();
+    //window->smartShow();
     
     //Converse API
-    APICaller* converseWorker = new NLPAPICaller("https://nlp.api.surirobot.net/getanswer");
+    APICaller* converseWorker = new ConverseAPICaller("https://converse.api.surirobot.net/converse");
     QObject::connect(converseWorker, SIGNAL(newReply(QString)), window, SLOT(setTextUpSignal(QString)));
     converseWorker->start();
     
+    
+    //NLP API
+    //APICaller* nlpWorker = new NLPAPICaller("https://nlp.api.surirobot.net/getanswer");
+    //QObject::connect(nlpWorker, SIGNAL(newReply(QString)), window, SLOT(setTextUpSignal(QString)));
+    //nlpWorker->start();
+    
     //Emotional API
-    APICaller* emotionalWorker = new EmotionalAPICaller("https://emotional.api.surirobot.net/emotions/actions/retrieve-facial-emotion");
-    QObject::connect(emotionalWorker,SIGNAL(newReply(QString)),window,SLOT(setTextDownSignal(QString)));
-    emotionalWorker->start();
+    //APICaller* emotionalWorker = new EmotionalAPICaller("https://emotional.api.surirobot.net/emotions/actions/retrieve-facial-emotion");
+    //QObject::connect(emotionalWorker,SIGNAL(newReply(QString)),window,SLOT(setTextDownSignal(QString)));
+    //emotionalWorker->start();
     
     //Record sound
     SpeechRecording* audioRecord = new SpeechRecording;
     audioRecord->start();
-    audioRecord->recordXSeconds(6);
+    //audioRecord->recordXSeconds(2);
     
     //Timer for test
     QTimer* activeTimer = new QTimer(window);

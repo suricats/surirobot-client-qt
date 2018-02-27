@@ -10,54 +10,58 @@ ConverseAPICaller::~ConverseAPICaller() {
 }
 
 void ConverseAPICaller::receiveReply(QNetworkReply* reply) {
-    isBusy=false;
+    isBusy = false;
     if (reply->error() != QNetworkReply::NoError) {
         std::cerr << "Error  " << reply->error() << " : " << reply->readAll().toStdString() << std::endl;
         networkManager->clearAccessCache();
     } else {
         QJsonObject jsonObject = QJsonDocument::fromJson(reply->readAll()).object();
         std::cout << "Received from Converse API : " << reply->readAll().toStdString() << std::endl;
-        QJsonArray messagesJson = jsonObject["results"].toObject()["messages"].toArray();
-        if (!messagesJson.isEmpty()) {
-            QJsonValueRef queryValue = messagesJson[0].toObject()["content"];
-            if (!queryValue.isNull() && !queryValue.isUndefined()) {
-                QString message = queryValue.toString();
-                emit newReply(message);
-            }
-        } else emit newReply(QString("Can't find message."));
+        QString message = jsonObject["answerText"].toString("Can't find message.");
+        emit newReply(message);
 
     }
     reply->deleteLater();
 }
 
-void ConverseAPICaller::sendRequest(QString text) {
-    /*
-    SEND FORM-DATA
-    QUrlQuery postData;
-    postData.addQueryItem("username", "wesha !");
-    postData.addQueryItem("email", "a");
-    postData.addQueryItem("password", "1234");
-    
-    //postData.addQueryItem("lang","fr");
-    serviceURL.setQuery(postData.query());
-    */
-    if (text != "" && !isBusy) {
+void ConverseAPICaller::sendRequest(QString filepath) {
+
+    if (!isBusy) {
+
+
+
+        QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+        //Language
+        /*
+        QHttpPart textPart;
+        textPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"language\""));
+        textPart.setBody("fr");
+        */
+        //Audio
+        QHttpPart audioPart;
+        audioPart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("audio/x-wav"));
+        audioPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"audio\""));
+        QFile *file = new QFile("tmp/bd212fcc-c7e0-4092-9e90-5f628486307e.wav");
+        std::cout << "File size :" << file->size() << std::endl;
+        file->open(QIODevice::ReadOnly);
+        audioPart.setBodyDevice(file);
+        file->setParent(multiPart); // we cannot delete the file now, so delete it with the multiPart
+        multiPart->append(audioPart);
+        //multiPart->append(textPart);
+
+
         
-        //Create the json request
-        QJsonObject jsonObject;
-        jsonObject["text"] = text;
-        jsonObject["language"] = "fr";
-        QJsonDocument jsonData(jsonObject);
-        QByteArray data = jsonData.toJson();
         QNetworkRequest request(url);
-        std::cout << "Sended to Converse API : " << data.toStdString() << std::endl;
-        //request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+        std::cout << "Sended to Converse API : " << "..." << std::endl;
+
+        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("multipart/form-data; boundary=723690991551375881941828858"));
         //request.setRawHeader("User-Agent", "My app name v0.1");
         //request.setRawHeader("X-Custom-User-Agent", "My app name v0.1");
         //request.setRawHeader("Content-Length", postDataSize);
-        isBusy=true;
-        networkManager->post(request, data);
+        isBusy = true;
+        QNetworkReply *reply = networkManager->post(request, multiPart);
+        multiPart->setParent(reply);
+
     }
 
 }

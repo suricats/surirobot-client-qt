@@ -50,7 +50,7 @@ void NLPAPICaller::sendRequest(QString text) {
         QJsonDocument jsonData(jsonObject);
         QByteArray data = jsonData.toJson();
         QNetworkRequest request(url);
-        std::cout << "Sended to Converse API : " << data.toStdString() << std::endl;
+        std::cout << "Sended to NLP API : " << data.toStdString() << std::endl;
         //request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
         //request.setRawHeader("User-Agent", "My app name v0.1");
