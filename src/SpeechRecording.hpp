@@ -40,7 +40,7 @@ public:
     SpeechRecording();
     ~SpeechRecording();
     void start();
-    
+
     ////////////////////////////////////////////////////////////
     /// Initialise OpenAL (open device and create context
     ///
@@ -91,8 +91,9 @@ public:
     ///
     void* thread_IsPersonTalking(void* isTalking);
 
-    public slots:
+public slots:
     int recordXSeconds(float second = 6);
+    int record6Seconds();
 signals:
     void newSoundCreated(QString text);
 };

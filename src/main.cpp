@@ -2,8 +2,6 @@
 //QT includes
 #include <QApplication>
 #include <QTimer>
-#include <QtMultimedia/QtMultimedia>
-#include <QtMultimedia/QCamera>
 
 //Other includes    
 #include <iostream>
@@ -17,8 +15,9 @@
 
 int main(int argc, char *argv[]) {
     std::cout << "Program started.  " << std::endl;
-    
+    //qputenv("QT_DEBUG_PLUGINS", QByteArray("1"));
     QApplication app(argc, argv);
+    
     mainWindow* window = new mainWindow();
     
     //if(QCameraInfo::availableCameras().count() <= 0) window->setTextDown("No available camera.");
@@ -42,7 +41,8 @@ int main(int argc, char *argv[]) {
     QObject::connect(converseWorker, SIGNAL(newReply(QString)), window, SLOT(setTextUpSignal(QString)));
     converseWorker->start();
     SpeechRecording* audioRecord = new SpeechRecording;
-    QObject::connect(audioRecord,SIGNAL(newSoundCreated(QString)),converseWorker,SLOT(sendRequest(QString)))
+    QObject::connect(audioRecord,SIGNAL(newSoundCreated(QString)),converseWorker,SLOT(sendRequest(QString)));
+    QObject::connect(window->MicButton,SIGNAL(released()),audioRecord,SLOT(record6Seconds()));
     audioRecord->start();
     
     //NLP API
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
     QTimer* activeTimer = new QTimer(window);
     activeTimer->setInterval(5*1000);
     QObject::connect(activeTimer, SIGNAL(timeout()), window, SLOT(sendEditText()));
-    QObject::connect(window,SIGNAL(sendEditTextSignal(QString)),converseWorker,SLOT(sendRequest(QString)));
+    //QObject::connect(window,SIGNAL(sendEditTextSignal(QString)),converseWorker,SLOT(sendRequest(QString)));
     //QObject::connect(window,SIGNAL(sendEditTextSignal(QString)),emotionalWorker,SLOT(sendRequest(QString)));
     activeTimer->start();
     
@@ -72,7 +72,9 @@ int main(int argc, char *argv[]) {
     QTRedis* redis = new QTRedis();
     redis->start();
     QObject::connect(redis, &QTRedis::signalNewPerson, window, &mainWindow::setTextMiddleSignal);
-     
+    
+    
+    QObject::connect(&app,SIGNAL(aboutToQuit()),converseWorker,SLOT(deleteAudioFiles()));
     return app.exec();
 
 

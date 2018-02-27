@@ -26,6 +26,9 @@
 class mainWindow : public QDialog {
     Q_OBJECT
 public:
+    
+    QPushButton *MicButton;
+    
     mainWindow();
     virtual ~mainWindow();
     void smartShow();
@@ -56,7 +59,6 @@ private:
     QLabel* labelTextUp;
     QLabel* labelTextMiddle;
     QLabel* labelTextDown;
-    QPushButton *MicButton;
     Ui::mainWindow widget;
 };
 
