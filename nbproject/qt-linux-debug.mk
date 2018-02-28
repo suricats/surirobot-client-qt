@@ -56,7 +56,8 @@ SOURCES       = src/SpeechRecording.cpp \
 		src/keyPressEventHandler.cpp \
 		src/main.cpp \
 		src/redis/QTRedis.cpp \
-		src/ui/mainWindow.cpp.cc moc_SpeechRecording.cpp \
+		src/ui/mainWindow.cpp.cc \
+		src/ui/manualWindow.cpp moc_SpeechRecording.cpp \
 		moc_APICaller.cpp \
 		moc_ConverseAPICaller.cpp \
 		moc_EmotionalAPICaller.cpp \
@@ -64,7 +65,8 @@ SOURCES       = src/SpeechRecording.cpp \
 		moc_keyPressEventHandler.cpp \
 		moc_qt.cpp \
 		moc_QTRedis.cpp \
-		moc_mainWindow.cpp
+		moc_mainWindow.cpp \
+		moc_manualWindow.cpp
 OBJECTS       = build/linux-debug/GNU-Linux/SpeechRecording.o \
 		build/linux-debug/GNU-Linux/APICaller.o \
 		build/linux-debug/GNU-Linux/ConverseAPICaller.o \
@@ -74,6 +76,7 @@ OBJECTS       = build/linux-debug/GNU-Linux/SpeechRecording.o \
 		build/linux-debug/GNU-Linux/main.o \
 		build/linux-debug/GNU-Linux/QTRedis.o \
 		build/linux-debug/GNU-Linux/mainWindow.cpp.o \
+		build/linux-debug/GNU-Linux/manualWindow.o \
 		build/linux-debug/GNU-Linux/moc_SpeechRecording.o \
 		build/linux-debug/GNU-Linux/moc_APICaller.o \
 		build/linux-debug/GNU-Linux/moc_ConverseAPICaller.o \
@@ -82,7 +85,8 @@ OBJECTS       = build/linux-debug/GNU-Linux/SpeechRecording.o \
 		build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o \
 		build/linux-debug/GNU-Linux/moc_qt.o \
 		build/linux-debug/GNU-Linux/moc_QTRedis.o \
-		build/linux-debug/GNU-Linux/moc_mainWindow.o
+		build/linux-debug/GNU-Linux/moc_mainWindow.o \
+		build/linux-debug/GNU-Linux/moc_manualWindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -151,7 +155,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		src/keyPressEventHandler.h \
 		src/qt.h \
 		src/redis/QTRedis.hpp \
-		src/ui/mainWindow.h src/SpeechRecording.cpp \
+		src/ui/mainWindow.h \
+		src/ui/manualWindow.h src/SpeechRecording.cpp \
 		src/api/APICaller.cpp \
 		src/api/ConverseAPICaller.cpp \
 		src/api/EmotionalAPICaller.cpp \
@@ -159,7 +164,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		src/keyPressEventHandler.cpp \
 		src/main.cpp \
 		src/redis/QTRedis.cpp \
-		src/ui/mainWindow.cpp.cc
+		src/ui/mainWindow.cpp.cc \
+		src/ui/manualWindow.cpp
 QMAKE_TARGET  = surirobot-client-qt
 DESTDIR       = dist/linux-debug/GNU-Linux/#avoid trailing-slash linebreak
 TARGET        = dist/linux-debug/GNU-Linux/surirobot-client-qt
@@ -334,8 +340,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents src/SpeechRecording.hpp src/api/APICaller.hpp src/api/ConverseAPICaller.hpp src/api/EmotionalAPICaller.hpp src/api/NLPAPICaller.hpp src/conf.hpp src/keyPressEventHandler.h src/qt.h src/redis/QTRedis.hpp src/ui/mainWindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/SpeechRecording.cpp src/api/APICaller.cpp src/api/ConverseAPICaller.cpp src/api/EmotionalAPICaller.cpp src/api/NLPAPICaller.cpp src/keyPressEventHandler.cpp src/main.cpp src/redis/QTRedis.cpp src/ui/mainWindow.cpp.cc $(DISTDIR)/
+	$(COPY_FILE) --parents src/SpeechRecording.hpp src/api/APICaller.hpp src/api/ConverseAPICaller.hpp src/api/EmotionalAPICaller.hpp src/api/NLPAPICaller.hpp src/conf.hpp src/keyPressEventHandler.h src/qt.h src/redis/QTRedis.hpp src/ui/mainWindow.h src/ui/manualWindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/SpeechRecording.cpp src/api/APICaller.cpp src/api/ConverseAPICaller.cpp src/api/EmotionalAPICaller.cpp src/api/NLPAPICaller.cpp src/keyPressEventHandler.cpp src/main.cpp src/redis/QTRedis.cpp src/ui/mainWindow.cpp.cc src/ui/manualWindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents src/ui/mainWindow.ui $(DISTDIR)/
 
 
@@ -359,9 +365,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_SpeechRecording.cpp moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_NLPAPICaller.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_QTRedis.cpp moc_mainWindow.cpp
+compiler_moc_header_make_all: moc_SpeechRecording.cpp moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_NLPAPICaller.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_QTRedis.cpp moc_mainWindow.cpp moc_manualWindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_SpeechRecording.cpp moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_NLPAPICaller.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_QTRedis.cpp moc_mainWindow.cpp
+	-$(DEL_FILE) moc_SpeechRecording.cpp moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_NLPAPICaller.cpp moc_keyPressEventHandler.cpp moc_qt.cpp moc_QTRedis.cpp moc_mainWindow.cpp moc_manualWindow.cpp
 moc_SpeechRecording.cpp: src/conf.hpp \
 		src/SpeechRecording.hpp
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/SpeechRecording.hpp -o moc_SpeechRecording.cpp
@@ -392,8 +398,14 @@ moc_QTRedis.cpp: src/redis/QTRedis.hpp
 
 moc_mainWindow.cpp: src/ui/ui_mainWindow.h \
 		src/keyPressEventHandler.h \
+		src/ui/manualWindow.h \
 		src/ui/mainWindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/ui/mainWindow.h -o moc_mainWindow.cpp
+
+moc_manualWindow.cpp: src/ui/ui_mainWindow.h \
+		src/keyPressEventHandler.h \
+		src/ui/manualWindow.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/ui/manualWindow.h -o moc_manualWindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -440,6 +452,7 @@ build/linux-debug/GNU-Linux/keyPressEventHandler.o: src/keyPressEventHandler.cpp
 build/linux-debug/GNU-Linux/main.o: src/main.cpp src/keyPressEventHandler.h \
 		src/ui/mainWindow.h \
 		src/ui/ui_mainWindow.h \
+		src/ui/manualWindow.h \
 		src/api/ConverseAPICaller.hpp \
 		src/api/APICaller.hpp \
 		src/api/EmotionalAPICaller.hpp \
@@ -454,8 +467,14 @@ build/linux-debug/GNU-Linux/QTRedis.o: src/redis/QTRedis.cpp src/redis/QTRedis.h
 
 build/linux-debug/GNU-Linux/mainWindow.cpp.o: src/ui/mainWindow.cpp.cc src/ui/mainWindow.h \
 		src/ui/ui_mainWindow.h \
-		src/keyPressEventHandler.h
+		src/keyPressEventHandler.h \
+		src/ui/manualWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/mainWindow.cpp.o src/ui/mainWindow.cpp.cc
+
+build/linux-debug/GNU-Linux/manualWindow.o: src/ui/manualWindow.cpp src/ui/manualWindow.h \
+		src/ui/ui_mainWindow.h \
+		src/keyPressEventHandler.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/manualWindow.o src/ui/manualWindow.cpp
 
 build/linux-debug/GNU-Linux/moc_SpeechRecording.o: moc_SpeechRecording.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_SpeechRecording.o moc_SpeechRecording.cpp
@@ -483,6 +502,9 @@ build/linux-debug/GNU-Linux/moc_QTRedis.o: moc_QTRedis.cpp
 
 build/linux-debug/GNU-Linux/moc_mainWindow.o: moc_mainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_mainWindow.o moc_mainWindow.cpp
+
+build/linux-debug/GNU-Linux/moc_manualWindow.o: moc_manualWindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_manualWindow.o moc_manualWindow.cpp
 
 ####### Install
 
