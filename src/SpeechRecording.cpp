@@ -88,7 +88,7 @@ bool SpeechRecording::InitCapture(const char* DeviceName) {
     }
 
     // Opening device
-    CaptureDevice = alcCaptureOpenDevice(DeviceName, 44100, AL_FORMAT_MONO16, 44100);
+    CaptureDevice = alcCaptureOpenDevice(DeviceName, 22050, AL_FORMAT_MONO16, 22050);
     if (!CaptureDevice) {
         std::cerr << "Could not open capture device" << std::endl;
         return false;
@@ -197,6 +197,7 @@ int SpeechRecording::recordXSeconds(float second) {
     std::cout << "Sound file generated at :" << str << std::endl;
     SaveSound(str, Samples);
     emit newSoundCreated(QString::fromStdString(str));
-
+    
+    Samples.clear();
     return 0;
 }
