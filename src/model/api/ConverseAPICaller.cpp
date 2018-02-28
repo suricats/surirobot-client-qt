@@ -13,11 +13,6 @@ APICaller(text) {
 ConverseAPICaller::~ConverseAPICaller() {
 }
 
-void ConverseAPICaller::deleteAudioFiles() {
-    std::stringstream ss;
-    ss << "exec rm -r " << TMP_DIR << "*";
-    system(ss.str().c_str());
-}
 
 void ConverseAPICaller::receiveReply(QNetworkReply* reply) {
     isBusy = false;

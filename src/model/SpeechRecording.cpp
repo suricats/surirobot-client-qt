@@ -1,6 +1,7 @@
 #include "SpeechRecording.hpp"
 
 SpeechRecording::SpeechRecording() {
+    audioPeriod = DEFAULT_PLANIFIED_SEC;
     currentThread = new QThread;
     moveToThread(currentThread);
     // boolean which represent the 'state' of the user
@@ -89,6 +90,7 @@ bool SpeechRecording::InitCapture(const char* DeviceName) {
 
     // Opening device
     CaptureDevice = alcCaptureOpenDevice(DeviceName, 44100, AL_FORMAT_MONO16, 44100);
+    //CaptureDevice = alcCaptureOpenDevice(DeviceName, 22050, AL_FORMAT_MONO16, 22050);
     if (!CaptureDevice) {
         std::cerr << "Could not open capture device" << std::endl;
         return false;
@@ -159,8 +161,8 @@ void* SpeechRecording::thread_IsPersonTalking(void* isTalking) {
     std::cout << "End of threadTalking" << std::endl;
     return (void*) NULL;
 }
-int SpeechRecording::record6Seconds() {
-    return recordXSeconds(3);
+int SpeechRecording::recordPSeconds() {
+    return recordXSeconds(audioPeriod);
 }
 
 int SpeechRecording::recordXSeconds(float second) {
@@ -199,6 +201,7 @@ int SpeechRecording::recordXSeconds(float second) {
     std::string str = TMP_DIR + uuid + ".wav";
     std::cout << "Sound file generated at :" << str << std::endl;
     SaveSound(str, Samples);
+    Samples.clear();
     emit newSoundCreated(QString::fromStdString(str));
 
     return 0;

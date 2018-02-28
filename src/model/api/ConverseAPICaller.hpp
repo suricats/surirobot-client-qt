@@ -19,7 +19,7 @@ public:
 public slots:
     void sendRequest(QString text) override;
     void receiveReply(QNetworkReply* reply) override;
-    void deleteAudioFiles();
+
     void startDownload(QString url);
 private slots:
     void downloadFinished(QNetworkReply* reply);

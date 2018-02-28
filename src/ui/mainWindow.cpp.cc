@@ -12,53 +12,57 @@
  */
 #include "mainWindow.h"
 #define NB_WIDGETS 3
-mainWindow::mainWindow()
-{
-	
-	//ui->setupUi(this);
+
+mainWindow::mainWindow() {
+
+    //ui->setupUi(this);
     widget.setupUi(this);
     keyPressEventHandler* eKeyPress = new keyPressEventHandler();
     installEventFilter(eKeyPress);
-    
+
     //Image
     imgWidget = new QWidget(this);
     labelImage = new QLabel(imgWidget);
     labelImage->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-     //Font
+    QImage image;
+    image.load(NORMAL_IMAGE);
+    labelImage->setPixmap(QPixmap::fromImage(image));
+    imgWidget->resize(image.height(), image.width());
+    //Font
     QFont f("Roboto", 40, QFont::Bold);
     //Text Up
     labelTextUp = new QLabel(this);
     labelTextUp->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     labelTextUp->setFont(f);
     labelTextUp->setText("N/A");
-    
+
     //Text Middle
     labelTextMiddle = new QLabel(this);
     labelTextMiddle->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     labelTextMiddle->setFont(f);
     labelTextMiddle->setText("N/A");
-    
+
     //Text Down
     labelTextDown = new QLabel(this);
-   labelTextDown->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    labelTextDown->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     labelTextDown->setFont(f);
     labelTextDown->setText("N/A");
-    
+
     //Microphone button
     MicButton = new QPushButton(this);
     MicButton->setIcon(QIcon("img/mic.png"));
-    MicButton->setIconSize(QSize(65,65));
+    MicButton->setIconSize(QSize(65, 65));
     QPalette paltt = MicButton->palette();
     paltt.setColor(QPalette::Button, QColor(Qt::white));
-   MicButton->setAutoFillBackground(true);
+    MicButton->setAutoFillBackground(true);
     MicButton->setPalette(paltt);
     MicButton->update();
 
     //Manuel button
-	Manuel = new QPushButton(this);
-	Manuel->setText("Manuel");
-	connect(Manuel, SIGNAL(clicked()), this,SLOT(createManualWindow()));
-	
+    Manuel = new QPushButton(this);
+    Manuel->setText("Manuel");
+    connect(Manuel, SIGNAL(clicked()), this, SLOT(createManualWindow()));
+
     //Background color
     QPalette pal = palette();
 
@@ -69,12 +73,10 @@ mainWindow::mainWindow()
 }
 
 mainWindow::~mainWindow() {
-	
+
 }
 
-
-void mainWindow::smartShow()
-{
+void mainWindow::smartShow() {
     showFullScreen();
     updateWidgets();
     //Timer display fixer
@@ -83,69 +85,69 @@ void mainWindow::smartShow()
     //displayFixer->setSingleShot(true);
     QObject::connect(displayFixer, SIGNAL(timeout()), this, SLOT(updateSlot()));
     displayFixer->start();
-    
+
 }
-void mainWindow::setTextUpFont(const QFont& f)
-{
+
+void mainWindow::setTextUpFont(const QFont& f) {
     labelTextUp->setFont(f);
     updateWidgets();
 }
-void mainWindow::setTextUp(const QString& text)
-{
+
+void mainWindow::setTextUp(const QString& text) {
     labelTextUp->setText(text);
     updateWidgets();
 }
-void mainWindow::setTextMiddle(const QString& text)
-{
+
+void mainWindow::setTextMiddle(const QString& text) {
     labelTextMiddle->setText(text);
     updateWidgets();
 }
-void mainWindow::setTextDown(const QString& text)
-{
+
+void mainWindow::setTextDown(const QString& text) {
     labelTextDown->setText(text);
     updateWidgets();
 }
-void mainWindow::setImage(QImage& image)
-{
+
+void mainWindow::setImage(QImage& image) {
     labelImage->setPixmap(QPixmap::fromImage(image));
-    imgWidget->resize(image.height(),image.width());
+    imgWidget->resize(image.height(), image.width());
     updateWidgets();
-    
+
 }
-void mainWindow::setEditText()
-{
+
+void mainWindow::setEditText() {
     editText = new QTextEdit();
     editText->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     editText->show();
     updateWidgets();
 }
-QString mainWindow::getEditText()
-{
+
+QString mainWindow::getEditText() {
     return editText->toPlainText();
 }
-void mainWindow::sendEditText()
-{
+
+void mainWindow::sendEditText() {
     emit sendEditTextSignal(editText->toPlainText());
 }
 
-void mainWindow::updateWidgets()
-{
+void mainWindow::updateWidgets() {
     labelTextUp->adjustSize();
     labelTextMiddle->adjustSize();
     labelTextDown->adjustSize();
     imgWidget->adjustSize();
-    
-    imgWidget->move(this->width()/2-imgWidget->width()/2,this->height()/3-imgWidget->height()/2);
-    labelTextUp->move(this->width()/2-this->labelTextUp->width()/2,this->height()/3-this->labelTextUp->height()/2+imgWidget->height()/2);
-    labelTextMiddle->move(this->width()/2-this->labelTextUp->width()/2,this->height()/3-this->labelTextUp->height()/2+imgWidget->height()/2+this->labelTextUp->height());
-    labelTextDown->move(this->width()/2-this->labelTextUp->width()/2,this->height()/3-this->labelTextUp->height()/2+imgWidget->height()/2+this->labelTextUp->height()+this->labelTextMiddle->height());
+
+    imgWidget->move(this->width() / 2 - imgWidget->width() / 2, this->height() / 3 - imgWidget->height() / 2);
+    labelTextUp->move(this->width() / 2 - this->labelTextUp->width() / 2, this->height() / 3 - this->labelTextUp->height() / 2 + imgWidget->height() / 2);
+    labelTextMiddle->move(this->width() / 2 - this->labelTextUp->width() / 2, this->height() / 3 - this->labelTextUp->height() / 2 + imgWidget->height() / 2 + this->labelTextUp->height());
+    labelTextDown->move(this->width() / 2 - this->labelTextUp->width() / 2, this->height() / 3 - this->labelTextUp->height() / 2 + imgWidget->height() / 2 + this->labelTextUp->height() + this->labelTextMiddle->height());
 }
-void mainWindow::updateSlot()
-{
+
+void mainWindow::updateSlot() {
     updateWidgets();
 }
 
 ///SIGNALS
+
 void mainWindow::setTextUpSignal(QString text) {
     this->setTextUp(text);
     this->updateWidgets();
@@ -155,14 +157,16 @@ void mainWindow::setTextMiddleSignal(QString text) {
     this->setTextMiddle(text);
     this->updateWidgets();
 }
+
 void mainWindow::setTextDownSignal(QString text) {
     this->setTextDown(text);
     this->updateWidgets();
 }
 
 //Slots
+
 void mainWindow::createManualWindow() //create new manual window
 {
-    manualWindow* manualW = new manualWindow(); 
-    manualW->show(); 
+    manualWindow* manualW = new manualWindow();
+    manualW->show();
 }

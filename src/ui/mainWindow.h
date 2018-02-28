@@ -24,6 +24,7 @@
 #include <QTimer>
 #include <QPushButton>
 
+#define NORMAL_IMAGE "res/SuriRobot1.png"
 class mainWindow : public QDialog {
     Q_OBJECT
 public:

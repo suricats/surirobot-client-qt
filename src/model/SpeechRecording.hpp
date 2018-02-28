@@ -1,3 +1,7 @@
+
+#ifndef SPEECHRECORDING_HPP
+#define SPEECHRECORDING_HPP
+
 #include <iostream>
 #include <unistd.h>
 #include <semaphore.h>
@@ -7,7 +11,7 @@
 #include <vector>
 #include <sndfile.h>
 
-#include "conf.hpp"
+#include "../conf.hpp"
 #include <uuid/uuid.h>
 //Library to handle Audio
 #include <AL/al.h>
@@ -17,9 +21,8 @@
 #include <QString>
 #include <QObject>
 #include <QThread>
-#ifndef SPEECHRECORDING_HPP
-#define SPEECHRECORDING_HPP
 
+#define DEFAULT_PLANIFIED_SEC 4
 class SpeechRecording : public QObject {
     Q_OBJECT
 private:
@@ -37,6 +40,7 @@ private:
     std::vector<ALshort> Samples;
 
 public:
+    int audioPeriod;
     SpeechRecording();
     ~SpeechRecording();
     void start();
@@ -93,7 +97,7 @@ public:
 
 public slots:
     int recordXSeconds(float second = 6);
-    int record6Seconds();
+    int recordPSeconds();
 signals:
     void newSoundCreated(QString text);
 };

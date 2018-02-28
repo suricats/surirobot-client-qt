@@ -4,15 +4,16 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>src/api/APICaller.hpp</itemPath>
-      <itemPath>src/api/ConverseAPICaller.hpp</itemPath>
-      <itemPath>src/api/EmotionalAPICaller.hpp</itemPath>
-      <itemPath>src/api/EmotionalAPICaller_old.hpp</itemPath>
-      <itemPath>src/api/NLPAPICaller.hpp</itemPath>
-      <itemPath>src/redis/QTRedis.hpp</itemPath>
-      <itemPath>src/SpeechRecording.cpp</itemPath>
-      <itemPath>src/SpeechRecording.hpp</itemPath>
+      <itemPath>src/model/api/APICaller.hpp</itemPath>
+      <itemPath>src/model/api/ConverseAPICaller.hpp</itemPath>
+      <itemPath>src/model/api/EmotionalAPICaller.hpp</itemPath>
+      <itemPath>src/model/api/EmotionalAPICaller_old.hpp</itemPath>
+      <itemPath>src/model/api/NLPAPICaller.hpp</itemPath>
+      <itemPath>src/model/redis/QTRedis.hpp</itemPath>
+      <itemPath>src/model/SpeechRecording.cpp</itemPath>
+      <itemPath>src/model/SpeechRecording.hpp</itemPath>
       <itemPath>src/conf.hpp</itemPath>
+      <itemPath>src/controller/converseManager.hpp</itemPath>
       <itemPath>src/keyPressEventHandler.h</itemPath>
       <itemPath>src/ui/mainWindow.h</itemPath>
       <itemPath>src/qt.h</itemPath>
@@ -25,12 +26,13 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>src/api/APICaller.cpp</itemPath>
-      <itemPath>src/api/ConverseAPICaller.cpp</itemPath>
-      <itemPath>src/api/EmotionalAPICaller.cpp</itemPath>
-      <itemPath>src/api/EmotionalAPICaller_old.cpp</itemPath>
-      <itemPath>src/api/NLPAPICaller.cpp</itemPath>
-      <itemPath>src/redis/QTRedis.cpp</itemPath>
+      <itemPath>src/model/api/APICaller.cpp</itemPath>
+      <itemPath>src/model/api/ConverseAPICaller.cpp</itemPath>
+      <itemPath>src/model/api/EmotionalAPICaller.cpp</itemPath>
+      <itemPath>src/model/api/EmotionalAPICaller_old.cpp</itemPath>
+      <itemPath>src/model/api/NLPAPICaller.cpp</itemPath>
+      <itemPath>src/model/redis/QTRedis.cpp</itemPath>
+      <itemPath>src/controller/converseManager.cpp</itemPath>
       <itemPath>src/keyPressEventHandler.cpp</itemPath>
       <itemPath>src/main.cpp</itemPath>
       <itemPath>src/ui/mainWindow.cpp.cc</itemPath>
@@ -69,31 +71,11 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
-      <item path="src/SpeechRecording.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/SpeechRecording.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/APICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/APICaller.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/ConverseAPICaller.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/EmotionalAPICaller.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/EmotionalAPICaller_old.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/EmotionalAPICaller_old.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/conf.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/controller/converseManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/controller/converseManager.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -101,9 +83,51 @@
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/qt.h" ex="false" tool="3" flavor2="0">
+      <item path="src/model/SpeechRecording.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/model/SpeechRecording.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/api/APICaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/api/APICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/api/ConverseAPICaller.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/ConverseAPICaller.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/EmotionalAPICaller.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/EmotionalAPICaller.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/EmotionalAPICaller_old.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/EmotionalAPICaller_old.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/qt.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/ui/mainWindow.cpp.cc" ex="false" tool="1" flavor2="0">
       </item>
@@ -140,31 +164,11 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="src/SpeechRecording.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/SpeechRecording.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/APICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/APICaller.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/ConverseAPICaller.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/EmotionalAPICaller.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/EmotionalAPICaller_old.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/EmotionalAPICaller_old.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/conf.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/controller/converseManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/controller/converseManager.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -172,11 +176,53 @@
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/model/SpeechRecording.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/SpeechRecording.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/api/APICaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/api/APICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/api/ConverseAPICaller.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/ConverseAPICaller.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/EmotionalAPICaller.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/EmotionalAPICaller.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/EmotionalAPICaller_old.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/EmotionalAPICaller_old.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/qt.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/ui/mainWindow.cpp.cc" ex="false" tool="1" flavor2="0">
       </item>
@@ -214,27 +260,11 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="src/SpeechRecording.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/SpeechRecording.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/APICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/APICaller.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/ConverseAPICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/ConverseAPICaller.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/EmotionalAPICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/EmotionalAPICaller.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/conf.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/controller/converseManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/controller/converseManager.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="9">
       </item>
@@ -242,11 +272,43 @@
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="9">
       </item>
+      <item path="src/model/SpeechRecording.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/SpeechRecording.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/api/APICaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/api/APICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/api/ConverseAPICaller.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/ConverseAPICaller.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/EmotionalAPICaller.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/EmotionalAPICaller.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/model/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/qt.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/ui/mainWindow.cpp.cc" ex="false" tool="1" flavor2="9">
       </item>
