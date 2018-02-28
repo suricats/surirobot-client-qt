@@ -1,5 +1,6 @@
 
 #include "NLPAPICaller.hpp"
+#include "src/conf.hpp"
 
 NLPAPICaller::NLPAPICaller(QString text) :
 APICaller(text) {
@@ -31,31 +32,18 @@ void NLPAPICaller::receiveReply(QNetworkReply* reply) {
 }
 
 void NLPAPICaller::sendRequest(QString text) {
-    /*
-    SEND FORM-DATA
-    QUrlQuery postData;
-    postData.addQueryItem("username", "wesha !");
-    postData.addQueryItem("email", "a");
-    postData.addQueryItem("password", "1234");
-    
-    //postData.addQueryItem("lang","fr");
-    serviceURL.setQuery(postData.query());
-    */
     if (text != "" && !isBusy) {
         
         //Create the json request
         QJsonObject jsonObject;
         jsonObject["text"] = text;
-        jsonObject["language"] = "fr";
+        jsonObject["language"] = DEFAULT_LANGUAGE;
         QJsonDocument jsonData(jsonObject);
         QByteArray data = jsonData.toJson();
         QNetworkRequest request(url);
-        std::cout << "Sended to Converse API : " << data.toStdString() << std::endl;
+        std::cout << "Sended to NLP API : " << data.toStdString() << std::endl;
         //request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
-        //request.setRawHeader("User-Agent", "My app name v0.1");
-        //request.setRawHeader("X-Custom-User-Agent", "My app name v0.1");
-        //request.setRawHeader("Content-Length", postDataSize);
         isBusy=true;
         networkManager->post(request, data);
     }

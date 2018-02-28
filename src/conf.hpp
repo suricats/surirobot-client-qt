@@ -15,6 +15,6 @@
 #define CONF_HPP
 
 #define TMP_DIR "tmp/"
-
+#define DEFAULT_LANGUAGE "fr"
 #endif /* CONF_HPP */
 

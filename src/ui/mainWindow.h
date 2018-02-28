@@ -21,10 +21,14 @@
 #include <QLabel>
 #include <QTextEdit>
 #include <QTimer>
+#include <QPushButton>
 
 class mainWindow : public QDialog {
     Q_OBJECT
 public:
+    
+    QPushButton *MicButton;
+    
     mainWindow();
     virtual ~mainWindow();
     void smartShow();
@@ -46,6 +50,7 @@ public slots:
     void updateSlot();
 signals:
     void sendEditTextSignal(QString text);
+    void sendMicSignal();
 private:
     QWidget* imgWidget;
     QLabel* labelImage;

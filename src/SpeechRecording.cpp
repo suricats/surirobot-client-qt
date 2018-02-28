@@ -159,6 +159,9 @@ void* SpeechRecording::thread_IsPersonTalking(void* isTalking) {
     std::cout << "End of threadTalking" << std::endl;
     return (void*) NULL;
 }
+int SpeechRecording::record6Seconds() {
+    return recordXSeconds(6);
+}
 
 int SpeechRecording::recordXSeconds(float second) {
 

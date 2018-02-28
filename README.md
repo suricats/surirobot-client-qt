@@ -21,12 +21,16 @@ sudo apt-get install qt5-default qtmultimedia5-dev qt5-doc
 ```bash
 sudo apt-get install libhiredis-dev
 ```
-4. Install GStream(Obsolete) and OpenCV
+4. Install OpenAL, SNDFile, MPG123, AO, UUID and OpenCV
 ```bash
-sudo apt-get install libqt5gstreamer-dev libopencv-dev
+sudo apt-get install libopenal-dev libalut-dev libsndfile1-dev libopencv-dev uuid-dev 
 ```
-4. Clone and open project
-5. Use **linux-debug** build configuration or
+4b. Optional packages
+```bash
+libmpg123-dev libao-dev
+```
+5. Clone and open project
+6. Use **linux-debug** build configuration or
 * Add a linker to HiRedis library: **Properties > Linker > Librairies > Add Library File > Find libhiredis.so**
 * Other steps.. [WIP] 
 * Enable QtNetwork : **Properties > Qt > Check 'QtNetwork'**
