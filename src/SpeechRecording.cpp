@@ -160,7 +160,7 @@ void* SpeechRecording::thread_IsPersonTalking(void* isTalking) {
     return (void*) NULL;
 }
 int SpeechRecording::record6Seconds() {
-    return recordXSeconds(6);
+    return recordXSeconds(3);
 }
 
 int SpeechRecording::recordXSeconds(float second) {

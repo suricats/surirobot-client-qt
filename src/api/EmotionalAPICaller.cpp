@@ -9,7 +9,6 @@ APICaller(text) {
     captureTimer->setInterval(100);
     QObject::connect(captureTimer, SIGNAL(timeout()), this, SLOT(captureImage()));
     imageVec.clear();
-
 }
 
 EmotionalAPICaller::~EmotionalAPICaller() {
@@ -58,30 +57,12 @@ void EmotionalAPICaller::captureImage() {
         imageVec.push_back(base64Image);
         if (imageVec.size() > 10) emit sendRequest();
     }
-
-
-
-
 }
 
-/*
- 
-void EmotionalAPICaller::imageCaptured(int id, const QImage& preview) {
-    QByteArray ba;
-    QBuffer buffer(&ba);
-    buffer.open(QIODevice::WriteOnly);
-    preview.save(&buffer, "BMP");
-    QByteArray arr = qCompress(buffer.buffer(), 5);
-    QString a = arr.toBase64();
-    imageVec.push_back(a);
-    if (imageVec.size() > 5) emit sendRequest();
-}
- */
 void EmotionalAPICaller::start() const {
     APICaller::start();
-
     captureTimer->start();
-
+    
 }
 
 void EmotionalAPICaller::sendRequest(QString text) {

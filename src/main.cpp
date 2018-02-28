@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
     QObject::connect(redis, &QTRedis::signalNewPerson, window, &mainWindow::setTextMiddleSignal);
     
     
-    QObject::connect(&app,SIGNAL(aboutToQuit()),converseWorker,SLOT(deleteAudioFiles()));
+    //QObject::connect(&app,SIGNAL(aboutToQuit()),converseWorker,SLOT(deleteAudioFiles()));
     return app.exec();
 
 
