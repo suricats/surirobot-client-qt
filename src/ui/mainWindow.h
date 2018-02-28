@@ -16,6 +16,7 @@
 
 #include "ui_mainWindow.h"
 #include "../keyPressEventHandler.h"
+#include "manualWindow.h"
 #include <iostream>
 #include <QApplication>
 #include <QLabel>
@@ -28,6 +29,7 @@ class mainWindow : public QDialog {
 public:
     
     QPushButton *MicButton;
+    QPushButton* Manuel;
     
     mainWindow();
     virtual ~mainWindow();
@@ -40,9 +42,10 @@ public:
     QString getEditText();
     void setImage(QImage&);
     void updateWidgets();
-    
+   
 
 public slots:
+    void createManualWindow(); 
     void setTextUpSignal(QString text);
     void setTextMiddleSignal(QString text);
     void setTextDownSignal(QString text);
