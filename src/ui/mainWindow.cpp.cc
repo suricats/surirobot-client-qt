@@ -54,6 +54,11 @@ mainWindow::mainWindow()
     MicButton->setPalette(paltt);
     MicButton->update();
 
+    //Manuel button
+	Manuel = new QPushButton(this);
+	Manuel->setText("Manuel");
+	connect(Manuel, SIGNAL(clicked()), this,SLOT(createManualWindow()));
+	
     //Background color
     QPalette pal = palette();
 
@@ -66,6 +71,8 @@ mainWindow::mainWindow()
 mainWindow::~mainWindow() {
 	
 }
+
+
 void mainWindow::smartShow()
 {
     showFullScreen();
@@ -151,4 +158,11 @@ void mainWindow::setTextMiddleSignal(QString text) {
 void mainWindow::setTextDownSignal(QString text) {
     this->setTextDown(text);
     this->updateWidgets();
+}
+
+//Slots
+void mainWindow::createManualWindow() //create new manual window
+{
+    manualWindow* manualW = new manualWindow(); 
+    manualW->show(); 
 }
