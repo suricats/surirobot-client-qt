@@ -8,6 +8,7 @@ APICaller(text) {
 }
 
 NLPAPICaller::~NLPAPICaller() {
+    stop();
 }
 
 void NLPAPICaller::receiveReply(QNetworkReply* reply) {

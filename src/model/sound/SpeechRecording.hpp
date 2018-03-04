@@ -11,7 +11,7 @@
 #include <vector>
 #include <sndfile.h>
 
-#include "../conf.hpp"
+#include "../../conf.hpp"
 #include <uuid/uuid.h>
 //Library to handle Audio
 #include <AL/al.h>

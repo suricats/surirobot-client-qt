@@ -3,7 +3,7 @@
 #include <QApplication>
 #include <QTimer>
 
-//Other headers    
+//Other headers
 #include <iostream>
 #include "keyPressEventHandler.h"
 #include "ui/mainWindow.h"

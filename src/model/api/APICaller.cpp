@@ -25,7 +25,7 @@ void APICaller::start() const{
     currentThread->start();
     
 }
-void APICaller::stop()
+void APICaller::stop() const
 {
     currentThread->quit();
 }

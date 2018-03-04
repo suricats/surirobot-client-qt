@@ -8,10 +8,12 @@
       <itemPath>src/model/api/ConverseAPICaller.hpp</itemPath>
       <itemPath>src/model/api/EmotionalAPICaller.hpp</itemPath>
       <itemPath>src/model/api/EmotionalAPICaller_old.hpp</itemPath>
+      <itemPath>src/model/api/FileDownloader.hpp</itemPath>
+      <itemPath>src/model/sound/MusicPlayer.hpp</itemPath>
       <itemPath>src/model/api/NLPAPICaller.hpp</itemPath>
       <itemPath>src/model/redis/QTRedis.hpp</itemPath>
-      <itemPath>src/model/SpeechRecording.cpp</itemPath>
-      <itemPath>src/model/SpeechRecording.hpp</itemPath>
+      <itemPath>src/model/sound/SpeechRecording.cpp</itemPath>
+      <itemPath>src/model/sound/SpeechRecording.hpp</itemPath>
       <itemPath>src/conf.hpp</itemPath>
       <itemPath>src/controller/converseManager.hpp</itemPath>
       <itemPath>src/controller/faceManager.hpp</itemPath>
@@ -32,6 +34,8 @@
       <itemPath>src/model/api/ConverseAPICaller.cpp</itemPath>
       <itemPath>src/model/api/EmotionalAPICaller.cpp</itemPath>
       <itemPath>src/model/api/EmotionalAPICaller_old.cpp</itemPath>
+      <itemPath>src/model/api/FileDownloader.cpp</itemPath>
+      <itemPath>src/model/sound/MusicPlayer.cpp</itemPath>
       <itemPath>src/model/api/NLPAPICaller.cpp</itemPath>
       <itemPath>src/model/redis/QTRedis.cpp</itemPath>
       <itemPath>src/controller/converseManager.cpp</itemPath>
@@ -95,10 +99,6 @@
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/model/SpeechRecording.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/model/SpeechRecording.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/model/api/APICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/model/api/APICaller.hpp" ex="false" tool="3" flavor2="0">
@@ -133,11 +133,29 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/model/api/FileDownloader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/api/FileDownloader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/model/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/model/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/model/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/sound/MusicPlayer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/sound/MusicPlayer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/sound/SpeechRecording.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/model/sound/SpeechRecording.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/qt.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -196,10 +214,6 @@
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/model/SpeechRecording.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/model/SpeechRecording.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/model/api/APICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/model/api/APICaller.hpp" ex="false" tool="3" flavor2="0">
@@ -234,6 +248,10 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/model/api/FileDownloader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/api/FileDownloader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/model/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/model/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
@@ -241,6 +259,20 @@
       <item path="src/model/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/model/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/sound/MusicPlayer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/sound/MusicPlayer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/sound/SpeechRecording.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/model/sound/SpeechRecording.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/qt.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -277,6 +309,11 @@
             <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libopenal.so</linkerLibFileItem>
             <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libsndfile.so</linkerLibFileItem>
             <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libuuid.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libavutil.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libavdevice.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libalut.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libSDL2.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libSDL2_mixer.so</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -299,10 +336,6 @@
       <item path="src/keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="9">
-      </item>
-      <item path="src/model/SpeechRecording.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/model/SpeechRecording.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/model/api/APICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -328,6 +361,10 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="src/model/api/FileDownloader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/api/FileDownloader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/model/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/model/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
@@ -335,6 +372,20 @@
       <item path="src/model/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/model/redis/QTRedis.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/sound/MusicPlayer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/sound/MusicPlayer.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/sound/SpeechRecording.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/model/sound/SpeechRecording.hpp"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/qt.h" ex="false" tool="3" flavor2="0">
       </item>

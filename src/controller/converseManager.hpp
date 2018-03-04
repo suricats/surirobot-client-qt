@@ -6,7 +6,7 @@
 #include "../model/api/ConverseAPICaller.hpp"
 #include "../model/api/EmotionalAPICaller.hpp"
 #include "../model/api/NLPAPICaller.hpp"
-#include "../model/SpeechRecording.hpp"
+#include "../model/sound/SpeechRecording.hpp"
 
 //UI headers
 #include "../ui/mainWindow.h"
@@ -44,7 +44,7 @@ private:
     NLPAPICaller* nlpWorker;
     ConverseAPICaller* converseWorker;
     SpeechRecording* audioRecorder;
-
+    
     bool nlpDebug;
 
     converseManager();

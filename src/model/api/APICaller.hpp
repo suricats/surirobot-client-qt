@@ -18,7 +18,7 @@ public:
     virtual ~APICaller();
     bool isBusy;
     virtual void start() const;
-    void stop();
+    virtual void stop() const;
 protected:
     QUrl url;
     QNetworkAccessManager* networkManager;

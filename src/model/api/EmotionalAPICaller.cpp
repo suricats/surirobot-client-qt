@@ -13,6 +13,7 @@ APICaller(text) {
 
 EmotionalAPICaller::~EmotionalAPICaller() {
     captureTimer->stop();
+    stop();
     delete captureTimer;
     imageVec.clear();
 }

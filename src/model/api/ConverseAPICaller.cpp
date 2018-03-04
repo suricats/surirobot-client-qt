@@ -1,18 +1,19 @@
 
 #include "ConverseAPICaller.hpp"
-#include "src/conf.hpp"
+#include "src/model/sound/SpeechRecording.hpp"
 
 ConverseAPICaller::ConverseAPICaller(QString text) :
 APICaller(text) {
-    fileDownloader = new QNetworkAccessManager();
-    fileDownloader->moveToThread(currentThread);
-    QObject::connect(fileDownloader, SIGNAL(finished(QNetworkReply*)), this, SLOT(downloadFinished(QNetworkReply*)));
-    QObject::connect(this, SIGNAL(download(QString)), this, SLOT(startDownload(QString)));
+    fileDownloader = new FileDownloader();
+    musicPlayer = new MusicPlayer();
+    QObject::connect(fileDownloader, SIGNAL(newFile(QByteArray)), this, SLOT(downloadFinished(QByteArray)));
+    QObject::connect(this, SIGNAL(download(QString)), fileDownloader, SLOT(sendRequest(QString)));
+    QObject::connect(this, SIGNAL(playSoundOrder(QString)), musicPlayer, SLOT(playSound(QString)));
 }
 
 ConverseAPICaller::~ConverseAPICaller() {
+    stop();
 }
-
 
 void ConverseAPICaller::receiveReply(QNetworkReply* reply) {
     isBusy = false;
@@ -27,11 +28,10 @@ void ConverseAPICaller::receiveReply(QNetworkReply* reply) {
         QString url = jsonObject["answerAudioLink"].toString("");
         std::cout << "Received from Converse API : " << message.toStdString() << std::endl;
         emit newReply(message);
-        //Play the sound
+
         std::cout << "Downloading the sound : " << url.toStdString() << std::endl;
+
         emit download(url);
-
-
     }
     reply->deleteLater();
 }
@@ -39,7 +39,6 @@ void ConverseAPICaller::receiveReply(QNetworkReply* reply) {
 void ConverseAPICaller::sendRequest(QString filepath) {
 
     if (!isBusy) {
-
         QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
         //Language
         QHttpPart textPart;
@@ -66,14 +65,20 @@ void ConverseAPICaller::sendRequest(QString filepath) {
 
 }
 
-void ConverseAPICaller::startDownload(QString url) {
-    QUrl parsedUrl = url;
-    QNetworkRequest request(parsedUrl);
-    fileDownloader->get(request);
-    isBusy = true;
+void ConverseAPICaller::start() const {
+    APICaller::start();
+    fileDownloader->start();
+    musicPlayer->start();
+
 }
 
-void ConverseAPICaller::downloadFinished(QNetworkReply* reply) {
+void ConverseAPICaller::stop() const {
+    fileDownloader->stop();
+    musicPlayer->currentThread->quit();
+    APICaller::stop();
+}
+
+void ConverseAPICaller::downloadFinished(QByteArray data) {
 
     std::cout << "Download finished." << std::endl;
     //generate filename
@@ -86,22 +91,24 @@ void ConverseAPICaller::downloadFinished(QNetworkReply* reply) {
     QFile file(QString::fromStdString(filename));
     if (!file.open(QIODevice::WriteOnly)) {
         std::cerr << "Could not create file : " << filename << std::endl;
+        return;
     }
-    file.write(reply->readAll());
+    file.write(data);
     std::cout << "Sound file generated at : " << filename << std::endl;
     file.close();
-    
+
     ///Play the audio
-    
-    this->readAudio(filename);
-    isBusy = false;
-    reply->deleteLater();
+    //Restart the audioplayer
+    musicPlayer->restart();
+    emit playSoundOrder(QString::fromStdString(filename));
+
 }
 
-void ConverseAPICaller::readAudio(std::string filename)
-{
-    
-    std::stringstream ss;
-    ss << "exec aplay " << filename;
-    system(ss.str().c_str());
+void ConverseAPICaller::readAudio(std::string filename) {
+    //std::stringstream ss;
+    //ss << "exec aplay " << filename;
+    //system(ss.str().c_str());
+
+
+
 }

@@ -21,23 +21,27 @@ sudo apt-get install qt5-default qtmultimedia5-dev qt5-doc
 ```bash
 sudo apt-get install libhiredis-dev
 ```
-4. Install OpenAL, SNDFile, MPG123, AO, UUID and OpenCV
+4. Install UUID and OpenCV
 ```bash
-sudo apt-get install libopenal-dev libalut-dev libsndfile1-dev libopencv-dev uuid-dev 
+sudo apt-get install libopencv-dev uuid-dev 
 ```
-4b. Optional packages
+5. Install audio packages (OpenAL, SNDFile and SDL2)
+```bash
+sudo apt-get install libopenal-dev libalut-dev libsndfile1-dev libsdl2-dev lidsdl2-mixer-dev
+```
+6. Optional packages
 ```bash
 libmpg123-dev libao-dev
 ```
-5. Clone and open project
-6. Use **linux-debug** build configuration or
+7. Clone and open project
+8. Use **linux-debug** build configuration or
 * Add a linker to HiRedis library: **Properties > Linker > Librairies > Add Library File > Find libhiredis.so**
-* Other steps.. [WIP] 
+* Add other linkers 
 * Enable QtNetwork : **Properties > Qt > Check 'QtNetwork'**
 
 
 ## Installing under Linux with command lines
-[WIP]
+Look at Dockerfile
 
 
 ## Authors
