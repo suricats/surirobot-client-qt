@@ -14,6 +14,8 @@
       <itemPath>src/model/SpeechRecording.hpp</itemPath>
       <itemPath>src/conf.hpp</itemPath>
       <itemPath>src/controller/converseManager.hpp</itemPath>
+      <itemPath>src/controller/faceManager.hpp</itemPath>
+      <itemPath>src/controller/generalManager.hpp</itemPath>
       <itemPath>src/keyPressEventHandler.h</itemPath>
       <itemPath>src/ui/mainWindow.h</itemPath>
       <itemPath>src/qt.h</itemPath>
@@ -33,6 +35,8 @@
       <itemPath>src/model/api/NLPAPICaller.cpp</itemPath>
       <itemPath>src/model/redis/QTRedis.cpp</itemPath>
       <itemPath>src/controller/converseManager.cpp</itemPath>
+      <itemPath>src/controller/faceManager.cpp</itemPath>
+      <itemPath>src/controller/generalManager.cpp</itemPath>
       <itemPath>src/keyPressEventHandler.cpp</itemPath>
       <itemPath>src/main.cpp</itemPath>
       <itemPath>src/ui/mainWindow.cpp.cc</itemPath>
@@ -76,6 +80,14 @@
       <item path="src/controller/converseManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/controller/converseManager.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/controller/faceManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/controller/faceManager.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/controller/generalManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/controller/generalManager.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -169,6 +181,14 @@
       <item path="src/controller/converseManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/controller/converseManager.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/controller/faceManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/controller/faceManager.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/controller/generalManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/controller/generalManager.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -265,6 +285,14 @@
       <item path="src/controller/converseManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/controller/converseManager.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/controller/faceManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/controller/faceManager.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/controller/generalManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/controller/generalManager.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="9">
       </item>

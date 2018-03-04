@@ -49,6 +49,8 @@ OBJECTS_DIR   = build/linux-debug/GNU-Linux/
 ####### Files
 
 SOURCES       = src/controller/converseManager.cpp \
+		src/controller/faceManager.cpp \
+		src/controller/generalManager.cpp \
 		src/keyPressEventHandler.cpp \
 		src/main.cpp \
 		src/model/SpeechRecording.cpp \
@@ -59,6 +61,8 @@ SOURCES       = src/controller/converseManager.cpp \
 		src/model/redis/QTRedis.cpp \
 		src/ui/mainWindow.cpp.cc \
 		src/ui/manualWindow.cpp moc_converseManager.cpp \
+		moc_faceManager.cpp \
+		moc_generalManager.cpp \
 		moc_keyPressEventHandler.cpp \
 		moc_SpeechRecording.cpp \
 		moc_APICaller.cpp \
@@ -70,6 +74,8 @@ SOURCES       = src/controller/converseManager.cpp \
 		moc_mainWindow.cpp \
 		moc_manualWindow.cpp
 OBJECTS       = build/linux-debug/GNU-Linux/converseManager.o \
+		build/linux-debug/GNU-Linux/faceManager.o \
+		build/linux-debug/GNU-Linux/generalManager.o \
 		build/linux-debug/GNU-Linux/keyPressEventHandler.o \
 		build/linux-debug/GNU-Linux/main.o \
 		build/linux-debug/GNU-Linux/SpeechRecording.o \
@@ -81,6 +87,8 @@ OBJECTS       = build/linux-debug/GNU-Linux/converseManager.o \
 		build/linux-debug/GNU-Linux/mainWindow.cpp.o \
 		build/linux-debug/GNU-Linux/manualWindow.o \
 		build/linux-debug/GNU-Linux/moc_converseManager.o \
+		build/linux-debug/GNU-Linux/moc_faceManager.o \
+		build/linux-debug/GNU-Linux/moc_generalManager.o \
 		build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o \
 		build/linux-debug/GNU-Linux/moc_SpeechRecording.o \
 		build/linux-debug/GNU-Linux/moc_APICaller.o \
@@ -152,6 +160,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		nbproject/nbproject/qt-linux-debug.pro src/conf.hpp \
 		src/controller/converseManager.hpp \
+		src/controller/faceManager.hpp \
+		src/controller/generalManager.hpp \
 		src/keyPressEventHandler.h \
 		src/model/SpeechRecording.hpp \
 		src/model/api/APICaller.hpp \
@@ -162,6 +172,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		src/qt.h \
 		src/ui/mainWindow.h \
 		src/ui/manualWindow.h src/controller/converseManager.cpp \
+		src/controller/faceManager.cpp \
+		src/controller/generalManager.cpp \
 		src/keyPressEventHandler.cpp \
 		src/main.cpp \
 		src/model/SpeechRecording.cpp \
@@ -346,8 +358,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents src/conf.hpp src/controller/converseManager.hpp src/keyPressEventHandler.h src/model/SpeechRecording.hpp src/model/api/APICaller.hpp src/model/api/ConverseAPICaller.hpp src/model/api/EmotionalAPICaller.hpp src/model/api/NLPAPICaller.hpp src/model/redis/QTRedis.hpp src/qt.h src/ui/mainWindow.h src/ui/manualWindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/controller/converseManager.cpp src/keyPressEventHandler.cpp src/main.cpp src/model/SpeechRecording.cpp src/model/api/APICaller.cpp src/model/api/ConverseAPICaller.cpp src/model/api/EmotionalAPICaller.cpp src/model/api/NLPAPICaller.cpp src/model/redis/QTRedis.cpp src/ui/mainWindow.cpp.cc src/ui/manualWindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/conf.hpp src/controller/converseManager.hpp src/controller/faceManager.hpp src/controller/generalManager.hpp src/keyPressEventHandler.h src/model/SpeechRecording.hpp src/model/api/APICaller.hpp src/model/api/ConverseAPICaller.hpp src/model/api/EmotionalAPICaller.hpp src/model/api/NLPAPICaller.hpp src/model/redis/QTRedis.hpp src/qt.h src/ui/mainWindow.h src/ui/manualWindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/controller/converseManager.cpp src/controller/faceManager.cpp src/controller/generalManager.cpp src/keyPressEventHandler.cpp src/main.cpp src/model/SpeechRecording.cpp src/model/api/APICaller.cpp src/model/api/ConverseAPICaller.cpp src/model/api/EmotionalAPICaller.cpp src/model/api/NLPAPICaller.cpp src/model/redis/QTRedis.cpp src/ui/mainWindow.cpp.cc src/ui/manualWindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents src/ui/mainWindow.ui $(DISTDIR)/
 
 
@@ -371,9 +383,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_converseManager.cpp moc_keyPressEventHandler.cpp moc_SpeechRecording.cpp moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_NLPAPICaller.cpp moc_QTRedis.cpp moc_qt.cpp moc_mainWindow.cpp moc_manualWindow.cpp
+compiler_moc_header_make_all: moc_converseManager.cpp moc_faceManager.cpp moc_generalManager.cpp moc_keyPressEventHandler.cpp moc_SpeechRecording.cpp moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_NLPAPICaller.cpp moc_QTRedis.cpp moc_qt.cpp moc_mainWindow.cpp moc_manualWindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_converseManager.cpp moc_keyPressEventHandler.cpp moc_SpeechRecording.cpp moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_NLPAPICaller.cpp moc_QTRedis.cpp moc_qt.cpp moc_mainWindow.cpp moc_manualWindow.cpp
+	-$(DEL_FILE) moc_converseManager.cpp moc_faceManager.cpp moc_generalManager.cpp moc_keyPressEventHandler.cpp moc_SpeechRecording.cpp moc_APICaller.cpp moc_ConverseAPICaller.cpp moc_EmotionalAPICaller.cpp moc_NLPAPICaller.cpp moc_QTRedis.cpp moc_qt.cpp moc_mainWindow.cpp moc_manualWindow.cpp
 moc_converseManager.cpp: src/model/api/ConverseAPICaller.hpp \
 		src/model/api/APICaller.hpp \
 		src/model/api/EmotionalAPICaller.hpp \
@@ -386,6 +398,32 @@ moc_converseManager.cpp: src/model/api/ConverseAPICaller.hpp \
 		src/ui/manualWindow.h \
 		src/controller/converseManager.hpp
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/controller/converseManager.hpp -o moc_converseManager.cpp
+
+moc_faceManager.cpp: src/model/api/EmotionalAPICaller.hpp \
+		src/model/api/APICaller.hpp \
+		src/model/redis/QTRedis.hpp \
+		src/ui/mainWindow.h \
+		src/ui/ui_mainWindow.h \
+		src/keyPressEventHandler.h \
+		src/ui/manualWindow.h \
+		src/controller/faceManager.hpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/controller/faceManager.hpp -o moc_faceManager.cpp
+
+moc_generalManager.cpp: src/controller/converseManager.hpp \
+		src/model/api/ConverseAPICaller.hpp \
+		src/model/api/APICaller.hpp \
+		src/model/api/EmotionalAPICaller.hpp \
+		src/model/api/NLPAPICaller.hpp \
+		src/model/SpeechRecording.hpp \
+		src/conf.hpp \
+		src/ui/mainWindow.h \
+		src/ui/ui_mainWindow.h \
+		src/keyPressEventHandler.h \
+		src/ui/manualWindow.h \
+		src/controller/faceManager.hpp \
+		src/model/redis/QTRedis.hpp \
+		src/controller/generalManager.hpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/controller/generalManager.hpp -o moc_generalManager.cpp
 
 moc_keyPressEventHandler.cpp: src/keyPressEventHandler.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/keyPressEventHandler.h -o moc_keyPressEventHandler.cpp
@@ -457,6 +495,32 @@ build/linux-debug/GNU-Linux/converseManager.o: src/controller/converseManager.cp
 		src/ui/manualWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/converseManager.o src/controller/converseManager.cpp
 
+build/linux-debug/GNU-Linux/faceManager.o: src/controller/faceManager.cpp src/controller/faceManager.hpp \
+		src/model/api/EmotionalAPICaller.hpp \
+		src/model/api/APICaller.hpp \
+		src/model/redis/QTRedis.hpp \
+		src/ui/mainWindow.h \
+		src/ui/ui_mainWindow.h \
+		src/keyPressEventHandler.h \
+		src/ui/manualWindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/faceManager.o src/controller/faceManager.cpp
+
+build/linux-debug/GNU-Linux/generalManager.o: src/controller/generalManager.cpp src/controller/generalManager.hpp \
+		src/controller/converseManager.hpp \
+		src/model/api/ConverseAPICaller.hpp \
+		src/model/api/APICaller.hpp \
+		src/model/api/EmotionalAPICaller.hpp \
+		src/model/api/NLPAPICaller.hpp \
+		src/model/SpeechRecording.hpp \
+		src/conf.hpp \
+		src/ui/mainWindow.h \
+		src/ui/ui_mainWindow.h \
+		src/keyPressEventHandler.h \
+		src/ui/manualWindow.h \
+		src/controller/faceManager.hpp \
+		src/model/redis/QTRedis.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/generalManager.o src/controller/generalManager.cpp
+
 build/linux-debug/GNU-Linux/keyPressEventHandler.o: src/keyPressEventHandler.cpp src/keyPressEventHandler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/keyPressEventHandler.o src/keyPressEventHandler.cpp
 
@@ -471,7 +535,9 @@ build/linux-debug/GNU-Linux/main.o: src/main.cpp src/keyPressEventHandler.h \
 		src/model/api/NLPAPICaller.hpp \
 		src/model/SpeechRecording.hpp \
 		src/conf.hpp \
-		src/model/redis/QTRedis.hpp
+		src/controller/faceManager.hpp \
+		src/model/redis/QTRedis.hpp \
+		src/controller/generalManager.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/main.o src/main.cpp
 
 build/linux-debug/GNU-Linux/SpeechRecording.o: src/model/SpeechRecording.cpp src/model/SpeechRecording.hpp \
@@ -511,6 +577,12 @@ build/linux-debug/GNU-Linux/manualWindow.o: src/ui/manualWindow.cpp src/ui/manua
 
 build/linux-debug/GNU-Linux/moc_converseManager.o: moc_converseManager.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_converseManager.o moc_converseManager.cpp
+
+build/linux-debug/GNU-Linux/moc_faceManager.o: moc_faceManager.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_faceManager.o moc_faceManager.cpp
+
+build/linux-debug/GNU-Linux/moc_generalManager.o: moc_generalManager.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_generalManager.o moc_generalManager.cpp
 
 build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o: moc_keyPressEventHandler.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/moc_keyPressEventHandler.o moc_keyPressEventHandler.cpp

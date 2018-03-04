@@ -31,6 +31,7 @@ public:
     void startAll();
     void startNLP();
     void startConverse();
+    void stop();
     bool isNLPDown();
     bool isConverseDown();
     void debugNLP(bool set = true);
@@ -49,7 +50,6 @@ private:
     converseManager();
     static converseManager* instance;
 public slots:
-    void deleteAudioFiles();
 
 };
 

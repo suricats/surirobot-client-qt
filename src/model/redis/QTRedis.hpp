@@ -6,10 +6,12 @@
 #include <QThread>
 #include <hiredis/adapters/qt.h>
 
+#define FACE_CHANNEL "face-recognition"
 class QTRedis : public QObject {
     Q_OBJECT
 
 public:
+    QThread* currentThread;
     QTRedis();
     virtual ~QTRedis();
     void start();
@@ -21,7 +23,7 @@ public slots:
     void run();
 
 private:
-    QThread* currentThread;
+    
     redisAsyncContext * m_ctx;
     RedisQtAdapter m_adapter;
 

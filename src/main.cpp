@@ -10,23 +10,18 @@
 
 //Controller headers
 #include "controller/converseManager.hpp"
-
-//UI headers
-#include "model/api/EmotionalAPICaller.hpp"
-#include "model/redis/QTRedis.hpp"
+#include "controller/faceManager.hpp"
+#include "controller/generalManager.hpp"
 
 int main(int argc, char *argv[]) {
     std::cout << "Program started.  " << std::endl;
     //qputenv("QT_DEBUG_PLUGINS", QByteArray("1"));
     
     QApplication app(argc, argv);
-    
     mainWindow* window = new mainWindow();
-    
     
     //EditText
     window->setEditText();
-    
     //Show
     window->smartShow();
     
@@ -35,23 +30,10 @@ int main(int argc, char *argv[]) {
     cm->setAudioPeriod(4);
     cm->startAll();
     
-    ///TO DO : create a file downloader as APICaller child
-    ///TO DO : implement faceManager
-    //Emotional API
-    //APICaller* emotionalWorker = new EmotionalAPICaller("https://emotional.api.surirobot.net/emotions/actions/retrieve-facial-emotion");
-    //QObject::connect(emotionalWorker,SIGNAL(newReply(QString)),window,SLOT(setTextDownSignal(QString)));
-    //emotionalWorker->start();
+    faceManager* fm = faceManager::getInstance();
+    fm->connectToUI(window);
+    fm->startFaceRecognition();
     
-    
-    //Redis for face recognition
-    QTRedis* redis = new QTRedis();
-    redis->start();
-    QObject::connect(redis, &QTRedis::signalNewPerson, window, &mainWindow::setTextMiddleSignal);
-    
-    
-    QObject::connect(&app,SIGNAL(aboutToQuit()),cm,SLOT(deleteAudioFiles()));
-    //TO DO : had a way to delete singlotons here
+    QObject::connect(&app,SIGNAL(aboutToQuit()),generalManager::getInstance(),SLOT(deleteAll()));
     return app.exec();
-
-
 }

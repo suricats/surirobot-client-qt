@@ -54,6 +54,13 @@ void converseManager::startAll() {
     startConverse();
     startNLP();
 }
+void converseManager::stop()
+{
+    nlpWorker->stop();
+    converseWorker->stop();
+    debugTimer->stop();
+    audioRecorder->currentThread->quit();
+}
 
 void converseManager::debugNLP(bool set) {
     if (nlpDebug == set)return;
@@ -86,9 +93,4 @@ void converseManager::setAudioPeriod(int nb) {
     
 }
 
-void converseManager::deleteAudioFiles() {
-    //TO-DO : change that...
-    std::stringstream ss;
-    ss << "exec rm -r " << TMP_DIR << "*";
-    system(ss.str().c_str());
-}
+

@@ -34,7 +34,7 @@ void onChange(redisAsyncContext*, void* r, void* privdata) {
         std::string type(reply->element[0]->str);
         std::string channel(reply->element[1]->str);
 
-        if (type.compare("message") == 0 && channel.compare("face-recognition") == 0) {
+        if (type.compare("message") == 0 && channel.compare(FACE_CHANNEL) == 0) {
             std::string message(reply->element[2]->str);
             emit obj->signalNewPerson(QString::fromUtf8(reply->element[2]->str));
         }

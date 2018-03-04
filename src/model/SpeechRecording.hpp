@@ -26,7 +26,7 @@
 class SpeechRecording : public QObject {
     Q_OBJECT
 private:
-    QThread* currentThread;
+    
     //Devices to handle microphone
     ALCdevice *Device = NULL;
     ALCdevice *CaptureDevice = NULL;
@@ -40,6 +40,7 @@ private:
     std::vector<ALshort> Samples;
 
 public:
+    QThread* currentThread;
     int audioPeriod;
     SpeechRecording();
     ~SpeechRecording();
