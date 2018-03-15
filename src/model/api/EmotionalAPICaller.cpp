@@ -1,35 +1,39 @@
 
 #include "EmotionalAPICaller.hpp"
+#include "src/controller/faceManager.hpp"
 
 EmotionalAPICaller::EmotionalAPICaller(QString text) :
 APICaller(text) {
     if (!cap.open(-1)) std::cerr << "Error - No camera found" << std::endl;
     captureTimer = new QTimer();
-    //Set the capture timer (every 0,5 seconds)
-    captureTimer->setInterval(100);
+    //Set the capture timer (every 3 seconds)
+    captureTimer->setInterval(EMOTIONAL_DELAY);
     QObject::connect(captureTimer, SIGNAL(timeout()), this, SLOT(captureImage()));
-    imageVec.clear();
 }
 
 EmotionalAPICaller::~EmotionalAPICaller() {
     captureTimer->stop();
     stop();
     delete captureTimer;
-    imageVec.clear();
 }
 
 void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
     isBusy = false;
-    imageVec.clear();
     if (reply->error() != QNetworkReply::NoError) {
         std::cerr << "Error " << reply->error() << std::endl;
         std::cerr << reply->readAll().toStdString() << std::endl;
         networkManager->clearAccessCache();
     } else {
         QJsonObject jsonObject = QJsonDocument::fromJson(reply->readAll()).object();
-        std::cout << "EmoAPI : " << reply->readAll().toStdString() << std::endl;
-        QString message = jsonObject["scores"].toString("No emotion detected");
-        std::cout << "Message : " << message.toStdString() << std::endl;
+        QJsonArray tmpAr = jsonObject["facial"].toArray();
+        QString message = "Emotions : ";
+        for(QJsonValue val : tmpAr)
+        {
+            message += val.toObject()["emotion"].toString("?");
+            message += ",";
+        }
+        //std::cout << "EmoAPI : " << QJsonDocument::fromJson(reply->readAll()).toBinaryData().toStdString() << std::endl;
+        //QString message = jsonObject["facial"].toString("No emotion detected");
         emit newReply(message);
 
 
@@ -38,25 +42,24 @@ void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
 }
 
 void EmotionalAPICaller::captureImage() {
-    if (imageVec.size() <= 10) {
+    if (!isBusy) {
         cv::Mat frame;
         cap >> frame;
         cv::Mat dst;
-        cv::resize(frame, dst, cv::Size(150, 150));
+        cv::resize(frame, dst, cv::Size(EMOTIONAL_IMAGE_SIZE, EMOTIONAL_IMAGE_SIZE));
         std::string ext = "jpeg";
-        std::string a = "Camera n°" + std::to_string(imageVec.size());
+        std::string a = "Camera n°1";
         cv::imshow(a, dst);
         std::vector<uint8_t> buffer;
         cv::imencode("." + ext, dst, buffer);
         QByteArray byteArray = QByteArray::fromRawData((const char*) buffer.data(), buffer.size());
         QString base64Image(byteArray.toBase64());
 
-        std::stringstream ss;
-        ss << "data:image/" << ext << ";base64";
-        std::string s = ss.str() + base64Image.toStdString();
-        base64Image = QString::fromStdString(s);
-        imageVec.push_back(base64Image);
-        if (imageVec.size() > 10) emit sendRequest();
+        //std::stringstream ss;
+        //ss << "data:image/" << ext << ";base64";
+        //std::string s = ss.str() + base64Image.toStdString();
+        //base64Image = QString::fromStdString(s);
+        sendRequest(base64Image);
     }
 }
 
@@ -68,21 +71,14 @@ void EmotionalAPICaller::start() const {
 
 void EmotionalAPICaller::sendRequest(QString text) {
     if (!isBusy) {
+        isBusy = true;
         QJsonObject jsonObject;
-        QJsonArray pictures;
-        QString firstStr;
-        for (QString str : imageVec) {
-            pictures.append(QJsonValue(str));
-            //firstStr = str;
-        }
-        jsonObject["pictures"] = pictures;
+        jsonObject["pictures"] = text;
         QJsonDocument jsonData(jsonObject);
-        imageVec.clear();
         QByteArray data = jsonData.toJson();
         QNetworkRequest request(url);
-        std::cout << "Sended to Emotional API : " << "..." /*firstStr.toStdString()*/ << std::endl;
+        std::cout << "Sended to Emotional API : " << "..." /*<< data.toStdString()*/ << std::endl;
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
-        isBusy = true;
         networkManager->post(request, data);
     }
 

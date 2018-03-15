@@ -9,9 +9,10 @@
 //UI headers
 #include "../ui/mainWindow.h"
 
-#define EMOTIONAL_URL "https://emotional.api.surirobot.net/emotions/actions/retrieve-facial-emotion"
+#define EMOTIONAL_URL "http://ec2-54-212-240-38.us-west-2.compute.amazonaws.com:8080/emotions/actions/retrieve-video-emotion"
 #define EMOTIONAL_NB_FRAMES 5
-
+#define EMOTIONAL_IMAGE_SIZE 200 //in pixels
+#define EMOTIONAL_DELAY 4000 //in ms
 class faceManager : public QObject {
     Q_OBJECT
 public:

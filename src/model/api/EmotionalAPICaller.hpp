@@ -13,7 +13,6 @@ class EmotionalAPICaller : public APICaller {
     Q_OBJECT
 private:
     QTimer* captureTimer;
-    std::vector<QString> imageVec;
     cv::VideoCapture cap;
 public:
     explicit EmotionalAPICaller(QString text);

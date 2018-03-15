@@ -29,7 +29,7 @@ mainWindow::mainWindow() {
     labelImage->setPixmap(QPixmap::fromImage(image));
     imgWidget->resize(image.height(), image.width());
     //Font
-    QFont f("Roboto", 40, QFont::Bold);
+    QFont f("Roboto", 16, QFont::Bold);
     //Text Up
     labelTextUp = new QLabel(this);
     labelTextUp->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -50,7 +50,7 @@ mainWindow::mainWindow() {
 
     //Microphone button
     MicButton = new QPushButton(this);
-    MicButton->setIcon(QIcon("img/mic.png"));
+    MicButton->setIcon(QIcon(MICRO_IMAGE));
     MicButton->setIconSize(QSize(65, 65));
     QPalette paltt = MicButton->palette();
     paltt.setColor(QPalette::Button, QColor(Qt::white));

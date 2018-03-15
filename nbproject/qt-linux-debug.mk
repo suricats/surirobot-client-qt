@@ -584,7 +584,13 @@ build/linux-debug/GNU-Linux/ConverseAPICaller.o: src/model/api/ConverseAPICaller
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/ConverseAPICaller.o src/model/api/ConverseAPICaller.cpp
 
 build/linux-debug/GNU-Linux/EmotionalAPICaller.o: src/model/api/EmotionalAPICaller.cpp src/model/api/EmotionalAPICaller.hpp \
-		src/model/api/APICaller.hpp
+		src/model/api/APICaller.hpp \
+		src/controller/faceManager.hpp \
+		src/model/redis/QTRedis.hpp \
+		src/ui/mainWindow.h \
+		src/ui/ui_mainWindow.h \
+		src/keyPressEventHandler.h \
+		src/ui/manualWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/EmotionalAPICaller.o src/model/api/EmotionalAPICaller.cpp
 
 build/linux-debug/GNU-Linux/FileDownloader.o: src/model/api/FileDownloader.cpp src/model/api/FileDownloader.hpp \

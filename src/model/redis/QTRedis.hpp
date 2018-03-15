@@ -7,6 +7,8 @@
 #include <hiredis/adapters/qt.h>
 
 #define FACE_CHANNEL "face-recognition"
+#define REDIS_HOSTNAME "localhost"
+//#define REDIS_HOSTNAME "surirobot-redis"
 class QTRedis : public QObject {
     Q_OBJECT
 

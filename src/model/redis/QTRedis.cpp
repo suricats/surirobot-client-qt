@@ -45,7 +45,7 @@ void onChange(redisAsyncContext*, void* r, void* privdata) {
 
 void QTRedis::run() {
 
-    m_ctx = redisAsyncConnect("surirobot-redis", 6379);
+    m_ctx = redisAsyncConnect(REDIS_HOSTNAME, 6379);
 
     if (m_ctx->err) {
         std::cerr << "Error: " << m_ctx->errstr << std::endl;
