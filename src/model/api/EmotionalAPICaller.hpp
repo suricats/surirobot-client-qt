@@ -13,10 +13,11 @@ class EmotionalAPICaller : public APICaller {
     Q_OBJECT
 private:
     QTimer* captureTimer;
+    QTimer* requestTimer;
     cv::VideoCapture cap;
+    cv::Mat currentFrame;
     
 public:
-    int cpts;
     explicit EmotionalAPICaller(QString text);
     virtual ~EmotionalAPICaller();
     void start() const override;

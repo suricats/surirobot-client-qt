@@ -13,7 +13,8 @@
 
 
 #define NLP_URL "https://nlp.api.surirobot.net/getanswer"
-#define CONVERSE_URL "https://converse.api.surirobot.net/converse"
+//#define CONVERSE_URL "https://converse.api.surirobot.net/converse"
+#define CONVERSE_URL "http://localhost:6900"
 #define NLP_INTERVAL_REQUEST 4 //in seconds
 
 class converseManager : public QObject {
