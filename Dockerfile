@@ -16,6 +16,7 @@ RUN apt-get install -y --fix-missing \
     libopencv-dev uuid-dev \
     libopenal-dev libalut-dev libsndfile1-dev libsdl2-dev libsdl2-mixer-dev \
     libmpg123-dev libao-dev \
+    libavdevice-dev \
     && apt-get clean && rm -rf /tmp/* /var/tmp/*
 
 RUN cd ~ && \
