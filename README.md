@@ -25,9 +25,9 @@ sudo apt-get install libhiredis-dev
 ```bash
 sudo apt-get install libopencv-dev uuid-dev 
 ```
-5. Install audio packages (OpenAL, SNDFile and SDL2)
+5. Install audio packages (OpenAL, SNDFile, AVDevice and SDL2)
 ```bash
-sudo apt-get install libopenal-dev libalut-dev libsndfile1-dev libsdl2-dev lidsdl2-mixer-dev
+sudo apt-get install libopenal-dev libalut-dev libsndfile1-dev libsdl2-dev libsdl2-mixer-dev libavdevice-dev
 ```
 6. Optional packages
 ```bash
