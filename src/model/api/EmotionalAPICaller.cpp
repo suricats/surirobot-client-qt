@@ -4,6 +4,7 @@
 
 EmotionalAPICaller::EmotionalAPICaller(QString text) :
 APICaller(text) {
+    cpts=0;
     if (!cap.open(-1)) std::cerr << "Error - No camera found" << std::endl;
     captureTimer = new QTimer();
     //Set the capture timer (every 3 seconds)
@@ -18,7 +19,8 @@ EmotionalAPICaller::~EmotionalAPICaller() {
 }
 
 void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
-    isBusy = false;
+    std::cout << "Receive capture n°" << cpts << std::endl;
+    
     if (reply->error() != QNetworkReply::NoError) {
         std::cerr << "Error " << reply->error() << std::endl;
         std::cerr << reply->readAll().toStdString() << std::endl;
@@ -38,6 +40,7 @@ void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
 
 
     }
+    isBusy = false;
     reply->deleteLater();
 }
 
@@ -47,24 +50,23 @@ void EmotionalAPICaller::captureImage() {
         cap >> frame;
         cv::Mat dst;
         cv::resize(frame, dst, cv::Size(EMOTIONAL_IMAGE_SIZE, EMOTIONAL_IMAGE_SIZE));
-        std::string ext = "jpeg";
         std::string a = "Camera n°1";
+        std::string ext = "jpeg";
+        cpts++;
+        std::cout << "Capture n°" << cpts << std::endl;
+        
         cv::imshow(a, dst);
         std::vector<uint8_t> buffer;
         cv::imencode("." + ext, dst, buffer);
         QByteArray byteArray = QByteArray::fromRawData((const char*) buffer.data(), buffer.size());
         QString base64Image(byteArray.toBase64());
-
-        //std::stringstream ss;
-        //ss << "data:image/" << ext << ";base64";
-        //std::string s = ss.str() + base64Image.toStdString();
-        //base64Image = QString::fromStdString(s);
         sendRequest(base64Image);
     }
 }
 
 void EmotionalAPICaller::start() const {
     APICaller::start();
+    
     captureTimer->start();
     
 }
@@ -79,6 +81,7 @@ void EmotionalAPICaller::sendRequest(QString text) {
         QNetworkRequest request(url);
         std::cout << "Sended to Emotional API : " << "..." /*<< data.toStdString()*/ << std::endl;
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+        std::cout << "Emit capture n°" << cpts << std::endl;
         networkManager->post(request, data);
     }
 

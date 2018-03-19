@@ -14,7 +14,9 @@ class EmotionalAPICaller : public APICaller {
 private:
     QTimer* captureTimer;
     cv::VideoCapture cap;
+    
 public:
+    int cpts;
     explicit EmotionalAPICaller(QString text);
     virtual ~EmotionalAPICaller();
     void start() const override;
