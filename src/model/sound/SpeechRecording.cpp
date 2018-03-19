@@ -4,18 +4,6 @@ SpeechRecording::SpeechRecording() {
     audioPeriod = DEFAULT_PLANIFIED_SEC;
     currentThread = new QThread;
     moveToThread(currentThread);
-    // boolean which represent the 'state' of the user
-    isTalking = true;
-
-    /*//thread which will check if the user is talking
-     pthread_t threadCheckUser;
-     semaph = sem_open ("pSem", O_CREAT | O_EXCL, 0644, 0);
-     // Creating thread to handle the person talking
-     * if (pthread_create(&threadCheckUser, NULL, thread_IsPersonTalking, (void*)isTalking) != 0)
-      {
-              std::cout << "error in allocating thread" << std::endl;
-              exit(EXIT_FAILURE);
-      }*/
 
     //Initialize openAL with default device
     if (!InitOpenAL(NULL)) {
@@ -25,22 +13,7 @@ SpeechRecording::SpeechRecording() {
 
     // Get all devices connected
     GetCaptureDevices(Devices);
-    int Choice = 0;
-    ///If you have some problem decomment the code here
-    /**       std::cout << "Veuillez choisir un device pour la capture :" << std::endl << std::endl;
-        for (std::size_t i = 0; i < Devices.size(); ++i)
-            std::cout << "[" << i << "] " << Devices[i] << std::endl;
-        // the user's choice
-
-        std::cin >> Choice;
-        std::cin.ignore(10000, '\n');
-     */
-    // Initialize capture
-    if (!InitCapture(Devices[Choice].c_str())) {
-        std::cout << "Error with the microphone... Exit Failure" << std::endl;
-        exit(EXIT_FAILURE);
-    }
-    alcCaptureStart(CaptureDevice);
+    
 }
 
 SpeechRecording::~SpeechRecording() {
@@ -48,10 +21,6 @@ SpeechRecording::~SpeechRecording() {
     alcCaptureCloseDevice(CaptureDevice);
     ShutdownOpenAL();
 
-    //end of program
-    ///pthread_join(threadCheckUser, NULL);
-    sem_destroy(semaph);
-    //std::cout << "End of Speech" << std::endl;
 }
 void SpeechRecording::start() {
     currentThread->start();
@@ -151,23 +120,24 @@ void SpeechRecording::SaveSound(const std::string& Filename, const std::vector<A
     sf_close(File);
 }
 
-void* SpeechRecording::thread_IsPersonTalking(void* isTalking) {
-    do {
-        //check if person is talking
-        //Data signal processing
-        // if sound is not important in buffer, then isTalking = false;
-        sem_wait(semaph);
-    } while ((bool)isTalking);
-    std::cout << "End of threadTalking" << std::endl;
-    return (void*) NULL;
-}
+
 int SpeechRecording::recordPSeconds() {
     return recordXSeconds(audioPeriod);
 }
 
 int SpeechRecording::recordXSeconds(float second) {
-
-    ///Here to change second       // 6sec of captur
+    
+    //Initialize microphone
+    int Choice = 0;
+    // Initialize capture
+    if (!InitCapture(Devices[Choice].c_str())) {
+        std::cout << "Error with the microphone... Exit Failure" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    alcCaptureStart(CaptureDevice);
+    
+    
+    ///Here to change second
     time_t Start = time(NULL);
     while (time(NULL) - Start < second) {
         // get the samples
@@ -203,6 +173,9 @@ int SpeechRecording::recordXSeconds(float second) {
     SaveSound(str, Samples);
     Samples.clear();
     emit newSoundCreated(QString::fromStdString(str));
-
+    
+    //Stop OpenAL
+    alcCaptureCloseDevice(CaptureDevice);
+    //ShutdownOpenAL();
     return 0;
 }

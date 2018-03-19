@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     converseManager* cm = converseManager::getInstance();
     cm->connectToUI(window);
     cm->setAudioPeriod(4);
-    //cm->startAll();
+    cm->startAll();
     
     faceManager* fm = faceManager::getInstance();
     fm->connectToUI(window);

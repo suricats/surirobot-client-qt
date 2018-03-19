@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <unistd.h>
-#include <semaphore.h>
 #include <fcntl.h>
 #include <string>
 #include <iomanip>
@@ -30,10 +29,6 @@ private:
     //Devices to handle microphone
     ALCdevice *Device = NULL;
     ALCdevice *CaptureDevice = NULL;
-    //Check if really necessary here
-    //maybe replace sem_wait(semaph); by a simple Sleep(1000);
-    sem_t *semaph;
-    bool isTalking;
     //List of all devices
     std::vector<std::string> Devices;
     // We will stock our samples in vector of Int16
@@ -89,12 +84,6 @@ public:
     ////////////////////////////////////////////////////////////
     void SaveSound(const std::string& Filename, const std::vector<ALshort>& Samples);
 
-    ///
-    /// \brief thread_IsPersonTalking check if the person has spoke in the last second
-    /// \param isTalking boolean : true if the person has spoke else false
-    /// \return
-    ///
-    void* thread_IsPersonTalking(void* isTalking);
 
 public slots:
     int recordXSeconds(float second = 6);
