@@ -13,6 +13,8 @@ RUN apt-get install -y --fix-missing \
     libhiredis-dev \
     qt5-default \
     qtmultimedia5-dev \
+    libopencv-dev \
+    uuid-dev \
     && apt-get clean && rm -rf /tmp/* /var/tmp/*
 
 RUN cd ~ && \
