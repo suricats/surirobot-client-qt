@@ -6,6 +6,7 @@ ConverseAPICaller::ConverseAPICaller(QString text) :
 APICaller(text) {
     fileDownloader = new FileDownloader();
     musicPlayer = new MusicPlayer();
+    musicThread = musicPlayer->currentThread;
     QObject::connect(fileDownloader, SIGNAL(newFile(QByteArray)), this, SLOT(downloadFinished(QByteArray)));
     QObject::connect(this, SIGNAL(download(QString)), fileDownloader, SLOT(sendRequest(QString)));
     QObject::connect(this, SIGNAL(playSoundOrder(QString)), musicPlayer, SLOT(playSound(QString)));
@@ -99,7 +100,10 @@ void ConverseAPICaller::downloadFinished(QByteArray data) {
 
     ///Play the audio
     //Restart the audioplayer
-    musicPlayer->restart();
+    musicThread->quit();
+    musicPlayer = new MusicPlayer();
+    musicPlayer->start();
+    QObject::connect(this, SIGNAL(playSoundOrder(QString)), musicPlayer, SLOT(playSound(QString)));
     emit playSoundOrder(QString::fromStdString(filename));
 
 }

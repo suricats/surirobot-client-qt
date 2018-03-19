@@ -18,6 +18,7 @@ class ConverseAPICaller : public APICaller {
 private:
     FileDownloader* fileDownloader;
     MusicPlayer* musicPlayer;
+    QThread* musicThread;
 
 public:
     void readAudio(std::string filename);
