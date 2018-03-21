@@ -8,6 +8,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
+
 class MusicPlayer : public QObject {
     Q_OBJECT
 public:
@@ -19,6 +20,10 @@ public:
     void restart();
 public slots:
     void playSound(QString filepath);
+    void interruptRequest();
+
+private:
+    unsigned int startTime;
 
 
 };

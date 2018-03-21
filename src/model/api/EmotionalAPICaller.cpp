@@ -35,8 +35,6 @@ void EmotionalAPICaller::receiveReply(QNetworkReply* reply) {
             message += val.toObject()["emotion"].toString("?");
             message += ",";
         }
-        //std::cout << "EmoAPI : " << QJsonDocument::fromJson(reply->readAll()).toBinaryData().toStdString() << std::endl;
-        //QString message = jsonObject["facial"].toString("No emotion detected");
         emit newReply(message);
 
 
@@ -78,7 +76,7 @@ void EmotionalAPICaller::sendRequest(QString text) {
         QJsonDocument jsonData(jsonObject);
         QByteArray data = jsonData.toJson();
         QNetworkRequest request(url);
-        std::cout << "Sended to Emotional API : " << "..." /*<< data.toStdString()*/ << std::endl;
+        //std::cout << "Sended to Emotional API : " << data.toStdString().substr(0,30) << "..." << std::endl;
         request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
         networkManager->post(request, data);
     }

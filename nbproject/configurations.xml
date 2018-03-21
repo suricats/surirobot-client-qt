@@ -19,7 +19,6 @@
       <itemPath>src/controller/faceManager.hpp</itemPath>
       <itemPath>src/controller/generalManager.hpp</itemPath>
       <itemPath>src/keyPressEventHandler.h</itemPath>
-      <itemPath>src/keyPressForSpeechHandler.hpp</itemPath>
       <itemPath>src/ui/mainWindow.h</itemPath>
       <itemPath>src/qt.h</itemPath>
     </logicalFolder>
@@ -43,7 +42,6 @@
       <itemPath>src/controller/faceManager.cpp</itemPath>
       <itemPath>src/controller/generalManager.cpp</itemPath>
       <itemPath>src/keyPressEventHandler.cpp</itemPath>
-      <itemPath>src/keyPressForSpeechHandler.cpp</itemPath>
       <itemPath>src/main.cpp</itemPath>
       <itemPath>src/ui/mainWindow.cpp.cc</itemPath>
     </logicalFolder>
@@ -98,10 +96,6 @@
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/keyPressForSpeechHandler.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/keyPressForSpeechHandler.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -217,10 +211,6 @@
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/keyPressForSpeechHandler.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/keyPressForSpeechHandler.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -344,10 +334,6 @@
       <item path="src/keyPressEventHandler.cpp" ex="false" tool="1" flavor2="9">
       </item>
       <item path="src/keyPressEventHandler.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/keyPressForSpeechHandler.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/keyPressForSpeechHandler.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="9">
       </item>
