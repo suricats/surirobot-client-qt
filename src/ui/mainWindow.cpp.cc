@@ -17,8 +17,7 @@ mainWindow::mainWindow() {
 
     //ui->setupUi(this);
     widget.setupUi(this);
-    keyPressEventHandler* eKeyPress = new keyPressEventHandler();
-    installEventFilter(eKeyPress);
+    
 
     //Image
     imgWidget = new QWidget(this);

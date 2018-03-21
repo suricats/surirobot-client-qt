@@ -6,6 +6,8 @@
 #include "converseManager.hpp"
 #include "faceManager.hpp"
 
+//Others headers
+#include "../keyPressEventHandler.h"
 class generalManager : public QObject {
     Q_OBJECT
 public:
@@ -17,7 +19,8 @@ public:
     void operator=(generalManager const&) = delete;
 
     ~generalManager();
-
+    void configureHandlers(QDialog* ui);
+    
 private:
     generalManager();
     static generalManager* instance;

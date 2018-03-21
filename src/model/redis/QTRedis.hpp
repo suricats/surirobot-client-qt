@@ -19,13 +19,12 @@ public:
     void start();
 
 signals:
-    void signalNewPerson(const QString& text);
+    void newPerson(QString name,QString id);
 
 public slots:
     void run();
 
 private:
-    
     redisAsyncContext * m_ctx;
     RedisQtAdapter m_adapter;
 

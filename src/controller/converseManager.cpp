@@ -92,5 +92,9 @@ void converseManager::setAudioPeriod(int nb) {
     else std::cerr << "Invalid audio period." << std::endl;
     
 }
+SpeechRecording* converseManager::getAudioRecorder()
+{
+    return audioRecorder;
+}
 
 

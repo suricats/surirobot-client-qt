@@ -22,12 +22,13 @@
 #include <QThread>
 
 #define DEFAULT_PLANIFIED_SEC 4
+
 class SpeechRecording : public QObject {
     Q_OBJECT
-private:
-    
-    //Devices to handle microphone
-    ALCdevice *Device = NULL;
+        private:
+
+            //Devices to handle microphone
+            ALCdevice *Device = NULL;
     ALCdevice *CaptureDevice = NULL;
     //List of all devices
     std::vector<std::string> Devices;
@@ -88,8 +89,14 @@ public:
 public slots:
     int recordXSeconds(float second = 6);
     int recordPSeconds();
+    void recordInBuffer(float second = 1);
+    int saveBuffer();
 signals:
     void newSoundCreated(QString text);
+    void isRecording(bool val);
+
+private:
+    bool isInit;
 };
 
 #endif /* SPEECHRECORDING_HPP */

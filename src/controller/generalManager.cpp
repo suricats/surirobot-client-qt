@@ -21,7 +21,11 @@ generalManager::generalManager() {
 generalManager::~generalManager() {
 
 }
-
+void generalManager::configureHandlers(QDialog* ui)
+{
+    keyPressEventHandler* eKeyPress = new keyPressEventHandler();
+    ui->installEventFilter(eKeyPress);
+}
 void generalManager::deleteAll() {
     //Stop the controllers
     faceManager::getInstance()->stop();

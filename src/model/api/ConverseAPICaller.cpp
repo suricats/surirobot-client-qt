@@ -51,11 +51,17 @@ void ConverseAPICaller::sendRequest(QString filepath) {
         audioPart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("audio/x-wav"));
         QFile *file = new QFile(filepath);
         file->open(QIODevice::ReadOnly);
-
+        
         audioPart.setBodyDevice(file);
         file->setParent(multiPart); // we cannot delete the file now, so delete it with the multiPart
+        
+        //Id
+        QHttpPart idPart;
+        textPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"userId\""));
+        textPart.setBody("1");
         multiPart->append(audioPart);
         multiPart->append(textPart);
+        multiPart->append(idPart);
         QNetworkRequest request(url);
         std::cout << "Sended to Converse API : " << "File - " << file->fileName().toStdString() << " - " << file->size() / 1000 << "Ko" << std::endl;
         isBusy = true;

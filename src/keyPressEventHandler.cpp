@@ -1,37 +1,57 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   keyPressEventHandler.cpp
- * Author: Alain BERRIER
- * 
- * Created on 2 décembre 2017, 16:42
- */
 
 #include "keyPressEventHandler.h"
 
 keyPressEventHandler::keyPressEventHandler() {
+    cm = converseManager::getInstance();
+    sr = cm->getAudioRecorder();
+    expirationTimer = new QTimer();
+    expirationTimer->setInterval(500);
+    expirationTimer->setSingleShot(true);
+    QObject::connect(expirationTimer,SIGNAL(timeout()),sr,SLOT(saveBuffer()));
+    QObject::connect(sr,SIGNAL(isRecording(bool)),this,SLOT(manageRecord(bool)));
+    QObject::connect(this,SIGNAL(startRecord()),sr,SLOT(recordInBuffer()));
+    audioRecording=false;
+    
+    
 }
-
 
 keyPressEventHandler::~keyPressEventHandler() {
 }
-
-bool keyPressEventHandler::eventFilter(QObject* obj, QEvent* event)
+//Communication between 2 different threads
+void keyPressEventHandler::manageRecord(bool val)
 {
-    if (event->type()==QEvent::KeyPress) {
-        QKeyEvent* key = static_cast<QKeyEvent*>(event);
-        if ( (key->key()==Qt::Key_Escape) || (key->key()==Qt::Key_Return) ) {
-            QApplication::quit();
-        } else {
-            return QObject::eventFilter(obj, event);
+    audioRecording=val;
+}
+bool keyPressEventHandler::eventFilter(QObject* obj, QEvent* event) {
+    
+    //Key pressed
+    if(event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent* keyP = static_cast<QKeyEvent*> (event);
+        if(keyP->key() == Qt::Key_Escape || keyP->key() == Qt::Key_Return) QApplication::quit();
+        else if(keyP->key() == Qt::Key_C)
+        {
+            //Expiration timer is set to prevent keyboard error
+            if(expirationTimer->isActive())expirationTimer->stop();
+            if(!audioRecording)
+            {
+                emit startRecord();
+                
+            }
+            return true;
         }
-        return true;
-    } else {
-        return QObject::eventFilter(obj, event);
+        else return QObject::eventFilter(obj, event);
     }
-    return false;
+    //Key released
+    else if(event->type() == QEvent::KeyRelease)
+    {
+        QKeyEvent* keyR = static_cast<QKeyEvent*> (event);
+        if(keyR->key() == Qt::Key_C && !expirationTimer->isActive())
+        {
+            expirationTimer->start();
+            return true;
+        }
+    }
+    return QObject::eventFilter(obj, event);
+    
 }
