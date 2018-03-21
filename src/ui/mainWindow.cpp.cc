@@ -135,6 +135,7 @@ void mainWindow::updateWidgets() {
     labelTextDown->adjustSize();
     imgWidget->adjustSize();
 
+    MicButton->move(0,this->height() / 10 );
     imgWidget->move(this->width() / 2 - imgWidget->width() / 2, this->height() / 3 - imgWidget->height() / 2);
     labelTextUp->move(this->width() / 2 - this->labelTextUp->width() / 2, this->height() / 3 - this->labelTextUp->height() / 2 + imgWidget->height() / 2);
     labelTextMiddle->move(this->width() / 2 - this->labelTextUp->width() / 2, this->height() / 3 - this->labelTextUp->height() / 2 + imgWidget->height() / 2 + this->labelTextUp->height());

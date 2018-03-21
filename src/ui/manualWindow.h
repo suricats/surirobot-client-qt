@@ -24,16 +24,31 @@
 #include <QTextEdit>
 #include <QTimer>
 #include <QPushButton>
+#include <QFileDialog>
+#include <QString>
+#include <QStringList>
+#include <QMessageBox>
+
+
 
 class manualWindow : public QDialog {
     Q_OBJECT
 public:
-
+	QPushButton* ajoutButton;
+	
 	manualWindow();
 	virtual ~manualWindow();
+	QString browse();
+	
+public slots:
+    void ajout();
+signals:
+	
 	
 private:
     Ui::mainWindow Mwidget;
+	QLabel* labelTest;
+	
 };
 
 #endif /* MANUALWINDOW_H */
