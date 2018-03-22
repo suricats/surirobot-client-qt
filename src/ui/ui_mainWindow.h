@@ -82,9 +82,6 @@ public:
         ButtonManuel->setText(QApplication::translate("mainWindow", "Manuel", 0));
         MicButton->setText(QString());
         labelImage->setText(QApplication::translate("mainWindow", "<html><head/><body><p><br/></p></body></html>", 0));
-        labelTextUp->setText(QApplication::translate("mainWindow", "TextLabel", 0));
-        labelTextMiddle->setText(QApplication::translate("mainWindow", "TextLabel", 0));
-        labelTextBottom->setText(QApplication::translate("mainWindow", "TextLabel", 0));
     } // retranslateUi
 
 };

@@ -28,9 +28,6 @@ public:
     QPushButton *ButtonManuel;
     QPushButton *MicButton;
     QLabel *labelImage;
-    QLabel *labelTextUp;
-    QLabel *labelTextMiddle;
-    QLabel *labelTextBottom;
 
     void setupUi(QDialog *mainWindow)
     {
@@ -55,21 +52,6 @@ public:
         labelImage = new QLabel(frame);
         labelImage->setObjectName(QStringLiteral("labelImage"));
         labelImage->setGeometry(QRect(270, 110, 401, 251));
-        labelTextUp = new QLabel(frame);
-        labelTextUp->setObjectName(QStringLiteral("labelTextUp"));
-        labelTextUp->setGeometry(QRect(370, 390, 261, 41));
-        labelTextMiddle = new QLabel(frame);
-        labelTextMiddle->setObjectName(QStringLiteral("labelTextMiddle"));
-        labelTextMiddle->setGeometry(QRect(370, 430, 261, 41));
-        labelTextBottom = new QLabel(frame);
-        labelTextBottom->setObjectName(QStringLiteral("labelTextBottom"));
-        labelTextBottom->setGeometry(QRect(370, 470, 261, 41));
-        ButtonManuel->raise();
-        MicButton->raise();
-        labelImage->raise();
-        labelTextMiddle->raise();
-        labelTextBottom->raise();
-        labelTextUp->raise();
 
         retranslateUi(mainWindow);
 
@@ -82,9 +64,6 @@ public:
         ButtonManuel->setText(QApplication::translate("mainWindow", "Manuel", 0));
         MicButton->setText(QString());
         labelImage->setText(QApplication::translate("mainWindow", "<html><head/><body><p><br/></p></body></html>", 0));
-        labelTextUp->setText(QApplication::translate("mainWindow", "TextLabel", 0));
-        labelTextMiddle->setText(QApplication::translate("mainWindow", "TextLabel", 0));
-        labelTextBottom->setText(QApplication::translate("mainWindow", "TextLabel", 0));
     } // retranslateUi
 
 };

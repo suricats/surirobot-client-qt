@@ -61,9 +61,11 @@ private:
     QLabel* labelImage;
     QTextEdit* editText;
     QImage currentImage;
+	
     QLabel* labelTextUp;
     QLabel* labelTextMiddle;
     QLabel* labelTextDown;
+	
     Ui::mainWindow widget;
 };
 

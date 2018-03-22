@@ -26,11 +26,20 @@ manualWindow::manualWindow()
 	labelTest = new QLabel(this);
 	
 	 //ajouter une photo button
-    ajoutButton = new QPushButton(this);
-   ajoutButton->setText("Ajouter Photo");
+	ajoutButton = new QPushButton(this);
+	ajoutButton->setText("Ajouter Photo");
 	ajoutButton->move(this->width() / 10, this->height() / 10);
 	 connect(ajoutButton, SIGNAL(clicked()), this, SLOT(ajout()));
-	this->show();
+	
+	  //prendre une photo button
+	prendreButton = new QPushButton(this);
+	prendreButton->setText("Prendre une Photo");
+	prendreButton->move(this->width() / 10, this->height() / 7);
+	 connect(prendreButton, SIGNAL(clicked()), this, SLOT(prendrePhoto()));
+	 
+	 this->show();
+	
+	
 }
 
 manualWindow::~manualWindow() {}
@@ -59,5 +68,10 @@ void manualWindow::ajout() {
 		}
 	 }	
 	//check OK	
+	
+}
+
+void manualWindow::prendrePhoto()
+{
 	
 }

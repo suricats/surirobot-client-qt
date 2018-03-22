@@ -36,6 +36,7 @@ class manualWindow : public QDialog {
     Q_OBJECT
 public:
 	QPushButton* ajoutButton;
+	QPushButton* prendreButton;
 	
 	manualWindow();
 	virtual ~manualWindow();
@@ -43,6 +44,7 @@ public:
 	
 public slots:
     void ajout();
+    void prendrePhoto();
 signals:
 	
 	

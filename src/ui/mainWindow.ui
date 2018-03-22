@@ -77,51 +77,6 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="labelTextUp">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>390</y>
-      <width>261</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelTextMiddle">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>430</y>
-      <width>261</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelTextBottom">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>470</y>
-      <width>261</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <zorder>ButtonManuel</zorder>
-   <zorder>MicButton</zorder>
-   <zorder>labelImage</zorder>
-   <zorder>labelTextMiddle</zorder>
-   <zorder>labelTextBottom</zorder>
-   <zorder>labelTextUp</zorder>
   </widget>
  </widget>
  <resources/>
