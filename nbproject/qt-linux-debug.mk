@@ -58,6 +58,7 @@ SOURCES       = src/controller/converseManager.cpp \
 		src/model/api/EmotionalAPICaller.cpp \
 		src/model/api/FileDownloader.cpp \
 		src/model/api/NLPAPICaller.cpp \
+		src/model/api/STTAPiCaller.cpp \
 		src/model/redis/QTRedis.cpp \
 		src/model/sound/MusicPlayer.cpp \
 		src/model/sound/SpeechRecording.cpp \
@@ -87,6 +88,7 @@ OBJECTS       = build/linux-debug/GNU-Linux/converseManager.o \
 		build/linux-debug/GNU-Linux/EmotionalAPICaller.o \
 		build/linux-debug/GNU-Linux/FileDownloader.o \
 		build/linux-debug/GNU-Linux/NLPAPICaller.o \
+		build/linux-debug/GNU-Linux/STTAPiCaller.o \
 		build/linux-debug/GNU-Linux/QTRedis.o \
 		build/linux-debug/GNU-Linux/MusicPlayer.o \
 		build/linux-debug/GNU-Linux/SpeechRecording.o \
@@ -176,6 +178,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		src/model/api/EmotionalAPICaller.hpp \
 		src/model/api/FileDownloader.hpp \
 		src/model/api/NLPAPICaller.hpp \
+		src/model/api/STTAPiCaller.hpp \
 		src/model/redis/QTRedis.hpp \
 		src/model/sound/MusicPlayer.hpp \
 		src/model/sound/SpeechRecording.hpp \
@@ -191,6 +194,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		src/model/api/EmotionalAPICaller.cpp \
 		src/model/api/FileDownloader.cpp \
 		src/model/api/NLPAPICaller.cpp \
+		src/model/api/STTAPiCaller.cpp \
 		src/model/redis/QTRedis.cpp \
 		src/model/sound/MusicPlayer.cpp \
 		src/model/sound/SpeechRecording.cpp \
@@ -370,8 +374,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents src/conf.hpp src/controller/converseManager.hpp src/controller/faceManager.hpp src/controller/generalManager.hpp src/keyPressEventHandler.h src/model/api/APICaller.hpp src/model/api/ConverseAPICaller.hpp src/model/api/EmotionalAPICaller.hpp src/model/api/FileDownloader.hpp src/model/api/NLPAPICaller.hpp src/model/redis/QTRedis.hpp src/model/sound/MusicPlayer.hpp src/model/sound/SpeechRecording.hpp src/qt.h src/ui/mainWindow.h src/ui/manualWindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/controller/converseManager.cpp src/controller/faceManager.cpp src/controller/generalManager.cpp src/keyPressEventHandler.cpp src/main.cpp src/model/api/APICaller.cpp src/model/api/ConverseAPICaller.cpp src/model/api/EmotionalAPICaller.cpp src/model/api/FileDownloader.cpp src/model/api/NLPAPICaller.cpp src/model/redis/QTRedis.cpp src/model/sound/MusicPlayer.cpp src/model/sound/SpeechRecording.cpp src/ui/mainWindow.cpp.cc src/ui/manualWindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/conf.hpp src/controller/converseManager.hpp src/controller/faceManager.hpp src/controller/generalManager.hpp src/keyPressEventHandler.h src/model/api/APICaller.hpp src/model/api/ConverseAPICaller.hpp src/model/api/EmotionalAPICaller.hpp src/model/api/FileDownloader.hpp src/model/api/NLPAPICaller.hpp src/model/api/STTAPiCaller.hpp src/model/redis/QTRedis.hpp src/model/sound/MusicPlayer.hpp src/model/sound/SpeechRecording.hpp src/qt.h src/ui/mainWindow.h src/ui/manualWindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/controller/converseManager.cpp src/controller/faceManager.cpp src/controller/generalManager.cpp src/keyPressEventHandler.cpp src/main.cpp src/model/api/APICaller.cpp src/model/api/ConverseAPICaller.cpp src/model/api/EmotionalAPICaller.cpp src/model/api/FileDownloader.cpp src/model/api/NLPAPICaller.cpp src/model/api/STTAPiCaller.cpp src/model/redis/QTRedis.cpp src/model/sound/MusicPlayer.cpp src/model/sound/SpeechRecording.cpp src/ui/mainWindow.cpp.cc src/ui/manualWindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents src/ui/mainWindow.ui $(DISTDIR)/
 
 
@@ -415,6 +419,7 @@ moc_converseManager.cpp: src/model/api/ConverseAPICaller.hpp \
 moc_faceManager.cpp: src/model/api/EmotionalAPICaller.hpp \
 		src/model/api/APICaller.hpp \
 		src/model/redis/QTRedis.hpp \
+		src/conf.hpp \
 		src/ui/mainWindow.h \
 		src/ui/ui_mainWindow.h \
 		src/ui/manualWindow.h \
@@ -476,7 +481,8 @@ moc_NLPAPICaller.cpp: src/model/api/APICaller.hpp \
 		src/model/api/NLPAPICaller.hpp
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/model/api/NLPAPICaller.hpp -o moc_NLPAPICaller.cpp
 
-moc_QTRedis.cpp: src/model/redis/QTRedis.hpp
+moc_QTRedis.cpp: src/conf.hpp \
+		src/model/redis/QTRedis.hpp
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/alain/workspace/surirobot-client-qt/nbproject -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include src/model/redis/QTRedis.hpp -o moc_QTRedis.cpp
 
 moc_MusicPlayer.cpp: src/model/sound/MusicPlayer.hpp
@@ -534,6 +540,7 @@ build/linux-debug/GNU-Linux/faceManager.o: src/controller/faceManager.cpp src/co
 		src/model/api/EmotionalAPICaller.hpp \
 		src/model/api/APICaller.hpp \
 		src/model/redis/QTRedis.hpp \
+		src/conf.hpp \
 		src/ui/mainWindow.h \
 		src/ui/ui_mainWindow.h \
 		src/ui/manualWindow.h
@@ -605,6 +612,7 @@ build/linux-debug/GNU-Linux/EmotionalAPICaller.o: src/model/api/EmotionalAPICall
 		src/model/api/APICaller.hpp \
 		src/controller/faceManager.hpp \
 		src/model/redis/QTRedis.hpp \
+		src/conf.hpp \
 		src/ui/mainWindow.h \
 		src/ui/ui_mainWindow.h \
 		src/ui/manualWindow.h
@@ -619,7 +627,13 @@ build/linux-debug/GNU-Linux/NLPAPICaller.o: src/model/api/NLPAPICaller.cpp src/m
 		src/conf.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/NLPAPICaller.o src/model/api/NLPAPICaller.cpp
 
-build/linux-debug/GNU-Linux/QTRedis.o: src/model/redis/QTRedis.cpp src/model/redis/QTRedis.hpp
+build/linux-debug/GNU-Linux/STTAPiCaller.o: src/model/api/STTAPiCaller.cpp src/model/api/STTAPiCaller.hpp \
+		src/model/api/APICaller.hpp \
+		src/conf.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/STTAPiCaller.o src/model/api/STTAPiCaller.cpp
+
+build/linux-debug/GNU-Linux/QTRedis.o: src/model/redis/QTRedis.cpp src/model/redis/QTRedis.hpp \
+		src/conf.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/linux-debug/GNU-Linux/QTRedis.o src/model/redis/QTRedis.cpp
 
 build/linux-debug/GNU-Linux/MusicPlayer.o: src/model/sound/MusicPlayer.cpp src/model/sound/MusicPlayer.hpp

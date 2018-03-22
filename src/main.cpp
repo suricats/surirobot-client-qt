@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
     
     faceManager* fm = faceManager::getInstance();
     fm->connectToUI(window);
-    fm->startAll();
+    fm->startFaceRecognition();
     
     QObject::connect(&app,SIGNAL(aboutToQuit()),generalManager::getInstance(),SLOT(deleteAll()));
     return app.exec();

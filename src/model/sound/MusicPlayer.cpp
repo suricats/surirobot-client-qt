@@ -4,7 +4,6 @@
 MusicPlayer::MusicPlayer() {
     currentThread = new QThread();
     moveToThread(currentThread);
-    QObject::connect(this,SIGNAL(playBufferOrder()),this,SLOT(playBufferSound()));
     
 }
 

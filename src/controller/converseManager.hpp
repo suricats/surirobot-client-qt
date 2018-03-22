@@ -41,12 +41,14 @@ public:
     void setAudioPeriod(int nb);
     
     SpeechRecording* getAudioRecorder();
+    
+    ConverseAPICaller* converseWorker;
+    SpeechRecording* audioRecorder;
 private:
     QTimer* debugTimer;
     mainWindow* ui;
     NLPAPICaller* nlpWorker;
-    ConverseAPICaller* converseWorker;
-    SpeechRecording* audioRecorder;
+    
     
     bool nlpDebug;
 

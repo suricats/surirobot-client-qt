@@ -8,6 +8,11 @@
 
 //Others headers
 #include "../keyPressEventHandler.h"
+#include <iostream>
+#include <string>
+
+
+
 class generalManager : public QObject {
     Q_OBJECT
 public:
@@ -20,16 +25,23 @@ public:
 
     ~generalManager();
     void configureHandlers(QDialog* ui);
-    
+
+    State state;
+    bool onScenario;
+    QString nameDetected;
+    QString idDetected;
+
 private:
     generalManager();
     static generalManager* instance;
 
     void deleteTemporaryFiles();
-
+    keyPressEventHandler* eKeyPress;
 public slots:
     void deleteAll();
-    
+    void scenarioRecognizedConfirmation(State state,QByteArray data);
+    void activateScenarioRecognizedConfirmation(bool val);
+
 
 };
 

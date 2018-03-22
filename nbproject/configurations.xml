@@ -7,11 +7,11 @@
       <itemPath>src/model/api/APICaller.hpp</itemPath>
       <itemPath>src/model/api/ConverseAPICaller.hpp</itemPath>
       <itemPath>src/model/api/EmotionalAPICaller.hpp</itemPath>
-      <itemPath>src/model/api/EmotionalAPICaller_old.hpp</itemPath>
       <itemPath>src/model/api/FileDownloader.hpp</itemPath>
       <itemPath>src/model/sound/MusicPlayer.hpp</itemPath>
       <itemPath>src/model/api/NLPAPICaller.hpp</itemPath>
       <itemPath>src/model/redis/QTRedis.hpp</itemPath>
+      <itemPath>src/model/api/STTAPiCaller.hpp</itemPath>
       <itemPath>src/model/sound/SpeechRecording.cpp</itemPath>
       <itemPath>src/model/sound/SpeechRecording.hpp</itemPath>
       <itemPath>src/conf.hpp</itemPath>
@@ -33,11 +33,11 @@
       <itemPath>src/model/api/APICaller.cpp</itemPath>
       <itemPath>src/model/api/ConverseAPICaller.cpp</itemPath>
       <itemPath>src/model/api/EmotionalAPICaller.cpp</itemPath>
-      <itemPath>src/model/api/EmotionalAPICaller_old.cpp</itemPath>
       <itemPath>src/model/api/FileDownloader.cpp</itemPath>
       <itemPath>src/model/sound/MusicPlayer.cpp</itemPath>
       <itemPath>src/model/api/NLPAPICaller.cpp</itemPath>
       <itemPath>src/model/redis/QTRedis.cpp</itemPath>
+      <itemPath>src/model/api/STTAPiCaller.cpp</itemPath>
       <itemPath>src/controller/converseManager.cpp</itemPath>
       <itemPath>src/controller/faceManager.cpp</itemPath>
       <itemPath>src/controller/generalManager.cpp</itemPath>
@@ -123,16 +123,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/model/api/EmotionalAPICaller_old.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/model/api/EmotionalAPICaller_old.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/model/api/FileDownloader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/model/api/FileDownloader.hpp" ex="false" tool="3" flavor2="0">
@@ -140,6 +130,10 @@
       <item path="src/model/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/model/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/api/STTAPiCaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/api/STTAPiCaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/model/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -238,16 +232,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/model/api/EmotionalAPICaller_old.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/model/api/EmotionalAPICaller_old.hpp"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="src/model/api/FileDownloader.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/model/api/FileDownloader.hpp" ex="false" tool="3" flavor2="0">
@@ -255,6 +239,10 @@
       <item path="src/model/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/model/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/api/STTAPiCaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/api/STTAPiCaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/model/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -368,6 +356,10 @@
       <item path="src/model/api/NLPAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/model/api/NLPAPICaller.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/model/api/STTAPiCaller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/model/api/STTAPiCaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/model/redis/QTRedis.cpp" ex="false" tool="1" flavor2="0">
       </item>

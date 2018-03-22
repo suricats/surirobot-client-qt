@@ -5,10 +5,11 @@
 #include <iostream>
 #include <QThread>
 #include <hiredis/adapters/qt.h>
-
+#include "../../conf.hpp"
 #define FACE_CHANNEL "face-recognition"
 #define REDIS_HOSTNAME "localhost"
 //#define REDIS_HOSTNAME "surirobot-redis"
+
 class QTRedis : public QObject {
     Q_OBJECT
 
@@ -19,8 +20,8 @@ public:
     void start();
 
 signals:
-    void newPerson(QString name,QString id);
-
+    void newPerson(QString name, QString id);
+    void activateDetectionScenario(State a,QByteArray data);
 public slots:
     void run();
 

@@ -26,6 +26,7 @@ class keyPressEventHandler : public QObject {
 public:
     keyPressEventHandler();
     virtual ~keyPressEventHandler();
+    bool onScenario;
 protected:
     bool eventFilter(QObject* obj, QEvent* event);
 private:

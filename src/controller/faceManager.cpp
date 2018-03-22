@@ -16,6 +16,7 @@ faceManager* faceManager::getInstance() {
 }
 
 faceManager::faceManager() {
+    
     emotionalWorker = new EmotionalAPICaller(EMOTIONAL_URL);
     faceWorker = new QTRedis();
 }
@@ -56,3 +57,4 @@ bool faceManager::isFaceRecognitionDown() {
 bool faceManager::isEmotionalRecognitionDown() {
     return false;
 }
+

@@ -2,6 +2,7 @@
 #include "keyPressEventHandler.h"
 
 keyPressEventHandler::keyPressEventHandler() {
+    onScenario=false;
     cm = converseManager::getInstance();
     sr = cm->getAudioRecorder();
     expirationTimer = new QTimer();
