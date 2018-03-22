@@ -25,8 +25,8 @@ class Ui_mainWindow
 {
 public:
     QFrame *frame;
-    QPushButton *ButtonManuel;
-    QPushButton *MicButton;
+  //  QPushButton *ButtonManuel;
+   // QPushButton *MicButton;
     QLabel *labelImage;
     QLabel *labelTextUp;
     QLabel *labelTextMiddle;
@@ -42,7 +42,7 @@ public:
         frame->setGeometry(QRect(-40, 0, 1061, 691));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
-        ButtonManuel = new QPushButton(frame);
+       /* ButtonManuel = new QPushButton(frame);
         ButtonManuel->setObjectName(QStringLiteral("ButtonManuel"));
         ButtonManuel->setGeometry(QRect(860, 110, 99, 27));
         MicButton = new QPushButton(frame);
@@ -51,8 +51,9 @@ public:
         QIcon icon;
         icon.addFile(QStringLiteral("../../../../img/mic.png"), QSize(), QIcon::Normal, QIcon::Off);
         MicButton->setIcon(icon);
-        MicButton->setIconSize(QSize(30, 30));
-        labelImage = new QLabel(frame);
+      	MicButton->setIconSize(QSize(30, 30));
+      */  
+	labelImage = new QLabel(frame);
         labelImage->setObjectName(QStringLiteral("labelImage"));
         labelImage->setGeometry(QRect(270, 110, 401, 251));
         labelTextUp = new QLabel(frame);
@@ -64,8 +65,8 @@ public:
         labelTextBottom = new QLabel(frame);
         labelTextBottom->setObjectName(QStringLiteral("labelTextBottom"));
         labelTextBottom->setGeometry(QRect(370, 470, 261, 41));
-        ButtonManuel->raise();
-        MicButton->raise();
+       // ButtonManuel->raise();
+       // MicButton->raise();
         labelImage->raise();
         labelTextMiddle->raise();
         labelTextBottom->raise();
@@ -79,8 +80,8 @@ public:
     void retranslateUi(QDialog *mainWindow)
     {
         mainWindow->setWindowTitle(QApplication::translate("mainWindow", "mainWindow", 0));
-        ButtonManuel->setText(QApplication::translate("mainWindow", "Manuel", 0));
-        MicButton->setText(QString());
+       // ButtonManuel->setText(QApplication::translate("mainWindow", "Manuel", 0));
+        //MicButton->setText(QString());
         labelImage->setText(QApplication::translate("mainWindow", "<html><head/><body><p><br/></p></body></html>", 0));
     } // retranslateUi
 

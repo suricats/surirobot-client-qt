@@ -28,42 +28,6 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QPushButton" name="ButtonManuel">
-    <property name="geometry">
-     <rect>
-      <x>860</x>
-      <y>110</y>
-      <width>99</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Manuel</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="MicButton">
-    <property name="geometry">
-     <rect>
-      <x>860</x>
-      <y>430</y>
-      <width>91</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>../../../../img/mic.png</normaloff>../../../../img/mic.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>30</width>
-      <height>30</height>
-     </size>
-    </property>
-   </widget>
    <widget class="QLabel" name="labelImage">
     <property name="geometry">
      <rect>

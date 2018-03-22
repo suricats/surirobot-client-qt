@@ -12,7 +12,8 @@ mainWindow::mainWindow() {
     labelImage = new QLabel(imgWidget);
     labelImage->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     QImage image;
-    image.load(NORMAL_IMAGE);
+    image.load(BASIC_IMAGE);
+    
     labelImage->setPixmap(QPixmap::fromImage(image));
     imgWidget->resize(image.height(), image.width());
     //Font
