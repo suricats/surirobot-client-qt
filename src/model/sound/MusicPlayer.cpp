@@ -4,6 +4,7 @@
 MusicPlayer::MusicPlayer() {
     currentThread = new QThread();
     moveToThread(currentThread);
+    QObject::connect(this,SIGNAL(playBufferOrder()),this,SLOT(playBufferSound()));
     
 }
 
@@ -37,6 +38,12 @@ void MusicPlayer::stop() {
     Mix_CloseAudio();
     currentThread->quit();
 }
+void MusicPlayer::interruptRequest()
+{
+   // interruptSound=true;
+    Mix_HaltMusic();
+    std::cout << "Sound interrupted" << std::endl;
+}
 void MusicPlayer::playSound(QString filepath)
 {
     // Set Volume
@@ -45,29 +52,21 @@ void MusicPlayer::playSound(QString filepath)
     // Open Audio File
     Mix_Music* music = Mix_LoadMUS(filepath.toStdString().c_str());
     
+    
     if (music) {
         // Start Playback
       if (Mix_PlayMusic(music, 1) == 0)
       {
-         unsigned int startTime = SDL_GetTicks();
-
-         // Wait
-         while (Mix_PlayingMusic())
-         {
-            SDL_Delay(10000);
-            std::cout << "Time: " << (SDL_GetTicks() - startTime) / 1000 << std::endl;
-         }
+         std::cout << "Sound playing..." << std::endl;
+          startTime = SDL_GetTicks();
       }
       else
       {
          std::cerr << "Mix_PlayMusic ERROR: " << Mix_GetError() << std::endl;
-     
         Mix_FreeMusic(music);
         music = 0;
       }
     } else {
         std::cerr << "Mix_LoadMuS ERROR: " << Mix_GetError() << std::endl;
     }
-
-    
 }

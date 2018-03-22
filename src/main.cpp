@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     
     QApplication app(argc, argv);
     mainWindow* window = new mainWindow();
-    
+    generalManager::getInstance()->configureHandlers(window);
     //EditText
     window->setEditText();
     //Show

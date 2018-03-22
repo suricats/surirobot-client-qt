@@ -16,7 +16,10 @@
 
 #include <QtCore/qobject.h>
 #include <QKeyEvent>
+#include <QKeySequence>
 #include <QApplication>
+#include <QTime>
+#include "controller/converseManager.hpp"
 
 class keyPressEventHandler : public QObject {
     Q_OBJECT
@@ -26,6 +29,15 @@ public:
 protected:
     bool eventFilter(QObject* obj, QEvent* event);
 private:
+    converseManager* cm;
+    SpeechRecording* sr;
+    bool audioRecording;
+    QTimer* expirationTimer;
+signals:
+    void startRecord();
+    void stopRecord();
+private slots:
+    void manageRecord(bool val);
 
 
 };

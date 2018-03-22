@@ -1,10 +1,3 @@
-/*
- * File:   QTRedis.cpp
- * Author: tberdy
- *
- * Created on 21 décembre 2017, 21:11
- */
-
 #include "QTRedis.hpp"
 #include <hiredis/async.h>
 #include <cstdio>
@@ -36,7 +29,12 @@ void onChange(redisAsyncContext*, void* r, void* privdata) {
 
         if (type.compare("message") == 0 && channel.compare(FACE_CHANNEL) == 0) {
             std::string message(reply->element[2]->str);
-            emit obj->signalNewPerson(QString::fromUtf8(reply->element[2]->str));
+            std::string delimiter = ".";
+
+            size_t pos = message.find(delimiter);
+            std::string id = message.substr(0,pos);
+            std::string name = message.substr(pos + delimiter.length()+1,message.length());
+            emit obj->newPerson(QString::fromStdString(name),QString::fromStdString(id));
         }
     }
 

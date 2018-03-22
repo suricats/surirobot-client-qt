@@ -32,8 +32,9 @@ public slots:
 private slots:
     void downloadFinished(QByteArray file);
 signals:
+    void interruptSound();
     void download(QString);
-    void playSoundOrder(QString);
+    void playSound(QString);
 
 
 

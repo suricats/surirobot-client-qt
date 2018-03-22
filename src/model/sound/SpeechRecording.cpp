@@ -2,6 +2,7 @@
 
 SpeechRecording::SpeechRecording() {
     audioPeriod = DEFAULT_PLANIFIED_SEC;
+    isInit = false;
     currentThread = new QThread;
     moveToThread(currentThread);
 
@@ -13,7 +14,7 @@ SpeechRecording::SpeechRecording() {
 
     // Get all devices connected
     GetCaptureDevices(Devices);
-    
+
 }
 
 SpeechRecording::~SpeechRecording() {
@@ -22,10 +23,12 @@ SpeechRecording::~SpeechRecording() {
     ShutdownOpenAL();
 
 }
+
 void SpeechRecording::start() {
     currentThread->start();
-    
+
 }
+
 bool SpeechRecording::InitOpenAL(const char* DeviceName) {
     // Opening device
     Device = alcOpenDevice(DeviceName);
@@ -120,24 +123,19 @@ void SpeechRecording::SaveSound(const std::string& Filename, const std::vector<A
     sf_close(File);
 }
 
-
-int SpeechRecording::recordPSeconds() {
-    return recordXSeconds(audioPeriod);
-}
-
-int SpeechRecording::recordXSeconds(float second) {
-    
-    //Initialize microphone
-    int Choice = 0;
-    // Initialize capture
-    if (!InitCapture(Devices[Choice].c_str())) {
-        std::cout << "Error with the microphone... Exit Failure" << std::endl;
-        exit(EXIT_FAILURE);
+void SpeechRecording::recordInBuffer(float second) {
+    if (!isInit) {
+        //Initialize microphone
+        int Choice = 0;
+        // Initialize capture
+        if (!InitCapture(Devices[Choice].c_str())) {
+            std::cout << "Error with the microphone... Exit Failure" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        alcCaptureStart(CaptureDevice);
+        isInit = true;
     }
-    alcCaptureStart(CaptureDevice);
-    
-    
-    ///Here to change second
+    emit isRecording(true);
     time_t Start = time(NULL);
     while (time(NULL) - Start < second) {
         // get the samples
@@ -151,7 +149,11 @@ int SpeechRecording::recordXSeconds(float second) {
             alcCaptureSamples(CaptureDevice, &Samples[Start], SamplesAvailable);
         }
     }
+    emit isRecording(false);
+}
 
+int SpeechRecording::saveBuffer() {
+    
     //Stop the microphone
     alcCaptureStop(CaptureDevice);
     ALCint SamplesAvailable;
@@ -161,7 +163,7 @@ int SpeechRecording::recordXSeconds(float second) {
         Samples.resize(Start + SamplesAvailable);
         alcCaptureSamples(CaptureDevice, &Samples[Start], SamplesAvailable);
     }
-
+    
     // Save the file
     uuid_t id;
     uuid_generate(id);
@@ -173,9 +175,18 @@ int SpeechRecording::recordXSeconds(float second) {
     SaveSound(str, Samples);
     Samples.clear();
     emit newSoundCreated(QString::fromStdString(str));
-    
+
     //Stop OpenAL
     alcCaptureCloseDevice(CaptureDevice);
-    //ShutdownOpenAL();
+    isInit=false;
     return 0;
+}
+
+int SpeechRecording::recordPSeconds() {
+    return recordXSeconds(audioPeriod);
+}
+
+int SpeechRecording::recordXSeconds(float second) {
+    recordInBuffer(second);
+    return saveBuffer();
 }

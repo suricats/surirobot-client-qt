@@ -15,7 +15,6 @@
 #define _MAINWINDOW_H
 
 #include "ui_mainWindow.h"
-#include "../keyPressEventHandler.h"
 #include "manualWindow.h"
 #include <iostream>
 #include <QApplication>

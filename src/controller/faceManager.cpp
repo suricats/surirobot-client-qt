@@ -28,7 +28,7 @@ void faceManager::connectToUI(mainWindow* ui) {
     this->ui = ui;
 
     QObject::connect(emotionalWorker,SIGNAL(newReply(QString)),ui,SLOT(setTextDownSignal(QString)));
-    QObject::connect(faceWorker, &QTRedis::signalNewPerson, ui, &mainWindow::setTextMiddleSignal);
+    QObject::connect(faceWorker, SIGNAL(newPerson(QString,QString)), ui,SLOT(setTextMiddleSignal(QString)));
 
 }
 
