@@ -25,6 +25,7 @@
 
 #define NORMAL_IMAGE "res/SuriRobot1.png"
 #define MICRO_IMAGE "res/mic.png"
+#define BASIC_IMAGE "res/illustrations/activities/basic.jpg"
 class mainWindow : public QDialog {
     Q_OBJECT
 public:
