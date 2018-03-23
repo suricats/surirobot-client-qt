@@ -22,7 +22,7 @@ generalManager::generalManager() {
     fm = faceManager::getInstance();
     QObject::connect(fm->faceWorker, SIGNAL(activateDetectionScenario(State, QByteArray)), this, SLOT(scenarioRecognizedConfirmation(State, QByteArray)));
     QObject::connect(this, SIGNAL(say(QString)), cm->speechWorker, SLOT(sendRequest(QString)));
-    QObject::connect(this, SIGNAL(void faceRecognitionLog(QString,bool)), fm->faceAPIworker, SLOT(sendLog(QString,bool)));
+    QObject::connect(this, SIGNAL(faceRecognitionLog(bool)), fm->faceAPIworker, SLOT(sendLog(bool)));
 
 }
 
@@ -103,7 +103,7 @@ void generalManager::scenarioRecognizedConfirmation(State newState, QByteArray d
                 QString text("Parfait ! Chattons ensemble à présent :)");
                 emit newText(text);
                 emit say(text);
-                emit faceRecognitionLog(idDetected,true);
+                emit faceRecognitionLog(true);
                 scenarioRecognizedConfirmation(State::STATE_IDLE);
             }
                 break;
@@ -113,7 +113,7 @@ void generalManager::scenarioRecognizedConfirmation(State newState, QByteArray d
                 QString text("Oh mince je me suis trompé. J'essayerai de faire mieux la prochaine fois !");
                 emit newText(text);
                 emit say(text);
-                emit faceRecognitionLog(idDetected,false);
+                emit faceRecognitionLog(false);
                 scenarioRecognizedConfirmation(State::STATE_IDLE);
             }
                 break;

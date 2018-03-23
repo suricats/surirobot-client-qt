@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include <QNetworkRequest>
 class FaceRecAPICaller : public APICaller {
     Q_OBJECT
 private:
@@ -17,7 +18,7 @@ public:
 public slots:
     void sendRequest(QString text = "") override;
     void receiveReply(QNetworkReply* reply) override;
-    void sendLog(QString,bool val);
+    void sendLog(bool val);
 
 };
 

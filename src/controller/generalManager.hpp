@@ -47,7 +47,7 @@ public slots:
 signals:
     void newText(QString text);
     void say(QString text);
-    void faceRecognitionLog(QString id,bool val);
+    void faceRecognitionLog(bool val);
 
 };
 
