@@ -36,6 +36,7 @@ void onChange(redisAsyncContext*, void* r, void* privdata) {
             std::string name = message.substr(pos + delimiter.length(),message.length());
             emit obj->newPerson(QString::fromStdString(name),QString::fromStdString(id));
             if(id!="-1" && name!="Unknown") emit obj->activateDetectionScenario(State::STATE_DETECTED,QByteArray::fromStdString(message));
+            else emit obj->activateDetectionScenario(State::STATE_NOT_DETECTED,QByteArray());
         }
     }
 

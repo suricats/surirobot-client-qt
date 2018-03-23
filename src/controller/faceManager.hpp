@@ -5,11 +5,12 @@
 //Model headers
 #include "../model/api/EmotionalAPICaller.hpp"
 #include "../model/redis/QTRedis.hpp"
-
+#include "../model/api/FaceRecAPICaller.hpp"
 //UI headers
 #include "../ui/mainWindow.h"
 
 #define EMOTIONAL_URL "http://ec2-54-212-240-38.us-west-2.compute.amazonaws.com:8080/emotions/actions/retrieve-video-emotion"
+#define FACE_RECOGNITION_URL "localhost:5000"
 #define EMOTIONAL_NB_FRAMES 5
 #define EMOTIONAL_IMAGE_SIZE 200 //in pixels
 #define EMOTIONAL_DELAY 4000 //in ms
@@ -38,6 +39,7 @@ public:
     bool isFaceRecognitionDown();
     bool isEmotionalRecognitionDown();
     QTRedis* faceWorker;
+    FaceRecAPICaller* faceAPIworker;
 private:
     EmotionalAPICaller* emotionalWorker;
     

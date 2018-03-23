@@ -7,13 +7,14 @@
 #include "../model/api/EmotionalAPICaller.hpp"
 #include "../model/api/NLPAPICaller.hpp"
 #include "../model/sound/SpeechRecording.hpp"
-
+#include "../model/api/TTSAPICaller.hpp"
 //UI headers
 #include "../ui/mainWindow.h"
 
 
 #define NLP_URL "https://nlp.api.surirobot.net/getanswer"
 #define CONVERSE_URL "https://converse.api.surirobot.net/converse"
+#define TTS_URL "https://text-to-speech.api.surirobot.net/speak"
 //#define CONVERSE_URL "http://localhost:6900/converse"
 #define NLP_INTERVAL_REQUEST 4 //in seconds
 
@@ -32,6 +33,7 @@ public:
     void startAll();
     void startNLP();
     void startConverse();
+    void startTTS();
     void stop();
     bool isNLPDown();
     bool isConverseDown();
@@ -44,6 +46,7 @@ public:
     
     ConverseAPICaller* converseWorker;
     SpeechRecording* audioRecorder;
+    TTSAPICaller* speechWorker;
 private:
     QTimer* debugTimer;
     mainWindow* ui;
@@ -55,7 +58,7 @@ private:
     converseManager();
     static converseManager* instance;
 public slots:
-
+    
 };
 
 #endif /* CONVERSEMANAGER_HPP */

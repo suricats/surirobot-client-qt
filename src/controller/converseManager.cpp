@@ -21,6 +21,7 @@ converseManager::converseManager() {
     audioRecorder = new SpeechRecording;
     nlpWorker = new NLPAPICaller(NLP_URL);
     converseWorker = new ConverseAPICaller(CONVERSE_URL);
+    speechWorker = new TTSAPICaller(TTS_URL);
     QObject::connect(audioRecorder, SIGNAL(newSoundCreated(QString)), converseWorker, SLOT(sendRequest(QString)));
     nlpDebug = false;
 }
@@ -29,6 +30,7 @@ converseManager::~converseManager() {
     delete audioRecorder;
     delete nlpWorker;
     delete converseWorker;
+    delete speechWorker;
 }
 
 void converseManager::connectToUI(mainWindow* ui) {
@@ -39,6 +41,7 @@ void converseManager::connectToUI(mainWindow* ui) {
     QObject::connect(ui->MicButton, SIGNAL(released()), audioRecorder, SLOT(recordPSeconds()));
 
     QObject::connect(debugTimer, SIGNAL(timeout()), ui, SLOT(sendEditText()));
+    
 }
 
 void converseManager::startConverse() {
@@ -49,16 +52,23 @@ void converseManager::startConverse() {
 void converseManager::startNLP() {
     nlpWorker->start();
 }
+void converseManager::startTTS()
+{
+    speechWorker->start();
+}
+
 
 void converseManager::startAll() {
     startConverse();
     startNLP();
+    startTTS();
 }
 void converseManager::stop()
 {
     nlpWorker->stop();
     converseWorker->stop();
     debugTimer->stop();
+    speechWorker->stop();
     audioRecorder->currentThread->quit();
 }
 

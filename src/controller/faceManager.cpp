@@ -1,4 +1,3 @@
-
 #include "faceManager.hpp"
 
 faceManager* faceManager::instance = NULL;
@@ -19,6 +18,7 @@ faceManager::faceManager() {
     
     emotionalWorker = new EmotionalAPICaller(EMOTIONAL_URL);
     faceWorker = new QTRedis();
+    faceAPIworker = new FaceRecAPICaller(FACE_RECOGNITION_URL);
 }
 
 faceManager::~faceManager() {
@@ -29,7 +29,7 @@ void faceManager::connectToUI(mainWindow* ui) {
     this->ui = ui;
 
     QObject::connect(emotionalWorker,SIGNAL(newReply(QString)),ui,SLOT(setTextDownSignal(QString)));
-    QObject::connect(faceWorker, SIGNAL(newPerson(QString,QString)), ui,SLOT(setTextMiddleSignal(QString)));
+    //QObject::connect(faceWorker, SIGNAL(newPerson(QString,QString)), ui,SLOT(setTextMiddleSignal(QString)));
 
 }
 
@@ -40,6 +40,7 @@ void faceManager::startAll() {
 
 void faceManager::startFaceRecognition() {
     faceWorker->start();
+    faceAPIworker->start();
 }
 
 void faceManager::startEmotionalRecognition() {
@@ -49,6 +50,7 @@ void faceManager::stop()
 {
     emotionalWorker->stop();
     faceWorker->currentThread->quit();
+    faceAPIworker->stop();
 }
 bool faceManager::isFaceRecognitionDown() {
     return false;

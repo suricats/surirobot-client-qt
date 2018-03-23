@@ -8,10 +8,9 @@
 
 //Others headers
 #include "../keyPressEventHandler.h"
+#include "../ui/mainWindow.h"
 #include <iostream>
 #include <string>
-
-
 
 class generalManager : public QObject {
     Q_OBJECT
@@ -25,7 +24,7 @@ public:
 
     ~generalManager();
     void configureHandlers(QDialog* ui);
-
+    void connectToUI(mainWindow* ui);
     State state;
     bool onScenario;
     QString nameDetected;
@@ -37,11 +36,18 @@ private:
 
     void deleteTemporaryFiles();
     keyPressEventHandler* eKeyPress;
+    mainWindow* ui;
+    converseManager* cm;
+    faceManager* fm;
 public slots:
     void deleteAll();
-    void scenarioRecognizedConfirmation(State state,QByteArray data);
+    void scenarioRecognizedConfirmation(State state, QByteArray data = QByteArray());
     void activateScenarioRecognizedConfirmation(bool val);
 
+signals:
+    void newText(QString text);
+    void say(QString text);
+    void faceRecognitionLog(QString id,bool val);
 
 };
 
