@@ -19,11 +19,8 @@ void FileDownloader::receiveReply(QNetworkReply* reply) {
 
 void FileDownloader::sendRequest(QString urlStr) {
     url = QUrl::fromUserInput(urlStr);
-    if (!isBusy) {
-        QUrl parsedUrl = url;
-        QNetworkRequest request(parsedUrl);
-        networkManager->get(request);
-
-    }
+    QUrl parsedUrl = url;
+    QNetworkRequest request(parsedUrl);
+    networkManager->get(request);
 
 }

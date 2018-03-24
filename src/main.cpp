@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     gm->connectToUI(window);
     
     //EditText
-    window->setEditText();
+    //window->setEditText();
     //Show
     window->smartShow();
     

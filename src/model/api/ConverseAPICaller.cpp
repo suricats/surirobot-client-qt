@@ -6,7 +6,7 @@ ConverseAPICaller::ConverseAPICaller(QString text) :
 APICaller(text) {
     intentMode = false;
     fileDownloader = new FileDownloader();
-    musicPlayer = new MusicPlayer();
+    musicPlayer = MusicPlayer::getInstance();
     QObject::connect(fileDownloader, SIGNAL(newFile(QByteArray)), this, SLOT(downloadFinished(QByteArray)));
     QObject::connect(this, SIGNAL(download(QString)), fileDownloader, SLOT(sendRequest(QString)));
     QObject::connect(this, SIGNAL(playSound(QString)), musicPlayer, SLOT(playSound(QString)));
@@ -19,76 +19,75 @@ ConverseAPICaller::~ConverseAPICaller() {
 
 void ConverseAPICaller::receiveReply(QNetworkReply* reply) {
     isBusy = false;
-    //audioPlayer->stop();
+    QByteArray buffer(reply->readAll());
     if (reply->error() != QNetworkReply::NoError) {
-        std::cerr << "Error  " << reply->error() << " : " << reply->readAll().toStdString() << std::endl;
+        std::cerr << "Error  " << reply->error() << " : " << buffer.toStdString() << std::endl;
         networkManager->clearAccessCache();
+    }
+    QJsonObject jsonObject = QJsonDocument::fromJson(buffer).object();
+    if (intentMode) {
+        QString intent = jsonObject["intent"].toString();
+        if (intent == "say-yes") {
+            std::cout << "OUI INTENT" << std::endl;
+            emit newIntent(State::STATE_CONFIRMATION_YES, intent.toUtf8());
+        }
+        if (intent == "say-no") {
+            std::cout << "OUI INTENT" << std::endl;
+            emit newIntent(State::STATE_CONFIRMATION_NO, intent.toUtf8());
+        }
+
+
     } else {
-        QJsonObject jsonObject = QJsonDocument::fromJson(reply->readAll()).object();
+        QString message = jsonObject["answerText"].toString();
+        QString url = jsonObject["answerAudioLink"].toString();
+        if (!message.isEmpty()) {
 
-
-
-        if (intentMode) {
-            QString intent = jsonObject["intent"].toString("");
-            if(intent == "say-yes")
-            {
-                std::cout << "OUI INTENT" << std::endl;
-                emit newIntent(State::STATE_CONFIRMATION_YES,intent.toUtf8());
-            }
-            if(intent == "say-no")
-            {
-                std::cout << "OUI INTENT" << std::endl;
-                emit newIntent(State::STATE_CONFIRMATION_NO,intent.toUtf8());
-            }
-            
-
-        } else {
-            QString message = jsonObject["answerText"].toString("Can't find message.");
-            QString url = jsonObject["answerAudioLink"].toString("");
             std::cout << "Received from Converse API : " << message.toStdString() << std::endl;
             emit newReply(message);
-
+        }
+        else emit newReply("Je ne me sens pas bien... [ERROR Conv : Field message needed but doesn't exist.]");
+        if(!url.isEmpty()){
             std::cout << "Downloading the sound : " << url.toStdString() << std::endl;
-
             emit download(url);
         }
 
     }
+
+
     reply->deleteLater();
 }
 
 void ConverseAPICaller::sendRequest(QString filepath) {
 
-    if (!isBusy) {
-        QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
-        //Language
-        QHttpPart textPart;
-        textPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"language\""));
-        textPart.setBody(DEFAULT_LANGUAGE);
-        //Audio
-        QHttpPart audioPart;
-        audioPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"audio\"; filename=\"audio.wav\""));
-        audioPart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("audio/x-wav"));
-        QFile *file = new QFile(filepath);
-        file->open(QIODevice::ReadOnly);
+    QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    //Language
+    QHttpPart textPart;
+    textPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"language\""));
+    textPart.setBody(DEFAULT_LANGUAGE);
+    //Audio
+    QHttpPart audioPart;
+    audioPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"audio\"; filename=\"audio.wav\""));
+    audioPart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("audio/x-wav"));
+    QFile *file = new QFile(filepath);
+    file->open(QIODevice::ReadOnly);
 
-        audioPart.setBodyDevice(file);
-        file->setParent(multiPart); // we cannot delete the file now, so delete it with the multiPart
+    audioPart.setBodyDevice(file);
+    file->setParent(multiPart); // we cannot delete the file now, so delete it with the multiPart
 
-        //Id
-        QHttpPart idPart;
-        textPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"userId\""));
-        textPart.setBody("1");
-        multiPart->append(audioPart);
-        multiPart->append(textPart);
-        multiPart->append(idPart);
-        QNetworkRequest request(url);
-        std::cout << "Sended to Converse API : " << "File - " << file->fileName().toStdString() << " - " << file->size() / 1000 << "Ko" << std::endl;
-        isBusy = true;
-        QNetworkReply *reply = networkManager->post(request, multiPart);
-        multiPart->setParent(reply);
+    //Id
+    QHttpPart idPart;
+    textPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"userId\""));
+    textPart.setBody("1");
+    multiPart->append(audioPart);
+    multiPart->append(textPart);
+    multiPart->append(idPart);
+    QNetworkRequest request(url);
+    std::cout << "Sended to Converse API : " << "File - " << file->fileName().toStdString() << " - " << file->size() / 1000 << "Ko" << std::endl;
+    isBusy = true;
+    QNetworkReply *reply = networkManager->post(request, multiPart);
+    multiPart->setParent(reply);
 
-    }
+
 
 }
 

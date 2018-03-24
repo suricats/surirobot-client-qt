@@ -20,6 +20,7 @@ generalManager::generalManager() {
     onScenario = false;
     cm = converseManager::getInstance();
     fm = faceManager::getInstance();
+    MusicPlayer::getInstance()->start();
     QObject::connect(fm->faceWorker, SIGNAL(activateDetectionScenario(State, QByteArray)), this, SLOT(scenarioRecognizedConfirmation(State, QByteArray)));
     QObject::connect(this, SIGNAL(say(QString)), cm->speechWorker, SLOT(sendRequest(QString)));
     QObject::connect(this, SIGNAL(faceRecognitionLog(bool)), fm->faceAPIworker, SLOT(sendLog(bool)));
@@ -66,7 +67,7 @@ void generalManager::scenarioRecognizedConfirmation(State newState, QByteArray d
                 std::cout << "STATE IDLE" << std::endl;
                 cm->converseWorker->intentMode = false;
                 QObject::disconnect(cm->converseWorker, SIGNAL(newIntent(State, QByteArray)), this, SLOT(scenarioRecognizedConfirmation(State, QByteArray)));
-                
+
             }
                 break;
             case State::STATE_DETECTED:
@@ -89,9 +90,11 @@ void generalManager::scenarioRecognizedConfirmation(State newState, QByteArray d
                 break;
             case State::STATE_NOT_DETECTED:
             {
-                QString text("Au revoir " + nameDetected + ".");
-                emit newText(text);
-                emit say(text);
+                if (!nameDetected.isEmpty()) {
+                    QString text("Au revoir " + nameDetected + ".");
+                    emit newText(text);
+                    emit say(text);
+                }
                 scenarioRecognizedConfirmation(State::STATE_IDLE);
             }
                 break;

@@ -33,7 +33,7 @@ void NLPAPICaller::receiveReply(QNetworkReply* reply) {
 }
 
 void NLPAPICaller::sendRequest(QString text) {
-    if (text != "" && !isBusy) {
+    if (text != "") {
         
         //Create the json request
         QJsonObject jsonObject;

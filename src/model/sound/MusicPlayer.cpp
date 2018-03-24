@@ -1,5 +1,18 @@
 
 #include "MusicPlayer.hpp"
+MusicPlayer* MusicPlayer::instance = NULL;
+
+void MusicPlayer::deleteInstance() {
+    delete instance;
+    instance = NULL;
+}
+
+MusicPlayer* MusicPlayer::getInstance() {
+    if (!MusicPlayer::instance) {
+        instance = new MusicPlayer();
+    }
+    return instance;
+}
 
 MusicPlayer::MusicPlayer() {
     currentThread = new QThread();
@@ -13,17 +26,7 @@ MusicPlayer::~MusicPlayer() {
 
 void MusicPlayer::start() {
     currentThread->start();
-    // Init
-    if (SDL_Init(SDL_INIT_AUDIO) != 0) {
-        std::cerr << "SDL_Init ERROR: " << SDL_GetError() << std::endl;
-        return;
-    }
-
-    // Open Audio device
-    if (Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 2048) != 0) {
-        std::cerr << "Mix_OpenAudio ERROR: " << Mix_GetError() << std::endl;
-        return;
-    }
+    
     
     
 }
@@ -45,12 +48,23 @@ void MusicPlayer::interruptRequest()
 }
 void MusicPlayer::playSound(QString filepath)
 {
+    // Init
+    if (SDL_Init(SDL_INIT_AUDIO) != 0) {
+        std::cerr << "SDL_Init ERROR: " << SDL_GetError() << std::endl;
+        return;
+    }
+
+    // Open Audio device
+    if (Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 2048) != 0) {
+        std::cerr << "Mix_OpenAudio ERROR: " << Mix_GetError() << std::endl;
+        return;
+    }
     // Set Volume
     Mix_VolumeMusic(100);
 
     // Open Audio File
-    Mix_Music* music = Mix_LoadMUS(filepath.toStdString().c_str());
     
+    Mix_Music* music = Mix_LoadMUS(filepath.toStdString().c_str());
     
     if (music) {
         // Start Playback

@@ -7,7 +7,6 @@
       <itemPath>src/model/api/APICaller.hpp</itemPath>
       <itemPath>src/model/api/ConverseAPICaller.hpp</itemPath>
       <itemPath>src/model/api/EmotionalAPICaller.hpp</itemPath>
-      <itemPath>src/model/api/FaceRecAPICaller.h</itemPath>
       <itemPath>src/model/api/FaceRecAPICaller.hpp</itemPath>
       <itemPath>src/model/api/FileDownloader.hpp</itemPath>
       <itemPath>src/model/sound/MusicPlayer.hpp</itemPath>
@@ -130,8 +129,6 @@
       </item>
       <item path="src/model/api/FaceRecAPICaller.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/model/api/FaceRecAPICaller.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/model/api/FaceRecAPICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/model/api/FileDownloader.cpp" ex="false" tool="1" flavor2="0">
@@ -248,8 +245,6 @@
             flavor2="0">
       </item>
       <item path="src/model/api/FaceRecAPICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/model/api/FaceRecAPICaller.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/model/api/FaceRecAPICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -375,8 +370,6 @@
             flavor2="0">
       </item>
       <item path="src/model/api/FaceRecAPICaller.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/model/api/FaceRecAPICaller.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/model/api/FaceRecAPICaller.hpp" ex="false" tool="3" flavor2="0">
       </item>

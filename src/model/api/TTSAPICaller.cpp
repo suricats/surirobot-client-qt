@@ -8,7 +8,7 @@
 TTSAPICaller::TTSAPICaller(QString text) :
 APICaller(text) {
     fileDownloader = new FileDownloader();
-    musicPlayer = new MusicPlayer();
+    musicPlayer = MusicPlayer::getInstance();
     QObject::connect(fileDownloader, SIGNAL(newFile(QByteArray)), this, SLOT(downloadFinished(QByteArray)));
     QObject::connect(this, SIGNAL(download(QString)), fileDownloader, SLOT(sendRequest(QString)));
     QObject::connect(this, SIGNAL(playSound(QString)), musicPlayer, SLOT(playSound(QString)));
@@ -28,8 +28,12 @@ void TTSAPICaller::receiveReply(QNetworkReply* reply) {
     } else {
         QJsonObject jsonObject = QJsonDocument::fromJson(reply->readAll()).object();
         QString url = jsonObject["downloadLink"].toString("");
-        std::cout << "Downloading the sound : " << url.toStdString() << std::endl;
-        emit download(url);
+        if (url.isEmpty()) newReply("Je ne me sens pas bien... [ERROR TTS : Fields needed don't exist.]");
+        else {
+            std::cout << "Downloading the sound : " << url.toStdString() << std::endl;
+            emit download(url);
+        }
+
 
 
     }
@@ -38,21 +42,18 @@ void TTSAPICaller::receiveReply(QNetworkReply* reply) {
 
 void TTSAPICaller::sendRequest(QString text) {
 
-    if (!isBusy) {
-        isBusy = true;
-        //Json request
-        QJsonObject jsonObject;
-        jsonObject["text"] = text;
-        jsonObject["language"]="fr-FR";
-        
-        QJsonDocument jsonData(jsonObject);
-        QByteArray data = jsonData.toJson();
-        QNetworkRequest request(url);
-        
-        request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
-        networkManager->post(request, data);
+    isBusy = true;
+    //Json request
+    QJsonObject jsonObject;
+    jsonObject["text"] = text;
+    jsonObject["language"] = "fr-FR";
 
-    }
+    QJsonDocument jsonData(jsonObject);
+    QByteArray data = jsonData.toJson();
+    QNetworkRequest request(url);
+
+    request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
+    networkManager->post(request, data);
 
 }
 

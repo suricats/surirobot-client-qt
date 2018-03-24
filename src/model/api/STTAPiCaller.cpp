@@ -18,21 +18,11 @@ void STTAPiCaller::receiveReply(QNetworkReply* reply) {
     } else {
         QJsonObject jsonObject = QJsonDocument::fromJson(reply->readAll()).object();
 
-        //QString message = jsonObject["answerText"].toString("Can't find message.");
-        //QString url = jsonObject["answerAudioLink"].toString("");
-        //std::cout << "Received from Converse API : " << message.toStdString() << std::endl;
-        //emit newReply(message);
-
     }
     reply->deleteLater();
 }
 
 void STTAPiCaller::sendRequest(QString filepath) {
 
-    if (!isBusy) {
-        
-        
-
-    }
 
 }
